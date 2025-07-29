@@ -1,107 +1,107 @@
-"use client"
+"use client";
 
-import { useState, useCallback, useMemo } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Brush } from "recharts"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ZoomIn, ZoomOut, RotateCcw, SkipBack, SkipForward, Maximize2 } from "lucide-react"
+import { useState, useCallback, useMemo } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Brush } from "recharts";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ZoomIn, ZoomOut, RotateCcw, SkipBack, SkipForward, Maximize2 } from "lucide-react";
 
 interface PerformanceTimelineChartProps {
-  data: any[]
+  data: any[];
 }
 
 export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps) {
-  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 20 }) // Start with 20% view for better detail
-  const [isPlaying, setIsPlaying] = useState(false)
-  const [currentTime, setCurrentTime] = useState(0)
-  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 20 }); // Start with 20% view for better detail
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Calculate time range and statistics
   const timeStats = useMemo(() => {
-    if (!data.length) return { min: 0, max: 0, duration: 0, range: "" }
+    if (!data.length) return { min: 0, max: 0, duration: 0, range: "" };
 
-    const min = Math.min(...data.map((d) => d.time))
-    const max = Math.max(...data.map((d) => d.time))
-    const duration = max - min
+    const min = Math.min(...data.map((d) => d.time));
+    const max = Math.max(...data.map((d) => d.time));
+    const duration = max - min;
 
-    let range = ""
+    let range = "";
     if (duration < 1000) {
-      range = `${duration.toFixed(0)}ms`
+      range = `${duration.toFixed(0)}ms`;
     } else if (duration < 60000) {
-      range = `${(duration / 1000).toFixed(1)}s`
+      range = `${(duration / 1000).toFixed(1)}s`;
     } else {
-      range = `${(duration / 60000).toFixed(1)}m`
+      range = `${(duration / 60000).toFixed(1)}m`;
     }
 
-    return { min, max, duration, range }
-  }, [data])
+    return { min, max, duration, range };
+  }, [data]);
 
   const formatTime = useCallback((value: number) => {
-    if (value < 1000) return `${value}ms`
-    if (value < 60000) return `${(value / 1000).toFixed(1)}s`
-    return `${(value / 60000).toFixed(1)}m`
-  }, [])
+    if (value < 1000) return `${value}ms`;
+    if (value < 60000) return `${(value / 1000).toFixed(1)}s`;
+    return `${(value / 60000).toFixed(1)}m`;
+  }, []);
 
   const zoomIn = useCallback(() => {
-    const currentRange = timelineZoom.end - timelineZoom.start
-    const newRange = Math.max(5, currentRange * 0.7) // Minimum 5% zoom
-    const center = (timelineZoom.start + timelineZoom.end) / 2
-    const newStart = Math.max(0, center - newRange / 2)
-    const newEnd = Math.min(100, newStart + newRange)
+    const currentRange = timelineZoom.end - timelineZoom.start;
+    const newRange = Math.max(5, currentRange * 0.7); // Minimum 5% zoom
+    const center = (timelineZoom.start + timelineZoom.end) / 2;
+    const newStart = Math.max(0, center - newRange / 2);
+    const newEnd = Math.min(100, newStart + newRange);
 
-    setTimelineZoom({ start: newStart, end: newEnd })
-  }, [timelineZoom])
+    setTimelineZoom({ start: newStart, end: newEnd });
+  }, [timelineZoom]);
 
   const zoomOut = useCallback(() => {
-    const currentRange = timelineZoom.end - timelineZoom.start
-    const newRange = Math.min(100, currentRange * 1.4)
-    const center = (timelineZoom.start + timelineZoom.end) / 2
-    const newStart = Math.max(0, center - newRange / 2)
-    const newEnd = Math.min(100, newStart + newRange)
+    const currentRange = timelineZoom.end - timelineZoom.start;
+    const newRange = Math.min(100, currentRange * 1.4);
+    const center = (timelineZoom.start + timelineZoom.end) / 2;
+    const newStart = Math.max(0, center - newRange / 2);
+    const newEnd = Math.min(100, newStart + newRange);
 
-    setTimelineZoom({ start: newStart, end: newEnd })
-  }, [timelineZoom])
+    setTimelineZoom({ start: newStart, end: newEnd });
+  }, [timelineZoom]);
 
   const panLeft = useCallback(() => {
-    const range = timelineZoom.end - timelineZoom.start
-    const panAmount = range * 0.3
-    const newStart = Math.max(0, timelineZoom.start - panAmount)
-    const newEnd = newStart + range
+    const range = timelineZoom.end - timelineZoom.start;
+    const panAmount = range * 0.3;
+    const newStart = Math.max(0, timelineZoom.start - panAmount);
+    const newEnd = newStart + range;
 
     if (newEnd <= 100) {
-      setTimelineZoom({ start: newStart, end: newEnd })
+      setTimelineZoom({ start: newStart, end: newEnd });
     }
-  }, [timelineZoom])
+  }, [timelineZoom]);
 
   const panRight = useCallback(() => {
-    const range = timelineZoom.end - timelineZoom.start
-    const panAmount = range * 0.3
-    const newEnd = Math.min(100, timelineZoom.end + panAmount)
-    const newStart = newEnd - range
+    const range = timelineZoom.end - timelineZoom.start;
+    const panAmount = range * 0.3;
+    const newEnd = Math.min(100, timelineZoom.end + panAmount);
+    const newStart = newEnd - range;
 
     if (newStart >= 0) {
-      setTimelineZoom({ start: newStart, end: newEnd })
+      setTimelineZoom({ start: newStart, end: newEnd });
     }
-  }, [timelineZoom])
+  }, [timelineZoom]);
 
   const resetZoom = useCallback(() => {
-    setTimelineZoom({ start: 0, end: 100 })
-  }, [])
+    setTimelineZoom({ start: 0, end: 100 });
+  }, []);
 
   const toggleFullscreen = useCallback(() => {
-    setIsFullscreen(!isFullscreen)
-  }, [isFullscreen])
+    setIsFullscreen(!isFullscreen);
+  }, [isFullscreen]);
 
   // Get visible data range
   const visibleData = useMemo(() => {
-    const startIndex = Math.floor((timelineZoom.start / 100) * data.length)
-    const endIndex = Math.ceil((timelineZoom.end / 100) * data.length)
-    return data.slice(startIndex, endIndex)
-  }, [data, timelineZoom])
+    const startIndex = Math.floor((timelineZoom.start / 100) * data.length);
+    const endIndex = Math.ceil((timelineZoom.end / 100) * data.length);
+    return data.slice(startIndex, endIndex);
+  }, [data, timelineZoom]);
 
-  const zoomPercentage = Math.round(timelineZoom.end - timelineZoom.start)
+  const zoomPercentage = Math.round(timelineZoom.end - timelineZoom.start);
 
   return (
     <Card
@@ -345,7 +345,7 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
                       setTimelineZoom({
                         start: (brushData.startIndex / data.length) * 100,
                         end: (brushData.endIndex / data.length) * 100,
-                      })
+                      });
                     }
                   }}
                 />
@@ -364,7 +364,7 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
             { key: "webgl", label: "WebGL (%)", color: "bg-yellow-500" },
             { key: "gpu", label: "GPU (%)", color: "bg-red-500" },
           ].map(({ key, label, color }) => {
-            const currentValue = visibleData.length > 0 ? visibleData[Math.floor(visibleData.length / 2)]?.[key] : 0
+            const currentValue = visibleData.length > 0 ? visibleData[Math.floor(visibleData.length / 2)]?.[key] : 0;
 
             return (
               <div key={key} className="flex items-center justify-between space-x-2 p-2 bg-slate-800/50 rounded">
@@ -376,7 +376,7 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
                   {typeof currentValue === "number" ? currentValue.toFixed(1) : "—"}
                 </span>
               </div>
-            )
+            );
           })}
         </div>
 
@@ -417,5 +417,5 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
