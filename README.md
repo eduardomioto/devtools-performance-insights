@@ -2,8 +2,6 @@
 
 A comprehensive Next.js application for analyzing complex Chrome DevTools performance profiles, with specialized support for WebAssembly (WASM), 3D models (GLB), HTTP/2-3 protocols, and multi-domain architectures.
 
-![Performance Analyzer Screenshot](https://via.placeholder.com/800x400/1e293b/3b82f6?text=Advanced+Performance+Analyzer)
-
 ## 🛡️ Security
 
 [![Snyk Security](https://snyk.io/test/github/your-org/chrome-performance-analyzer/badge.svg)](https://snyk.io/test/github/your-org/chrome-performance-analyzer)
@@ -46,8 +44,10 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 2. **Install dependencies**
    ```bash
    npm install
+   
    # or
    yarn install
+   
    # or
    pnpm install
    ```
@@ -55,8 +55,10 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 3. **Run the development server**
    ```bash
    npm run dev
+   
    # or
    yarn dev
+   
    # or
    pnpm dev
    ```
