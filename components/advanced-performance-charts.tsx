@@ -530,37 +530,45 @@ export default function AdvancedPerformanceCharts({
         </CardHeader>
         <CardContent>
           <div className="space-y-2 max-h-[400px] overflow-y-auto">
-            {networkWaterfallData.map((req: {
-              id: number;
-              name: string;
-              start: number;
-              duration: number;
-              size: number;
-              protocol: string;
-              type: string;
-            }, index: number) => (
-              <div key={req.id} className="flex items-center space-x-2 text-xs">
-                <div className="w-20 truncate text-slate-300">{req.name}</div>
-                <div className="flex-1 bg-slate-700 rounded-full h-4 relative">
-                  <div
-                    className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full"
-                    style={{
-                      width: `${Math.min(100, (req.duration / 2000) * 100)}%`,
-                      marginLeft: `${(req.start / 3000) * 100}%`,
-                    }}
-                  />
-                </div>
-                <Badge
-                  variant="outline"
-                  className="text-xs border-slate-600 text-slate-300"
+            {networkWaterfallData.map(
+              (
+                req: {
+                  id: number;
+                  name: string;
+                  start: number;
+                  duration: number;
+                  size: number;
+                  protocol: string;
+                  type: string;
+                },
+                index: number,
+              ) => (
+                <div
+                  key={req.id}
+                  className="flex items-center space-x-2 text-xs"
                 >
-                  {req.protocol}
-                </Badge>
-                <div className="w-16 text-right text-slate-400">
-                  {req.duration}ms
+                  <div className="w-20 truncate text-slate-300">{req.name}</div>
+                  <div className="flex-1 bg-slate-700 rounded-full h-4 relative">
+                    <div
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full"
+                      style={{
+                        width: `${Math.min(100, (req.duration / 2000) * 100)}%`,
+                        marginLeft: `${(req.start / 3000) * 100}%`,
+                      }}
+                    />
+                  </div>
+                  <Badge
+                    variant="outline"
+                    className="text-xs border-slate-600 text-slate-300"
+                  >
+                    {req.protocol}
+                  </Badge>
+                  <div className="w-16 text-right text-slate-400">
+                    {req.duration}ms
+                  </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </CardContent>
       </Card>
