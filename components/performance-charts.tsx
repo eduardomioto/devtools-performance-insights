@@ -1,28 +1,28 @@
-"use client";
+"use client"
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { Line, LineChart, Bar, BarChart, Area, AreaChart, XAxis, YAxis, CartesianGrid } from "recharts";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { Line, LineChart, Bar, BarChart, Area, AreaChart, XAxis, YAxis, CartesianGrid } from "recharts"
 
 interface PerformanceChartsProps {
-  data: any;
+  data: any
 }
 
 export default function PerformanceCharts({ data }: PerformanceChartsProps) {
   // Generate sample chart data based on the performance profile
-  // const timelineData = [
-  //   { time: 0, cpu: 0, memory: 45, network: 0 },
-  //   { time: 200, cpu: 15, memory: 48, network: 25 },
-  //   { time: 400, cpu: 45, memory: 52, network: 60 },
-  //   { time: 600, cpu: 78, memory: 58, network: 40 },
-  //   { time: 800, cpu: 65, memory: 62, network: 20 },
-  //   { time: 1000, cpu: 35, memory: 55, network: 15 },
-  //   { time: 1200, cpu: 25, memory: 50, network: 10 },
-  //   { time: 1400, cpu: 20, memory: 48, network: 5 },
-  //   { time: 1600, cpu: 15, memory: 46, network: 0 },
-  //   { time: 1800, cpu: 10, memory: 45, network: 0 },
-  //   { time: 2000, cpu: 8, memory: 44, network: 0 },
-  // ];
+  const timelineData = [
+    { time: 0, cpu: 0, memory: 45, network: 0 },
+    { time: 200, cpu: 15, memory: 48, network: 25 },
+    { time: 400, cpu: 45, memory: 52, network: 60 },
+    { time: 600, cpu: 78, memory: 58, network: 40 },
+    { time: 800, cpu: 65, memory: 62, network: 20 },
+    { time: 1000, cpu: 35, memory: 55, network: 15 },
+    { time: 1200, cpu: 25, memory: 50, network: 10 },
+    { time: 1400, cpu: 20, memory: 48, network: 5 },
+    { time: 1600, cpu: 15, memory: 46, network: 0 },
+    { time: 1800, cpu: 10, memory: 45, network: 0 },
+    { time: 2000, cpu: 8, memory: 44, network: 0 },
+  ]
 
   const metricsData = [
     { metric: "FCP", value: 800, threshold: 1800, status: "good" },
@@ -35,7 +35,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
     { metric: "FID", value: 50, threshold: 100, status: "good" },
     { metric: "CLS", value: 0.15, threshold: 0.1, status: "poor" },
     { metric: "TTFB", value: 200, threshold: 800, status: "good" },
-  ];
+  ]
 
   const networkData = [
     { resource: "HTML", size: 15, time: 200 },
@@ -44,7 +44,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
     { resource: "Images", size: 520, time: 600 },
     { resource: "Fonts", size: 85, time: 300 },
     { resource: "API", size: 12, time: 180 },
-  ];
+  ]
 
   return (
     <div className="grid gap-6">
@@ -72,7 +72,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
             }}
             className="h-[400px]"
           >
-            <LineChart data={data}>
+            <LineChart data={timelineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} />
               <YAxis />
@@ -167,7 +167,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
             }}
             className="h-[250px]"
           >
-            <AreaChart data={data}>
+            <AreaChart data={timelineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} />
               <YAxis />
@@ -178,5 +178,5 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
