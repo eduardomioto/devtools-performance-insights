@@ -1,8 +1,8 @@
-import { Activity, Info } from "lucide-react"
-import type { ComplexPerformanceData } from "@/types/profiling-type"
+import { Activity, Info } from "lucide-react";
+import type { ComplexPerformanceData } from "@/types/profiling-type";
 
 interface DashboardHeaderProps {
-  performanceData: ComplexPerformanceData | null
+  performanceData: ComplexPerformanceData | null;
 }
 
 export function DashboardHeader({ performanceData }: DashboardHeaderProps) {
@@ -29,5 +29,5 @@ export function DashboardHeader({ performanceData }: DashboardHeaderProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

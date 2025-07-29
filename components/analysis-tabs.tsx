@@ -1,23 +1,23 @@
-"use client"
+"use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import AdvancedPerformanceCharts from "@/components/advanced-performance-charts"
-import ComplexIssuesAnalysis from "@/components/complex-issues-analysis"
-import AdvancedRecommendations from "@/components/advanced-recommendations"
-import ResourceAnalysis from "@/components/resource-analysis"
-import ProtocolAnalysis from "@/components/protocol-analysis"
-import { getCriticalIssuesCount } from "@/lib/performance-utils"
-import type { ComplexPerformanceData } from "@/types/profiling-type"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import AdvancedPerformanceCharts from "@/components/advanced-performance-charts";
+import ComplexIssuesAnalysis from "@/components/complex-issues-analysis";
+import AdvancedRecommendations from "@/components/advanced-recommendations";
+import ResourceAnalysis from "@/components/resource-analysis";
+import ProtocolAnalysis from "@/components/protocol-analysis";
+import { getCriticalIssuesCount } from "@/lib/performance-utils";
+import type { ComplexPerformanceData } from "@/types/profiling-type";
 
 interface AnalysisTabsProps {
-  data: ComplexPerformanceData
-  activeTab: string
-  onTabChange: (tab: string) => void
+  data: ComplexPerformanceData;
+  activeTab: string;
+  onTabChange: (tab: string) => void;
 }
 
 export function AnalysisTabs({ data, activeTab, onTabChange }: AnalysisTabsProps) {
-  const criticalIssuesCount = getCriticalIssuesCount(data)
+  const criticalIssuesCount = getCriticalIssuesCount(data);
 
   return (
     <Tabs value={activeTab} onValueChange={onTabChange} className="space-y-4">
@@ -74,5 +74,5 @@ export function AnalysisTabs({ data, activeTab, onTabChange }: AnalysisTabsProps
         <AdvancedRecommendations data={data} />
       </TabsContent>
     </Tabs>
-  )
+  );
 }

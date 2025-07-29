@@ -1,10 +1,10 @@
-import { Zap, Globe } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import type { ComplexPerformanceData } from "@/types/profiling-type"
+import { Zap, Globe } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import type { ComplexPerformanceData } from "@/types/profiling-type";
 
 interface ProtocolDomainOverviewProps {
-  data: ComplexPerformanceData
+  data: ComplexPerformanceData;
 }
 
 export function ProtocolDomainOverview({ data }: ProtocolDomainOverviewProps) {
@@ -97,5 +97,5 @@ export function ProtocolDomainOverview({ data }: ProtocolDomainOverviewProps) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

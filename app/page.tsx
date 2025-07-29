@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { DashboardHeader } from "@/components/dashboard-header"
-import { UploadSection } from "@/components/upload-section"
-import { PerformanceStats } from "@/components/performance-stats"
-import { CriticalIssuesAlert } from "@/components/critical-issues-alert"
-import { ProtocolDomainOverview } from "@/components/protocol-domain-overview"
-import { AnalysisTabs } from "@/components/analysis-tabs"
-import { ResetSection } from "@/components/reset-section"
-import { usePerformanceData } from "@/hooks/use-performance-data"
+import { useState } from "react";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { DashboardHeader } from "@/components/dashboard-header";
+import { UploadSection } from "@/components/upload-section";
+import { PerformanceStats } from "@/components/performance-stats";
+import { CriticalIssuesAlert } from "@/components/critical-issues-alert";
+import { ProtocolDomainOverview } from "@/components/protocol-domain-overview";
+import { AnalysisTabs } from "@/components/analysis-tabs";
+import { ResetSection } from "@/components/reset-section";
+import { usePerformanceData } from "@/hooks/use-performance-data";
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState("overview")
+  const [activeTab, setActiveTab] = useState("overview");
   const { performanceData, isLoading, error, uploadProgress, handleFileUpload, handleComplexSampleData, resetData } =
-    usePerformanceData()
+    usePerformanceData();
 
   return (
     <TooltipProvider>
@@ -44,5 +44,5 @@ export default function HomePage() {
         </div>
       </div>
     </TooltipProvider>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { Upload } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
+import { Upload } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface ResetSectionProps {
-  requestCount: number
-  onReset: () => void
+  requestCount: number;
+  onReset: () => void;
 }
 
 export function ResetSection({ requestCount, onReset }: ResetSectionProps) {
@@ -26,5 +26,5 @@ export function ResetSection({ requestCount, onReset }: ResetSectionProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,21 +1,21 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { Upload, FileText, AlertTriangle } from "lucide-react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Skeleton } from "@/components/ui/skeleton"
+import { Upload, FileText, AlertTriangle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface UploadSectionProps {
-  isLoading: boolean
-  error: string | null
-  uploadProgress: number
-  onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onLoadSample: () => void
+  isLoading: boolean;
+  error: string | null;
+  uploadProgress: number;
+  onFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onLoadSample: () => void;
 }
 
 export function UploadSection({ isLoading, error, uploadProgress, onFileUpload, onLoadSample }: UploadSectionProps) {
@@ -112,5 +112,5 @@ export function UploadSection({ isLoading, error, uploadProgress, onFileUpload, 
         )}
       </CardContent>
     </Card>
-  )
+  );
 }

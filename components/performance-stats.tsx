@@ -1,23 +1,23 @@
-import { Database, Zap, CheckCircle, Globe, AlertTriangle, Activity, TrendingDown, TrendingUp } from "lucide-react"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip"
-import { getPerformanceScore, getScoreColor, getCriticalIssuesCount } from "@/lib/performance-utils"
-import type { ComplexPerformanceData } from "@/types/profiling-type"
+import { Database, Zap, CheckCircle, Globe, AlertTriangle, Activity, TrendingDown, TrendingUp } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
+import { getPerformanceScore, getScoreColor, getCriticalIssuesCount } from "@/lib/performance-utils";
+import type { ComplexPerformanceData } from "@/types/profiling-type";
 
 interface PerformanceStatsProps {
-  data: ComplexPerformanceData
+  data: ComplexPerformanceData;
 }
 
 function getScoreIcon(score: number) {
-  if (score >= 90) return <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
-  if (score >= 70) return <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
-  if (score >= 50) return <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />
-  return <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+  if (score >= 90) return <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />;
+  if (score >= 70) return <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />;
+  if (score >= 50) return <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />;
+  return <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />;
 }
 
 export function PerformanceStats({ data }: PerformanceStatsProps) {
-  const performanceScore = getPerformanceScore(data)
-  const criticalIssuesCount = getCriticalIssuesCount(data)
+  const performanceScore = getPerformanceScore(data);
+  const criticalIssuesCount = getCriticalIssuesCount(data);
 
   const stats = [
     {
@@ -62,7 +62,7 @@ export function PerformanceStats({ data }: PerformanceStatsProps) {
       color: "text-red-400",
       tooltip: "High-impact performance issues requiring immediate attention",
     },
-  ]
+  ];
 
   return (
     <TooltipProvider>
@@ -89,5 +89,5 @@ export function PerformanceStats({ data }: PerformanceStatsProps) {
         ))}
       </div>
     </TooltipProvider>
-  )
+  );
 }

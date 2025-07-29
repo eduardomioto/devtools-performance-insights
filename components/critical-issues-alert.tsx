@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { AlertTriangle } from "lucide-react"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { getCriticalIssuesCount } from "@/lib/performance-utils"
-import type { ComplexPerformanceData } from "@/types/profiling-type"
+import { AlertTriangle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { getCriticalIssuesCount } from "@/lib/performance-utils";
+import type { ComplexPerformanceData } from "@/types/profiling-type";
 
 interface CriticalIssuesAlertProps {
-  data: ComplexPerformanceData
-  onViewDetails: () => void
+  data: ComplexPerformanceData;
+  onViewDetails: () => void;
 }
 
 export function CriticalIssuesAlert({ data, onViewDetails }: CriticalIssuesAlertProps) {
-  const criticalIssuesCount = getCriticalIssuesCount(data)
+  const criticalIssuesCount = getCriticalIssuesCount(data);
 
-  if (criticalIssuesCount === 0) return null
+  if (criticalIssuesCount === 0) return null;
 
   return (
     <Alert className="bg-red-900/20 border-red-800">
@@ -27,5 +27,5 @@ export function CriticalIssuesAlert({ data, onViewDetails }: CriticalIssuesAlert
         </Button>
       </AlertDescription>
     </Alert>
-  )
+  );
 }
