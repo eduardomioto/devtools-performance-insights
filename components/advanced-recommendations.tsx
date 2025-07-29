@@ -2,28 +2,12 @@
 
 import type React from "react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import {
-  CheckCircle,
-  Lightbulb,
-  Target,
-  Zap,
-  Cpu,
-  ImageIcon,
-  Wifi,
-  Database,
-  Globe,
-} from "lucide-react";
+import { CheckCircle, Lightbulb, Target, Zap, Cpu, ImageIcon, Wifi, Database, Globe } from "lucide-react";
 
 interface AdvancedRecommendationsProps {
   data: any;
@@ -46,17 +30,14 @@ interface AdvancedRecommendation {
   estimatedImpact: number;
 }
 
-export default function AdvancedRecommendations({
-  data,
-}: AdvancedRecommendationsProps) {
+export default function AdvancedRecommendations({ data }: AdvancedRecommendationsProps) {
   const advancedRecommendations: AdvancedRecommendation[] = [
     {
       id: "1",
       title: "Implement WASM Streaming Compilation",
       priority: "critical",
       category: "WebAssembly",
-      description:
-        "Use WebAssembly.instantiateStreaming() to compile WASM modules while downloading",
+      description: "Use WebAssembly.instantiateStreaming() to compile WASM modules while downloading",
       implementation: [
         "Replace WebAssembly.instantiate() with WebAssembly.instantiateStreaming()",
         "Implement progressive WASM loading for large modules",
@@ -75,10 +56,7 @@ const wasmModule = await WebAssembly.instantiateStreaming(
       timeToImplement: "2-3 days",
       icon: <Cpu className="w-4 h-4" />,
       affectedMetrics: ["FCP", "LCP", "TBT"],
-      prerequisites: [
-        "Modern browser support",
-        "WASM modules served with correct MIME type",
-      ],
+      prerequisites: ["Modern browser support", "WASM modules served with correct MIME type"],
       estimatedImpact: 85,
     },
     {
@@ -86,8 +64,7 @@ const wasmModule = await WebAssembly.instantiateStreaming(
       title: "Implement 3D Model LOD System",
       priority: "critical",
       category: "3D Graphics",
-      description:
-        "Create Level-of-Detail system for GLB models to reduce memory usage and load times",
+      description: "Create Level-of-Detail system for GLB models to reduce memory usage and load times",
       implementation: [
         "Generate multiple LOD versions of GLB models (high, medium, low)",
         "Implement distance-based LOD switching",
@@ -114,8 +91,7 @@ const loadModelLOD = (distance) => {
       title: "Migrate to HTTP/3 with QUIC",
       priority: "high",
       category: "Network Protocol",
-      description:
-        "Upgrade all connections to HTTP/3 for improved multiplexing and reduced latency",
+      description: "Upgrade all connections to HTTP/3 for improved multiplexing and reduced latency",
       implementation: [
         "Configure server to support HTTP/3 with QUIC protocol",
         "Update CDN configuration for HTTP/3 support",
@@ -140,8 +116,7 @@ add_header Alt-Svc 'h3=":443"; ma=86400';`,
       title: "Implement Advanced Resource Bundling",
       priority: "high",
       category: "Resource Optimization",
-      description:
-        "Reduce 247 requests through intelligent bundling and HTTP/2 push strategies",
+      description: "Reduce 247 requests through intelligent bundling and HTTP/2 push strategies",
       implementation: [
         "Implement route-based code splitting with dynamic imports",
         "Bundle critical resources using HTTP/2 Server Push",
@@ -163,10 +138,7 @@ const loadModule = async (moduleName) => {
       timeToImplement: "1-2 weeks",
       icon: <Database className="w-4 h-4" />,
       affectedMetrics: ["FCP", "LCP", "Network Efficiency"],
-      prerequisites: [
-        "Build system modification",
-        "Service worker implementation",
-      ],
+      prerequisites: ["Build system modification", "Service worker implementation"],
       estimatedImpact: 80,
     },
     {
@@ -174,8 +146,7 @@ const loadModule = async (moduleName) => {
       title: "Optimize Cross-Domain Architecture",
       priority: "high",
       category: "DNS/Connection",
-      description:
-        "Consolidate resources and implement domain sharding optimization",
+      description: "Consolidate resources and implement domain sharding optimization",
       implementation: [
         "Consolidate resources to 2-3 primary domains",
         "Implement DNS prefetching for remaining external domains",
@@ -231,8 +202,7 @@ class WasmMemoryPool {
       title: "Advanced Resource Prioritization",
       priority: "medium",
       category: "Loading Strategy",
-      description:
-        "Implement intelligent resource prioritization based on user interaction patterns",
+      description: "Implement intelligent resource prioritization based on user interaction patterns",
       implementation: [
         "Use Intersection Observer for lazy loading optimization",
         "Implement priority hints for critical resources",
@@ -311,17 +281,11 @@ instancedGeometry.instanceCount = instanceCount;`,
     }
   };
 
-  const criticalRecs = advancedRecommendations.filter(
-    (r) => r.priority === "critical",
-  );
+  const criticalRecs = advancedRecommendations.filter((r) => r.priority === "critical");
   const highRecs = advancedRecommendations.filter((r) => r.priority === "high");
-  const mediumRecs = advancedRecommendations.filter(
-    (r) => r.priority === "medium",
-  );
+  const mediumRecs = advancedRecommendations.filter((r) => r.priority === "medium");
   const quickWins = advancedRecommendations.filter(
-    (r) =>
-      r.difficulty === "easy" ||
-      (r.difficulty === "medium" && r.estimatedImpact > 70),
+    (r) => r.difficulty === "easy" || (r.difficulty === "medium" && r.estimatedImpact > 70)
   );
 
   return (
@@ -334,43 +298,31 @@ instancedGeometry.instanceCount = instanceCount;`,
             Advanced Performance Optimization Roadmap
           </CardTitle>
           <CardDescription className="text-blue-300">
-            Comprehensive optimization strategy for complex web applications
-            with WASM, 3D graphics, and multi-protocol architecture
+            Comprehensive optimization strategy for complex web applications with WASM, 3D graphics, and multi-protocol
+            architecture
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="text-center p-4 bg-red-900/20 border border-red-800 rounded-lg">
-              <div className="text-2xl font-bold text-red-400">
-                {criticalRecs.length}
-              </div>
+              <div className="text-2xl font-bold text-red-400">{criticalRecs.length}</div>
               <div className="text-sm text-red-300">Critical Priority</div>
-              <div className="text-xs text-red-400 mt-1">
-                Immediate Action Required
-              </div>
+              <div className="text-xs text-red-400 mt-1">Immediate Action Required</div>
             </div>
             <div className="text-center p-4 bg-orange-900/20 border border-orange-800 rounded-lg">
-              <div className="text-2xl font-bold text-orange-400">
-                {highRecs.length}
-              </div>
+              <div className="text-2xl font-bold text-orange-400">{highRecs.length}</div>
               <div className="text-sm text-orange-300">High Priority</div>
               <div className="text-xs text-orange-400 mt-1">Next 2 Weeks</div>
             </div>
             <div className="text-center p-4 bg-yellow-900/20 border border-yellow-800 rounded-lg">
-              <div className="text-2xl font-bold text-yellow-400">
-                {mediumRecs.length}
-              </div>
+              <div className="text-2xl font-bold text-yellow-400">{mediumRecs.length}</div>
               <div className="text-sm text-yellow-300">Medium Priority</div>
               <div className="text-xs text-yellow-400 mt-1">Next Month</div>
             </div>
             <div className="text-center p-4 bg-green-900/20 border border-green-800 rounded-lg">
-              <div className="text-2xl font-bold text-green-400">
-                {quickWins.length}
-              </div>
+              <div className="text-2xl font-bold text-green-400">{quickWins.length}</div>
               <div className="text-sm text-green-300">Quick Wins</div>
-              <div className="text-xs text-green-400 mt-1">
-                High Impact/Low Effort
-              </div>
+              <div className="text-xs text-green-400 mt-1">High Impact/Low Effort</div>
             </div>
           </div>
         </CardContent>
@@ -380,85 +332,49 @@ instancedGeometry.instanceCount = instanceCount;`,
       <Tabs defaultValue="critical" className="space-y-4">
         <div className="mobile-scroll">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
-            <TabsTrigger
-              value="critical"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="critical" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               Critical
             </TabsTrigger>
-            <TabsTrigger
-              value="high"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="high" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               High Priority
             </TabsTrigger>
-            <TabsTrigger
-              value="medium"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="medium" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               Medium
             </TabsTrigger>
-            <TabsTrigger
-              value="quick-wins"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="quick-wins" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               Quick Wins
             </TabsTrigger>
-            <TabsTrigger
-              value="all"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="all" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               All
             </TabsTrigger>
           </TabsList>
         </div>
 
         <TabsContent value="critical">
-          <RecommendationsList
-            recommendations={criticalRecs}
-            title="Critical Priority Optimizations"
-          />
+          <RecommendationsList recommendations={criticalRecs} title="Critical Priority Optimizations" />
         </TabsContent>
 
         <TabsContent value="high">
-          <RecommendationsList
-            recommendations={highRecs}
-            title="High Priority Optimizations"
-          />
+          <RecommendationsList recommendations={highRecs} title="High Priority Optimizations" />
         </TabsContent>
 
         <TabsContent value="medium">
-          <RecommendationsList
-            recommendations={mediumRecs}
-            title="Medium Priority Optimizations"
-          />
+          <RecommendationsList recommendations={mediumRecs} title="Medium Priority Optimizations" />
         </TabsContent>
 
         <TabsContent value="quick-wins">
-          <RecommendationsList
-            recommendations={quickWins}
-            title="Quick Wins - High Impact Optimizations"
-          />
+          <RecommendationsList recommendations={quickWins} title="Quick Wins - High Impact Optimizations" />
         </TabsContent>
 
         <TabsContent value="all">
-          <RecommendationsList
-            recommendations={advancedRecommendations}
-            title="All Recommendations"
-          />
+          <RecommendationsList recommendations={advancedRecommendations} title="All Recommendations" />
         </TabsContent>
       </Tabs>
     </div>
   );
 }
 
-function RecommendationsList({
-  recommendations,
-  title,
-}: {
-  recommendations: AdvancedRecommendation[];
-  title: string;
-}) {
+function RecommendationsList({ recommendations, title }: { recommendations: AdvancedRecommendation[]; title: string }) {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "critical":
@@ -492,35 +408,23 @@ function RecommendationsList({
       <CardHeader>
         <CardTitle className="text-slate-100">{title}</CardTitle>
         <CardDescription className="text-slate-400">
-          {recommendations.length} optimization strategies with detailed
-          implementation guides
+          {recommendations.length} optimization strategies with detailed implementation guides
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
           {recommendations.map((rec) => (
-            <div
-              key={rec.id}
-              className="border border-slate-600 rounded-lg p-4 sm:p-6 space-y-4"
-            >
+            <div key={rec.id} className="border border-slate-600 rounded-lg p-4 sm:p-6 space-y-4">
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-3 flex-1">
                   {rec.icon}
                   <div className="flex-1">
-                    <h3 className="font-semibold text-slate-100 text-sm sm:text-base">
-                      {rec.title}
-                    </h3>
+                    <h3 className="font-semibold text-slate-100 text-sm sm:text-base">{rec.title}</h3>
                     <div className="flex flex-wrap items-center gap-2 mt-2">
-                      <Badge
-                        variant={getPriorityColor(rec.priority) as any}
-                        className="text-xs"
-                      >
+                      <Badge variant={getPriorityColor(rec.priority) as any} className="text-xs">
                         {rec.priority.toUpperCase()}
                       </Badge>
-                      <Badge
-                        variant="outline"
-                        className="text-xs border-slate-600 text-slate-300"
-                      >
+                      <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
                         {rec.category}
                       </Badge>
                       <span
@@ -528,19 +432,14 @@ function RecommendationsList({
                       >
                         {rec.difficulty}
                       </span>
-                      <Badge
-                        variant="outline"
-                        className="text-xs border-slate-600 text-slate-300"
-                      >
+                      <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
                         {rec.timeToImplement}
                       </Badge>
                     </div>
                   </div>
                 </div>
                 <div className="text-right ml-4">
-                  <div className="text-sm font-medium text-slate-100">
-                    {rec.expectedImprovement}
-                  </div>
+                  <div className="text-sm font-medium text-slate-100">{rec.expectedImprovement}</div>
                   <Progress value={rec.estimatedImpact} className="w-20 mt-1" />
                 </div>
               </div>
@@ -548,19 +447,11 @@ function RecommendationsList({
               <p className="text-sm text-slate-300">{rec.description}</p>
 
               <div className="bg-blue-900/20 border border-blue-800 rounded p-3">
-                <p className="text-sm text-blue-400 font-medium mb-2">
-                  Expected Performance Impact:
-                </p>
-                <p className="text-sm text-blue-200">
-                  {rec.expectedImprovement}
-                </p>
+                <p className="text-sm text-blue-400 font-medium mb-2">Expected Performance Impact:</p>
+                <p className="text-sm text-blue-200">{rec.expectedImprovement}</p>
                 <div className="flex flex-wrap gap-1 mt-2">
                   {rec.affectedMetrics.map((metric) => (
-                    <Badge
-                      key={metric}
-                      variant="outline"
-                      className="text-xs border-blue-700 text-blue-300"
-                    >
+                    <Badge key={metric} variant="outline" className="text-xs border-blue-700 text-blue-300">
                       {metric}
                     </Badge>
                   ))}
@@ -569,9 +460,7 @@ function RecommendationsList({
 
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm font-medium text-slate-100 mb-2">
-                    Implementation Steps:
-                  </p>
+                  <p className="text-sm font-medium text-slate-100 mb-2">Implementation Steps:</p>
                   <ul className="text-sm text-slate-300 space-y-1">
                     {rec.implementation.map((step, index) => (
                       <li key={index} className="flex items-start space-x-2">
@@ -584,9 +473,7 @@ function RecommendationsList({
 
                 {rec.codeExample && (
                   <div>
-                    <p className="text-sm font-medium text-slate-100 mb-2">
-                      Code Example:
-                    </p>
+                    <p className="text-sm font-medium text-slate-100 mb-2">Code Example:</p>
                     <pre className="bg-slate-900/50 border border-slate-600 rounded p-3 text-xs text-slate-300 overflow-x-auto">
                       <code>{rec.codeExample}</code>
                     </pre>
@@ -595,16 +482,10 @@ function RecommendationsList({
 
                 {rec.prerequisites.length > 0 && (
                   <div>
-                    <p className="text-sm font-medium text-slate-100 mb-2">
-                      Prerequisites:
-                    </p>
+                    <p className="text-sm font-medium text-slate-100 mb-2">Prerequisites:</p>
                     <div className="flex flex-wrap gap-1">
                       {rec.prerequisites.map((prereq) => (
-                        <Badge
-                          key={prereq}
-                          variant="outline"
-                          className="text-xs border-slate-600 text-slate-400"
-                        >
+                        <Badge key={prereq} variant="outline" className="text-xs border-slate-600 text-slate-400">
                           {prereq}
                         </Badge>
                       ))}
