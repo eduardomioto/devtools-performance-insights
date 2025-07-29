@@ -1,5 +1,8 @@
-// Sample data generation functions for demo purposes only
-// These are used when the user clicks "Load Complex Sample"
+// =============================================================================
+// SAMPLE DATA GENERATOR FOR DEMO PURPOSES ONLY
+// This file contains all the sample/fake data generation functions
+// Used only when user clicks "Load Complex Sample" button
+// =============================================================================
 
 export interface NetworkRequest {
   url: string
@@ -47,7 +50,39 @@ export interface ProtocolInfo {
   domains: string[]
 }
 
-export function generateSampleTraceEvents() {
+export interface ComplexPerformanceData {
+  traceEvents: any[]
+  metadata: any
+  categories: string[]
+  networkRequests: NetworkRequest[]
+  wasmModules: WasmModule[]
+  glbFiles: GLBFile[]
+  domains: DomainInfo[]
+  protocols: ProtocolInfo[]
+}
+
+// Generate complex sample data for demo purposes
+export function generateComplexSampleData(): ComplexPerformanceData {
+  return {
+    traceEvents: generateSampleTraceEvents(),
+    metadata: {
+      "cpu-family": 6,
+      "cpu-model": 142,
+      "physical-memory": 34359738368,
+      "os-name": "Windows",
+      "os-version": "11.0.0",
+      "chrome-version": "120.0.6099.109",
+    },
+    categories: ["loading", "navigation", "scripting", "rendering", "painting", "wasm", "webgl"],
+    networkRequests: generateSampleNetworkRequests(),
+    wasmModules: generateSampleWasmModules(),
+    glbFiles: generateSampleGLBFiles(),
+    domains: generateSampleDomainInfo(),
+    protocols: generateSampleProtocolInfo(),
+  }
+}
+
+function generateSampleTraceEvents() {
   return [
     { name: "navigationStart", ts: 0, dur: 0, cat: "navigation" },
     { name: "domContentLoadedEventEnd", ts: 2400000, dur: 0, cat: "loading" },
@@ -57,40 +92,64 @@ export function generateSampleTraceEvents() {
     { name: "wasmCompileStart", ts: 1000000, dur: 500000, cat: "wasm" },
     { name: "wasmInstantiateStart", ts: 1500000, dur: 200000, cat: "wasm" },
     { name: "glbLoadStart", ts: 2000000, dur: 1500000, cat: "webgl" },
+    // Add more realistic Chrome DevTools trace events
     {
       name: "ResourceSendRequest",
-      ts: 500000,
-      dur: 0,
-      cat: "devtools.timeline",
-      args: { data: { url: "https://app.example.com/main.js", requestMethod: "GET", requestId: "1" } },
-    },
-    {
-      name: "ResourceReceiveResponse",
-      ts: 600000,
+      ts: 100000,
       dur: 0,
       cat: "devtools.timeline",
       args: {
-        data: { url: "https://app.example.com/main.js", statusCode: 200, encodedDataLength: 125000, requestId: "1" },
+        data: {
+          url: "https://app.example.com/main.js",
+          requestId: "1",
+          requestMethod: "GET",
+          priority: "high",
+        },
+      },
+    },
+    {
+      name: "ResourceReceiveResponse",
+      ts: 150000,
+      dur: 0,
+      cat: "devtools.timeline",
+      args: {
+        data: {
+          url: "https://app.example.com/main.js",
+          requestId: "1",
+          statusCode: 200,
+          encodedDataLength: 125000,
+          protocol: "http/2",
+        },
       },
     },
     {
       name: "v8.wasm.compiledModule",
-      ts: 1200000,
+      ts: 1000000,
       dur: 180000,
       cat: "wasm",
-      args: { data: { url: "https://cdn.example.com/physics-engine.wasm", size: 2400000 } },
+      args: {
+        data: {
+          url: "https://cdn.example.com/physics-engine.wasm",
+          size: 2400000,
+        },
+      },
     },
     {
       name: "v8.wasm.instantiateModule",
-      ts: 1400000,
+      ts: 1200000,
       dur: 95000,
       cat: "wasm",
-      args: { data: { url: "https://cdn.example.com/physics-engine.wasm", memoryUsage: 16777216 } },
+      args: {
+        data: {
+          url: "https://cdn.example.com/physics-engine.wasm",
+          memoryUsage: 16777216,
+        },
+      },
     },
   ]
 }
 
-export function generateSampleNetworkRequests(): NetworkRequest[] {
+function generateSampleNetworkRequests(): NetworkRequest[] {
   const domains = ["app.example.com", "cdn.example.com", "api.example.com", "assets.example.com", "models.example.com"]
   const protocols = ["http/1.1", "http/2", "http/3"]
   const types = ["document", "script", "stylesheet", "image", "font", "xhr", "fetch", "wasm", "other"]
@@ -108,7 +167,7 @@ export function generateSampleNetworkRequests(): NetworkRequest[] {
   }))
 }
 
-export function generateSampleWasmModules(): WasmModule[] {
+function generateSampleWasmModules(): WasmModule[] {
   return [
     {
       name: "physics-engine.wasm",
@@ -137,7 +196,7 @@ export function generateSampleWasmModules(): WasmModule[] {
   ]
 }
 
-export function generateSampleGLBFiles(): GLBFile[] {
+function generateSampleGLBFiles(): GLBFile[] {
   return [
     {
       name: "main-scene.glb",
@@ -174,7 +233,7 @@ export function generateSampleGLBFiles(): GLBFile[] {
   ]
 }
 
-export function generateSampleDomainInfo(): DomainInfo[] {
+function generateSampleDomainInfo(): DomainInfo[] {
   return [
     {
       domain: "app.example.com",
@@ -214,7 +273,7 @@ export function generateSampleDomainInfo(): DomainInfo[] {
   ]
 }
 
-export function generateSampleProtocolInfo(): ProtocolInfo[] {
+function generateSampleProtocolInfo(): ProtocolInfo[] {
   return [
     {
       protocol: "http/3",
@@ -238,25 +297,4 @@ export function generateSampleProtocolInfo(): ProtocolInfo[] {
       domains: ["legacy.example.com"],
     },
   ]
-}
-
-// Complete sample data generator for demo purposes
-export function generateComplexSampleData() {
-  return {
-    traceEvents: generateSampleTraceEvents(),
-    metadata: {
-      "cpu-family": 6,
-      "cpu-model": 142,
-      "physical-memory": 34359738368,
-      "os-name": "Windows",
-      "os-version": "11.0.0",
-      "chrome-version": "120.0.6099.109",
-    },
-    categories: ["loading", "navigation", "scripting", "rendering", "painting", "wasm", "webgl"],
-    networkRequests: generateSampleNetworkRequests(),
-    wasmModules: generateSampleWasmModules(),
-    glbFiles: generateSampleGLBFiles(),
-    domains: generateSampleDomainInfo(),
-    protocols: generateSampleProtocolInfo(),
-  }
 }

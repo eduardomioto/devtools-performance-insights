@@ -32,23 +32,13 @@ import ResourceAnalysis from "@/components/resource-analysis"
 import ProtocolAnalysis from "@/components/protocol-analysis"
 import {
   generateComplexSampleData,
+  type ComplexPerformanceData,
   type NetworkRequest,
   type WasmModule,
   type GLBFile,
   type DomainInfo,
   type ProtocolInfo,
 } from "@/lib/sample-data"
-
-interface ComplexPerformanceData {
-  traceEvents: any[]
-  metadata: any
-  categories: string[]
-  networkRequests: NetworkRequest[]
-  wasmModules: WasmModule[]
-  glbFiles: GLBFile[]
-  domains: DomainInfo[]
-  protocols: ProtocolInfo[]
-}
 
 export default function HomePage() {
   const [performanceData, setPerformanceData] = useState<ComplexPerformanceData | null>(null)
