@@ -160,7 +160,7 @@ When contributing, please:
 5. Follow the existing format and style
 
 Example entry:
-\`\`\`markdown
+```markdown
 ### Added
 - New WASM streaming analysis feature ([#123](https://github.com/project/repo/pull/123))
 - Support for HTTP/3 QUIC protocol analysis
@@ -169,7 +169,7 @@ Example entry:
 ### Fixed
 - Memory leak in chart rendering component ([#124](https://github.com/project/repo/issues/124))
 - Incorrect FCP calculation for complex profiles
-\`\`\`
+```
 
 ## Links
 

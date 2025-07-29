@@ -1,28 +1,8 @@
 "use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import {
-  Line,
-  LineChart,
-  Bar,
-  BarChart,
-  Area,
-  AreaChart,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-} from "recharts";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Line, LineChart, Bar, BarChart, Area, AreaChart, XAxis, YAxis, CartesianGrid } from "recharts";
 
 interface PerformanceChartsProps {
   data: any;
@@ -72,9 +52,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
       <Card>
         <CardHeader>
           <CardTitle>Performance Timeline</CardTitle>
-          <CardDescription>
-            CPU usage, memory consumption, and network activity over time
-          </CardDescription>
+          <CardDescription>CPU usage, memory consumption, and network activity over time</CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer
@@ -99,24 +77,9 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
               <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} />
               <YAxis />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <Line
-                type="monotone"
-                dataKey="cpu"
-                stroke="var(--color-cpu)"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="memory"
-                stroke="var(--color-memory)"
-                strokeWidth={2}
-              />
-              <Line
-                type="monotone"
-                dataKey="network"
-                stroke="var(--color-network)"
-                strokeWidth={2}
-              />
+              <Line type="monotone" dataKey="cpu" stroke="var(--color-cpu)" strokeWidth={2} />
+              <Line type="monotone" dataKey="memory" stroke="var(--color-memory)" strokeWidth={2} />
+              <Line type="monotone" dataKey="network" stroke="var(--color-network)" strokeWidth={2} />
             </LineChart>
           </ChartContainer>
         </CardContent>
@@ -127,9 +90,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
         <Card>
           <CardHeader>
             <CardTitle>Core Web Vitals</CardTitle>
-            <CardDescription>
-              Key performance metrics that impact user experience
-            </CardDescription>
+            <CardDescription>Key performance metrics that impact user experience</CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer
@@ -151,11 +112,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
                 <YAxis dataKey="metric" type="category" width={60} />
                 <ChartTooltip content={<ChartTooltipContent />} />
                 <Bar dataKey="value" fill="var(--color-value)" />
-                <Bar
-                  dataKey="threshold"
-                  fill="var(--color-threshold)"
-                  opacity={0.3}
-                />
+                <Bar dataKey="threshold" fill="var(--color-threshold)" opacity={0.3} />
               </BarChart>
             </ChartContainer>
           </CardContent>
@@ -165,9 +122,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
         <Card>
           <CardHeader>
             <CardTitle>Resource Loading</CardTitle>
-            <CardDescription>
-              Size and loading time of different resource types
-            </CardDescription>
+            <CardDescription>Size and loading time of different resource types</CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer
@@ -200,9 +155,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
       <Card>
         <CardHeader>
           <CardTitle>CPU Usage Distribution</CardTitle>
-          <CardDescription>
-            Detailed view of CPU usage patterns during page load
-          </CardDescription>
+          <CardDescription>Detailed view of CPU usage patterns during page load</CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer
@@ -219,13 +172,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
               <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} />
               <YAxis />
               <ChartTooltip content={<ChartTooltipContent />} />
-              <Area
-                type="monotone"
-                dataKey="cpu"
-                stroke="var(--color-cpu)"
-                fill="var(--color-cpu)"
-                fillOpacity={0.3}
-              />
+              <Area type="monotone" dataKey="cpu" stroke="var(--color-cpu)" fill="var(--color-cpu)" fillOpacity={0.3} />
             </AreaChart>
           </ChartContainer>
         </CardContent>

@@ -6,9 +6,9 @@ This document outlines the comprehensive performance evaluation rules and thresh
 
 The performance score is calculated using a penalty-based system starting from 100 points:
 
-\`\`\`typescript
+```typescript
 Performance Score = 100 - WASM Penalties - GLB Penalties - Network Penalties - Protocol Penalties
-\`\`\`
+```
 
 ### Score Categories
 
@@ -66,9 +66,9 @@ Performance Score = 100 - WASM Penalties - GLB Penalties - Network Penalties - P
 ### Complexity Scoring
 
 The complexity score is calculated as:
-\`\`\`
+```
 Complexity = (Vertices / 1000) + (Textures × 2) + (Materials × 3)
-\`\`\`
+```
 
 | Complexity Score | Threshold | Penalty | Severity | Impact |
 |------------------|-----------|---------|----------|---------|

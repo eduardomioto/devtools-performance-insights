@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import {
   Line,
   LineChart,
@@ -16,26 +16,26 @@ import {
   ScatterChart,
   Legend,
   Brush,
-} from "recharts"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+} from "recharts";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 interface AdvancedPerformanceChartsProps {
-  data: any
+  data: any;
 }
 
 export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceChartsProps) {
-  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 100 })
-  const [protocolZoom, setProtocolZoom] = useState(1)
-  const [wasmZoom, setWasmZoom] = useState(1)
-  const [glbZoom, setGlbZoom] = useState(1)
-  const [domainZoom, setDomainZoom] = useState(1)
+  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 100 });
+  const [protocolZoom, setProtocolZoom] = useState(1);
+  const [wasmZoom, setWasmZoom] = useState(1);
+  const [glbZoom, setGlbZoom] = useState(1);
+  const [domainZoom, setDomainZoom] = useState(1);
 
   // Generate advanced timeline data with WASM and GLB events
   const generateTimelineData = () => {
     // Create timeline data points based on actual performance data
-    const timelinePoints = []
+    const timelinePoints = [];
 
     for (let time = 0; time <= 3000; time += 200) {
       const point = {
@@ -46,14 +46,14 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
         wasm: time > 1000 && time < 1800 ? Math.max(0, 60 + Math.random() * 30) : Math.random() * 5,
         webgl: time > 1600 && time < 2400 ? Math.max(0, 40 + Math.random() * 35) : Math.random() * 5,
         gpu: time > 1600 ? Math.max(0, 30 + ((time - 1600) / 1400) * 50 + Math.random() * 20) : Math.random() * 10,
-      }
-      timelinePoints.push(point)
+      };
+      timelinePoints.push(point);
     }
 
-    return timelinePoints
-  }
+    return timelinePoints;
+  };
 
-  const timelineData = generateTimelineData()
+  const timelineData = generateTimelineData();
 
   // Protocol performance comparison
   const protocolData = data.protocols.map((protocol: any) => ({
@@ -62,7 +62,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     avgLatency: protocol.avgLatency,
     totalSize: protocol.totalSize / 1024, // Convert to KB
     efficiency: protocol.totalSize / protocol.avgLatency / 1000, // KB per ms
-  }))
+  }));
 
   // WASM performance metrics
   const wasmData = data.wasmModules.map((module: any, index: number) => ({
@@ -73,7 +73,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     instantiateTime: module.instantiateTime,
     totalTime: module.loadTime + module.compileTime + module.instantiateTime,
     memoryMB: module.memoryUsage / 1024 / 1024,
-  }))
+  }));
 
   // GLB file analysis
   const glbData = data.glbFiles.map((file: any) => ({
@@ -84,7 +84,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     textures: file.textures,
     materials: file.materials,
     complexity: file.vertices / 1000 + file.textures * 2 + file.materials * 3,
-  }))
+  }));
 
   // Request distribution by domain
   const domainRequestData = data.domains.map((domain: any) => ({
@@ -92,7 +92,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     requests: domain.requests,
     sizeMB: domain.totalSize / 1024 / 1024,
     avgResponse: domain.avgResponseTime,
-  }))
+  }));
 
   // Network waterfall simulation - REMOVED LIMITATION, show all requests
   const networkWaterfallData = data.networkRequests.map((req: any, index: number) => ({
@@ -103,13 +103,13 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     size: req.size / 1024,
     protocol: req.protocol,
     type: req.type,
-  }))
+  }));
 
-  const resetTimelineZoom = () => setTimelineZoom({ start: 0, end: 100 })
-  const resetProtocolZoom = () => setProtocolZoom(1)
-  const resetWasmZoom = () => setWasmZoom(1)
-  const resetGlbZoom = () => setGlbZoom(1)
-  const resetDomainZoom = () => setDomainZoom(1)
+  const resetTimelineZoom = () => setTimelineZoom({ start: 0, end: 100 });
+  const resetProtocolZoom = () => setProtocolZoom(1);
+  const resetWasmZoom = () => setWasmZoom(1);
+  const resetGlbZoom = () => setGlbZoom(1);
+  const resetDomainZoom = () => setDomainZoom(1);
 
   return (
     <div className="grid gap-4 sm:gap-6">
@@ -206,7 +206,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
                         setTimelineZoom({
                           start: (brushData.startIndex / timelineData.length) * 100,
                           end: (brushData.endIndex / timelineData.length) * 100,
-                        })
+                        });
                       }
                     }}
                   />
@@ -573,15 +573,15 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
             {networkWaterfallData.map(
               (
                 req: {
-                  id: number
-                  name: string
-                  start: number
-                  duration: number
-                  size: number
-                  protocol: string
-                  type: string
+                  id: number;
+                  name: string;
+                  start: number;
+                  duration: number;
+                  size: number;
+                  protocol: string;
+                  type: string;
                 },
-                index: number,
+                index: number
               ) => (
                 <div
                   key={req.id}
@@ -604,7 +604,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
                   <div className="w-16 text-right text-slate-400">{req.duration}ms</div>
                   <div className="w-16 text-right text-slate-500">{req.size.toFixed(1)}KB</div>
                 </div>
-              ),
+              )
             )}
           </div>
           <div className="mt-4 text-xs text-slate-500 text-center">
@@ -613,5 +613,5 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

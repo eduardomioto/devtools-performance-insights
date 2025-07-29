@@ -34,7 +34,7 @@ Please include the following information in your report:
 
 ### Example Report
 
-\`\`\`
+```
 Subject: Security Vulnerability Report - Chrome Performance Analyzer
 
 Description:
@@ -58,7 +58,7 @@ Proof of Concept:
 
 Suggested Fix:
 Implement server-side file size validation before processing.
-\`\`\`
+```
 
 ## Response Timeline
 
@@ -99,7 +99,7 @@ We aim to respond to security reports according to the following timeline:
 When contributing to this project, please follow these security guidelines:
 
 #### Input Validation
-\`\`\`typescript
+```typescript
 // ✅ Good - Validate all inputs
 function parsePerformanceProfile(file: File): PerformanceData {
   if (file.size > MAX_FILE_SIZE) {
@@ -117,10 +117,10 @@ function parsePerformanceProfile(file: File): PerformanceData {
 function parsePerformanceProfile(file: File): PerformanceData {
   return JSON.parse(await file.text())
 }
-\`\`\`
+```
 
 #### Secure Data Handling
-\`\`\`typescript
+```typescript
 // ✅ Good - Sanitize data
 function displayMetricValue(value: unknown): string {
   if (typeof value !== 'number' || !isFinite(value)) {
@@ -133,10 +133,10 @@ function displayMetricValue(value: unknown): string {
 function displayMetricValue(value: unknown): string {
   return String(value)
 }
-\`\`\`
+```
 
 #### Error Handling
-\`\`\`typescript
+```typescript
 // ✅ Good - Safe error handling
 try {
   const data = parseProfile(file)
@@ -153,7 +153,7 @@ try {
 } catch (error) {
   throw error // May expose sensitive information
 }
-\`\`\`
+```
 
 ## Vulnerability Categories
 

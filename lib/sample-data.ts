@@ -5,7 +5,7 @@ import type {
   GLBFile,
   DomainInfo,
   ProtocolInfo,
-} from "@/types/profiling-type"
+} from "@/types/profiling-type";
 
 // Sample trace events that match Chrome DevTools format
 function generateSampleTraceEvents() {
@@ -53,39 +53,39 @@ function generateSampleTraceEvents() {
         },
       },
     },
-  ]
+  ];
 }
 
 // Generate realistic network requests with proper sizes
 function generateSampleNetworkRequests(): NetworkRequest[] {
-  const domains = ["app.example.com", "cdn.example.com", "api.example.com", "assets.example.com", "models.example.com"]
-  const protocols = ["http/1.1", "http/2", "http/3"]
-  const types = ["document", "script", "stylesheet", "image", "font", "xhr", "fetch", "wasm", "other"]
+  const domains = ["app.example.com", "cdn.example.com", "api.example.com", "assets.example.com", "models.example.com"];
+  const protocols = ["http/1.1", "http/2", "http/3"];
+  const types = ["document", "script", "stylesheet", "image", "font", "xhr", "fetch", "wasm", "other"];
 
   return Array.from({ length: 247 }, (_, i) => {
-    const domain = domains[i % domains.length]
-    const type = types[Math.floor(Math.random() * types.length)]
+    const domain = domains[i % domains.length];
+    const type = types[Math.floor(Math.random() * types.length)];
 
     // Generate realistic file sizes based on type
-    let size = 1000
+    let size = 1000;
     switch (type) {
       case "wasm":
-        size = Math.floor(Math.random() * 3000000) + 500000 // 0.5-3.5MB
-        break
+        size = Math.floor(Math.random() * 3000000) + 500000; // 0.5-3.5MB
+        break;
       case "script":
-        size = Math.floor(Math.random() * 500000) + 10000 // 10KB-500KB
-        break
+        size = Math.floor(Math.random() * 500000) + 10000; // 10KB-500KB
+        break;
       case "stylesheet":
-        size = Math.floor(Math.random() * 100000) + 5000 // 5KB-100KB
-        break
+        size = Math.floor(Math.random() * 100000) + 5000; // 5KB-100KB
+        break;
       case "image":
-        size = Math.floor(Math.random() * 2000000) + 50000 // 50KB-2MB
-        break
+        size = Math.floor(Math.random() * 2000000) + 50000; // 50KB-2MB
+        break;
       case "document":
-        size = Math.floor(Math.random() * 50000) + 5000 // 5KB-50KB
-        break
+        size = Math.floor(Math.random() * 50000) + 5000; // 5KB-50KB
+        break;
       default:
-        size = Math.floor(Math.random() * 100000) + 1000 // 1KB-100KB
+        size = Math.floor(Math.random() * 100000) + 1000; // 1KB-100KB
     }
 
     return {
@@ -98,8 +98,8 @@ function generateSampleNetworkRequests(): NetworkRequest[] {
       duration: Math.floor(Math.random() * 2000) + 50,
       type,
       priority: Math.random() > 0.7 ? "high" : Math.random() > 0.4 ? "medium" : "low",
-    }
-  })
+    };
+  });
 }
 
 // Generate WASM modules with proper sizes
@@ -129,7 +129,7 @@ function generateSampleWasmModules(): WasmModule[] {
       instantiateTime: 45,
       memoryUsage: 4194304, // 4MB
     },
-  ]
+  ];
 }
 
 // Generate GLB files with proper sizes
@@ -167,7 +167,7 @@ function generateSampleGLBFiles(): GLBFile[] {
       textures: 8,
       materials: 6,
     },
-  ]
+  ];
 }
 
 function generateSampleDomainInfo(): DomainInfo[] {
@@ -207,7 +207,7 @@ function generateSampleDomainInfo(): DomainInfo[] {
       avgResponseTime: 2800,
       protocols: ["http/3"],
     },
-  ]
+  ];
 }
 
 function generateSampleProtocolInfo(): ProtocolInfo[] {
@@ -233,7 +233,7 @@ function generateSampleProtocolInfo(): ProtocolInfo[] {
       avgLatency: 280,
       domains: ["legacy.example.com"],
     },
-  ]
+  ];
 }
 
 export function generateComplexSampleData(): ComplexPerformanceData {
@@ -253,8 +253,8 @@ export function generateComplexSampleData(): ComplexPerformanceData {
     glbFiles: generateSampleGLBFiles(),
     domains: generateSampleDomainInfo(),
     protocols: generateSampleProtocolInfo(),
-  }
+  };
 }
 
 // Export types for use in other files
-export type { ComplexPerformanceData, NetworkRequest, WasmModule, GLBFile, DomainInfo, ProtocolInfo }
+export type { ComplexPerformanceData, NetworkRequest, WasmModule, GLBFile, DomainInfo, ProtocolInfo };

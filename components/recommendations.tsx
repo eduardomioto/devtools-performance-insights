@@ -2,22 +2,9 @@
 
 import type React from "react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  CheckCircle,
-  ArrowRight,
-  Lightbulb,
-  Target,
-  Zap,
-  Code2,
-} from "lucide-react";
+import { CheckCircle, ArrowRight, Lightbulb, Target, Zap, Code2 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface RecommendationsProps {
@@ -43,8 +30,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       title: "Implement Code Splitting",
       priority: "high",
       category: "JavaScript",
-      description:
-        "Split your JavaScript bundle into smaller chunks to reduce initial load time",
+      description: "Split your JavaScript bundle into smaller chunks to reduce initial load time",
       implementation: [
         "Use dynamic imports for route-based code splitting",
         "Implement component-level lazy loading",
@@ -60,8 +46,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       title: "Optimize Images",
       priority: "high",
       category: "Images",
-      description:
-        "Compress and serve images in modern formats with proper sizing",
+      description: "Compress and serve images in modern formats with proper sizing",
       implementation: [
         "Convert images to WebP/AVIF format",
         "Implement responsive images with srcset",
@@ -77,8 +62,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       title: "Eliminate Render-Blocking Resources",
       priority: "high",
       category: "CSS",
-      description:
-        "Optimize CSS delivery to prevent blocking of page rendering",
+      description: "Optimize CSS delivery to prevent blocking of page rendering",
       implementation: [
         "Inline critical CSS in HTML head",
         "Load non-critical CSS asynchronously",
@@ -126,8 +110,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       title: "Add Resource Hints",
       priority: "low",
       category: "HTML",
-      description:
-        "Use preload, prefetch, and preconnect to optimize resource loading",
+      description: "Use preload, prefetch, and preconnect to optimize resource loading",
       implementation: [
         "Add preload hints for critical resources",
         "Use prefetch for next-page resources",
@@ -167,9 +150,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
   };
 
   const highPriorityRecs = recommendations.filter((r) => r.priority === "high");
-  const mediumPriorityRecs = recommendations.filter(
-    (r) => r.priority === "medium",
-  );
+  const mediumPriorityRecs = recommendations.filter((r) => r.priority === "medium");
   const lowPriorityRecs = recommendations.filter((r) => r.priority === "low");
 
   const quickWins = recommendations.filter((r) => r.difficulty === "easy");
@@ -184,29 +165,20 @@ export default function Recommendations({ data }: RecommendationsProps) {
             <Lightbulb className="w-5 h-5" />
             Performance Optimization Roadmap
           </CardTitle>
-          <CardDescription>
-            Prioritized recommendations to improve your application's
-            performance
-          </CardDescription>
+          <CardDescription>Prioritized recommendations to improve your application's performance</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="text-center p-4 bg-red-50 rounded-lg">
-              <div className="text-2xl font-bold text-red-600">
-                {highPriorityRecs.length}
-              </div>
+              <div className="text-2xl font-bold text-red-600">{highPriorityRecs.length}</div>
               <div className="text-sm text-red-700">High Priority</div>
             </div>
             <div className="text-center p-4 bg-yellow-50 rounded-lg">
-              <div className="text-2xl font-bold text-yellow-600">
-                {mediumPriorityRecs.length}
-              </div>
+              <div className="text-2xl font-bold text-yellow-600">{mediumPriorityRecs.length}</div>
               <div className="text-sm text-yellow-700">Medium Priority</div>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
-              <div className="text-2xl font-bold text-green-600">
-                {quickWins.length}
-              </div>
+              <div className="text-2xl font-bold text-green-600">{quickWins.length}</div>
               <div className="text-sm text-green-700">Quick Wins</div>
             </div>
           </div>
@@ -225,12 +197,8 @@ export default function Recommendations({ data }: RecommendationsProps) {
           {/* High Priority */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-red-600">
-                High Priority Recommendations
-              </CardTitle>
-              <CardDescription>
-                Address these issues first for maximum impact
-              </CardDescription>
+              <CardTitle className="text-red-600">High Priority Recommendations</CardTitle>
+              <CardDescription>Address these issues first for maximum impact</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -244,12 +212,8 @@ export default function Recommendations({ data }: RecommendationsProps) {
           {/* Medium Priority */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-yellow-600">
-                Medium Priority Recommendations
-              </CardTitle>
-              <CardDescription>
-                Important optimizations for continued improvement
-              </CardDescription>
+              <CardTitle className="text-yellow-600">Medium Priority Recommendations</CardTitle>
+              <CardDescription>Important optimizations for continued improvement</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -263,12 +227,8 @@ export default function Recommendations({ data }: RecommendationsProps) {
           {/* Low Priority */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-gray-600">
-                Low Priority Recommendations
-              </CardTitle>
-              <CardDescription>
-                Nice-to-have optimizations for polish
-              </CardDescription>
+              <CardTitle className="text-gray-600">Low Priority Recommendations</CardTitle>
+              <CardDescription>Nice-to-have optimizations for polish</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -282,18 +242,14 @@ export default function Recommendations({ data }: RecommendationsProps) {
 
         <TabsContent value="category" className="space-y-4">
           {["JavaScript", "Images", "CSS", "Layout", "HTML"].map((category) => {
-            const categoryRecs = recommendations.filter(
-              (r) => r.category === category,
-            );
+            const categoryRecs = recommendations.filter((r) => r.category === category);
             if (categoryRecs.length === 0) return null;
 
             return (
               <Card key={category}>
                 <CardHeader>
                   <CardTitle>{category} Optimizations</CardTitle>
-                  <CardDescription>
-                    {categoryRecs.length} recommendations
-                  </CardDescription>
+                  <CardDescription>{categoryRecs.length} recommendations</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -311,9 +267,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
           <Card>
             <CardHeader>
               <CardTitle className="text-green-600">Quick Wins</CardTitle>
-              <CardDescription>
-                Easy to implement optimizations with good impact
-              </CardDescription>
+              <CardDescription>Easy to implement optimizations with good impact</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -329,11 +283,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
   );
 }
 
-function RecommendationCard({
-  recommendation,
-}: {
-  recommendation: Recommendation;
-}) {
+function RecommendationCard({ recommendation }: { recommendation: Recommendation }) {
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "high":
@@ -381,12 +331,8 @@ function RecommendationCard({
       <p className="text-sm text-gray-600">{recommendation.description}</p>
 
       <div className="bg-blue-50 border border-blue-200 rounded p-3">
-        <p className="text-sm text-blue-800 font-medium mb-2">
-          Expected Improvement:
-        </p>
-        <p className="text-sm text-blue-700">
-          {recommendation.expectedImprovement}
-        </p>
+        <p className="text-sm text-blue-800 font-medium mb-2">Expected Improvement:</p>
+        <p className="text-sm text-blue-700">{recommendation.expectedImprovement}</p>
       </div>
 
       <div className="space-y-2">

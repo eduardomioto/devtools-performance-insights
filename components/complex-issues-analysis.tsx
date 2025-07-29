@@ -2,27 +2,11 @@
 
 import type React from "react";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  AlertTriangle,
-  Clock,
-  Zap,
-  Database,
-  Cpu,
-  ImageIcon,
-  Code,
-  Wifi,
-  Globe,
-} from "lucide-react";
+import { AlertTriangle, Clock, Zap, Database, Cpu, ImageIcon, Code, Wifi, Globe } from "lucide-react";
 
 interface ComplexIssuesAnalysisProps {
   data: any;
@@ -41,17 +25,14 @@ interface ComplexIssue {
   estimatedSavings: string;
 }
 
-export default function ComplexIssuesAnalysis({
-  data,
-}: ComplexIssuesAnalysisProps) {
+export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisProps) {
   const complexIssues: ComplexIssue[] = [
     {
       id: "1",
       title: "WASM Compilation Bottleneck",
       severity: "critical",
       category: "WebAssembly",
-      description:
-        "Large WASM modules causing significant compilation delays on main thread",
+      description: "Large WASM modules causing significant compilation delays on main thread",
       impact: "Blocks main thread for 180ms+ during compilation phase",
       metric: `${data.wasmModules.filter((m: any) => m.compileTime > 100).length} modules affected`,
       icon: <Cpu className="w-4 h-4" />,
@@ -63,8 +44,7 @@ export default function ComplexIssuesAnalysis({
       title: "Massive 3D Model Loading",
       severity: "critical",
       category: "3D Graphics",
-      description:
-        "GLB files exceeding 20MB causing memory pressure and long load times",
+      description: "GLB files exceeding 20MB causing memory pressure and long load times",
       impact: "Increases LCP by 2.8s and causes memory spikes up to 95MB",
       metric: `${data.glbFiles.filter((f: any) => f.size > 20000000).length} large models`,
       icon: <ImageIcon className="w-4 h-4" />,
@@ -76,14 +56,11 @@ export default function ComplexIssuesAnalysis({
       title: "HTTP/1.1 Legacy Requests",
       severity: "high",
       category: "Network Protocol",
-      description:
-        "Critical resources still using HTTP/1.1 with connection limits",
+      description: "Critical resources still using HTTP/1.1 with connection limits",
       impact: "Head-of-line blocking and connection queue delays",
       metric: `${data.networkRequests.filter((r: any) => r.protocol === "http/1.1").length} legacy requests`,
       icon: <Wifi className="w-4 h-4" />,
-      affectedResources: data.networkRequests.filter(
-        (r: any) => r.protocol === "http/1.1",
-      ).length,
+      affectedResources: data.networkRequests.filter((r: any) => r.protocol === "http/1.1").length,
       estimatedSavings: "~300ms network improvement",
     },
     {
@@ -91,8 +68,7 @@ export default function ComplexIssuesAnalysis({
       title: "Request Waterfall Cascade",
       severity: "high",
       category: "Network",
-      description:
-        "247 requests creating complex dependency chains and network congestion",
+      description: "247 requests creating complex dependency chains and network congestion",
       impact: "Network queue saturation and increased connection overhead",
       metric: `${data.networkRequests.length} total requests`,
       icon: <Globe className="w-4 h-4" />,
@@ -104,10 +80,8 @@ export default function ComplexIssuesAnalysis({
       title: "Cross-Domain Resource Scatter",
       severity: "high",
       category: "DNS/Connection",
-      description:
-        "Resources spread across 5+ domains causing DNS lookup and connection overhead",
-      impact:
-        "Additional DNS resolution time and connection establishment delays",
+      description: "Resources spread across 5+ domains causing DNS lookup and connection overhead",
+      impact: "Additional DNS resolution time and connection establishment delays",
       metric: `${data.domains.length} domains`,
       icon: <Database className="w-4 h-4" />,
       affectedResources: data.domains.length,
@@ -130,14 +104,11 @@ export default function ComplexIssuesAnalysis({
       title: "Unoptimized Resource Priorities",
       severity: "medium",
       category: "Resource Loading",
-      description:
-        "Critical resources not properly prioritized in loading sequence",
+      description: "Critical resources not properly prioritized in loading sequence",
       impact: "Suboptimal loading order affecting perceived performance",
       metric: `${data.networkRequests.filter((r: any) => r.priority === "low").length} low-priority critical resources`,
       icon: <Clock className="w-4 h-4" />,
-      affectedResources: data.networkRequests.filter(
-        (r: any) => r.priority === "low",
-      ).length,
+      affectedResources: data.networkRequests.filter((r: any) => r.priority === "low").length,
       estimatedSavings: "~150ms perceived improvement",
     },
     {
@@ -145,8 +116,7 @@ export default function ComplexIssuesAnalysis({
       title: "3D Model Complexity Overhead",
       severity: "medium",
       category: "WebGL",
-      description:
-        "High-polygon models causing GPU bottlenecks and rendering delays",
+      description: "High-polygon models causing GPU bottlenecks and rendering delays",
       impact: "Frame drops and rendering performance issues",
       metric: `${data.glbFiles.reduce((acc: number, f: any) => acc + f.vertices, 0).toLocaleString()} total vertices`,
       icon: <ImageIcon className="w-4 h-4" />,
@@ -217,7 +187,7 @@ export default function ComplexIssuesAnalysis({
       acc[issue.category] = (acc[issue.category] || 0) + 1;
       return acc;
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   );
 
   const severityStats = complexIssues.reduce(
@@ -225,7 +195,7 @@ export default function ComplexIssuesAnalysis({
       acc[issue.severity] = (acc[issue.severity] || 0) + 1;
       return acc;
     },
-    {} as Record<string, number>,
+    {} as Record<string, number>
   );
 
   const criticalIssues = complexIssues.filter((i) => i.severity === "critical");
@@ -244,8 +214,7 @@ export default function ComplexIssuesAnalysis({
               Critical Performance Issues Detected
             </CardTitle>
             <CardDescription className="text-red-300">
-              {criticalIssues.length} critical issues requiring immediate
-              attention
+              {criticalIssues.length} critical issues requiring immediate attention
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -256,9 +225,7 @@ export default function ComplexIssuesAnalysis({
                     {issue.icon}
                     <h4 className="font-medium text-red-200">{issue.title}</h4>
                   </div>
-                  <p className="text-red-300 text-sm">
-                    {issue.estimatedSavings}
-                  </p>
+                  <p className="text-red-300 text-sm">{issue.estimatedSavings}</p>
                 </div>
               ))}
             </div>
@@ -271,12 +238,8 @@ export default function ComplexIssuesAnalysis({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-red-400">
-                {severityStats.critical || 0}
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                Critical Issues
-              </div>
+              <div className="text-xl sm:text-2xl font-bold text-red-400">{severityStats.critical || 0}</div>
+              <div className="text-xs sm:text-sm text-slate-400">Critical Issues</div>
             </div>
           </CardContent>
         </Card>
@@ -284,12 +247,8 @@ export default function ComplexIssuesAnalysis({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-orange-400">
-                {severityStats.high || 0}
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                High Priority
-              </div>
+              <div className="text-xl sm:text-2xl font-bold text-orange-400">{severityStats.high || 0}</div>
+              <div className="text-xs sm:text-sm text-slate-400">High Priority</div>
             </div>
           </CardContent>
         </Card>
@@ -297,12 +256,8 @@ export default function ComplexIssuesAnalysis({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-yellow-400">
-                {severityStats.medium || 0}
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                Medium Priority
-              </div>
+              <div className="text-xl sm:text-2xl font-bold text-yellow-400">{severityStats.medium || 0}</div>
+              <div className="text-xs sm:text-sm text-slate-400">Medium Priority</div>
             </div>
           </CardContent>
         </Card>
@@ -310,12 +265,8 @@ export default function ComplexIssuesAnalysis({
         <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-blue-400">
-                {severityStats.low || 0}
-              </div>
-              <div className="text-xs sm:text-sm text-slate-400">
-                Low Priority
-              </div>
+              <div className="text-xl sm:text-2xl font-bold text-blue-400">{severityStats.low || 0}</div>
+              <div className="text-xs sm:text-sm text-slate-400">Low Priority</div>
             </div>
           </CardContent>
         </Card>
@@ -326,30 +277,20 @@ export default function ComplexIssuesAnalysis({
         <CardHeader>
           <CardTitle className="text-slate-100">Issues by Category</CardTitle>
           <CardDescription className="text-slate-400">
-            Distribution of performance issues across different system
-            components
+            Distribution of performance issues across different system components
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {Object.entries(categoryStats).map(([category, count]) => (
-              <div
-                key={category}
-                className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg"
-              >
+              <div key={category} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
                 <div className="flex items-center space-x-2">
                   <span className="font-medium text-slate-100">{category}</span>
-                  <Badge
-                    variant="outline"
-                    className="border-slate-600 text-slate-300"
-                  >
+                  <Badge variant="outline" className="border-slate-600 text-slate-300">
                     {count}
                   </Badge>
                 </div>
-                <Progress
-                  value={(count / complexIssues.length) * 100}
-                  className="w-16"
-                />
+                <Progress value={(count / complexIssues.length) * 100} className="w-16" />
               </div>
             ))}
           </div>
@@ -360,34 +301,19 @@ export default function ComplexIssuesAnalysis({
       <Tabs defaultValue="all" className="space-y-4">
         <div className="mobile-scroll">
           <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
-            <TabsTrigger
-              value="all"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="all" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               All Issues
             </TabsTrigger>
-            <TabsTrigger
-              value="critical"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="critical" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               Critical
             </TabsTrigger>
-            <TabsTrigger
-              value="high"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="high" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               High
             </TabsTrigger>
-            <TabsTrigger
-              value="medium"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="medium" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               Medium
             </TabsTrigger>
-            <TabsTrigger
-              value="low"
-              className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
-            >
+            <TabsTrigger value="low" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
               Low
             </TabsTrigger>
           </TabsList>
@@ -466,55 +392,34 @@ function IssuesList({ issues }: { issues: ComplexIssue[] }) {
   return (
     <Card className="bg-slate-800/50 border-slate-700">
       <CardHeader>
-        <CardTitle className="text-slate-100">
-          Detailed Issues Analysis
-        </CardTitle>
+        <CardTitle className="text-slate-100">Detailed Issues Analysis</CardTitle>
         <CardDescription className="text-slate-400">
-          {issues.length} issues with comprehensive impact assessment and
-          optimization potential
+          {issues.length} issues with comprehensive impact assessment and optimization potential
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
           {issues.map((issue) => (
-            <div
-              key={issue.id}
-              className={`border rounded-lg p-4 space-y-3 ${getSeverityBgColor(issue.severity)}`}
-            >
+            <div key={issue.id} className={`border rounded-lg p-4 space-y-3 ${getSeverityBgColor(issue.severity)}`}>
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-2 flex-1">
                   {issue.icon}
                   <div className="flex-1">
-                    <h3 className="font-semibold text-slate-100">
-                      {issue.title}
-                    </h3>
+                    <h3 className="font-semibold text-slate-100">{issue.title}</h3>
                     <div className="flex flex-wrap items-center gap-2 mt-1">
-                      <Badge
-                        variant={getSeverityColor(issue.severity) as any}
-                        className="text-xs"
-                      >
+                      <Badge variant={getSeverityColor(issue.severity) as any} className="text-xs">
                         {issue.severity.toUpperCase()}
                       </Badge>
-                      <Badge
-                        variant="outline"
-                        className="text-xs border-slate-600 text-slate-300"
-                      >
+                      <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
                         {issue.category}
                       </Badge>
-                      <span className="text-xs text-slate-400">
-                        {issue.metric}
-                      </span>
+                      <span className="text-xs text-slate-400">{issue.metric}</span>
                     </div>
                   </div>
                 </div>
                 <div className="text-right ml-4">
-                  <div className="text-sm font-medium text-slate-100">
-                    {issue.estimatedSavings}
-                  </div>
-                  <Progress
-                    value={getSeverityScore(issue.severity)}
-                    className="w-20 mt-1"
-                  />
+                  <div className="text-sm font-medium text-slate-100">{issue.estimatedSavings}</div>
+                  <Progress value={getSeverityScore(issue.severity)} className="w-20 mt-1" />
                 </div>
               </div>
 
