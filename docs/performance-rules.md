@@ -1,6 +1,6 @@
 # Performance Evaluation Rules
 
-This document outlines the comprehensive performance evaluation rules and thresholds used by the Advanced Chrome Performance Analyzer.
+This document outlines the comprehensive performance evaluation rules and thresholds used by the Devtools Performance Insights.
 
 ## 📊 Overall Performance Score Calculation
 

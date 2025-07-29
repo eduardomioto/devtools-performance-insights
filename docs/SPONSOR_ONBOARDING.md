@@ -1,6 +1,6 @@
 # Sponsor Onboarding Guide
 
-Welcome to the Advanced Chrome Performance Analyzer sponsor family! 🎉
+Welcome to the Devtools Performance Insights sponsor family! 🎉
 
 This guide will help you get the most out of your sponsorship and understand how to access your sponsor benefits.
 
@@ -256,7 +256,7 @@ A: We don't facilitate hiring directly, but sponsors often connect with contribu
 
 ## 🙏 Thank You!
 
-Thank you for sponsoring the Advanced Chrome Performance Analyzer! Your support makes it possible for us to:
+Thank you for sponsoring the Devtools Performance Insights! Your support makes it possible for us to:
 
 - 🚀 **Innovate**: Develop cutting-edge performance analysis features
 - 🌍 **Serve**: Help developers worldwide optimize their applications

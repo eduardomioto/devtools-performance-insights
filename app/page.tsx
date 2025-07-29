@@ -215,7 +215,7 @@ export default function HomePage() {
                 <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
               <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Advanced Performance Analyzer
+                Devtools Performance Insights
               </h1>
             </div>
             <p className="text-sm sm:text-lg text-slate-300 max-w-3xl mx-auto">

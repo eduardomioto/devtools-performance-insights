@@ -1,5 +1,5 @@
 {
-  "name": "chrome-performance-analyzer",
+  "name": "devtools-performance-insights",
   "version": "1.0.0",
   "description": "Advanced Chrome DevTools performance profile analyzer with WASM, GLB, and multi-protocol support",
   "keywords": [
@@ -16,38 +16,33 @@
     "web-vitals",
     "optimization"
   ],
-  "homepage": "https://github.com/your-org/chrome-performance-analyzer#readme",
+  "homepage": "https://github.com/your-org/devtools-performance-insights#readme",
   "bugs": {
-    "url": "https://github.com/your-org/chrome-performance-analyzer/issues"
+    "url": "https://github.com/your-org/devtools-performance-insights/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/chrome-performance-analyzer.git"
+    "url": "https://github.com/your-org/devtools-performance-insights.git"
   },
   "funding": [
     {
       "type": "github",
       "url": "https://github.com/sponsors/maintainer1"
-    },
-    {
-      "type": "opencollective",
-      "url": "https://opencollective.com/chrome-performance-analyzer"
-    },
-    {
-      "type": "ko-fi",
-      "url": "https://ko-fi.com/chromeperf"
     }
   ],
   "license": "MIT",
   "author": "Chrome Performance Analyzer Team",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky",
+    "format:write": "prettier --write \"**/*.{ts,tsx}\" --cache --ignore-path .prettierignore",
+    "format:check": "prettier --check \"**/*.{ts,tsx}\" --cache --ignore-path .prettierignore",
     "build": "next build",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "dev": "next dev",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "lint": "next lint",
+    "lint:fix": "next lint --fix",
     "start": "next start",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -55,44 +50,48 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.0.5",
-    "@radix-ui/react-avatar": "^1.0.4",
-    "@radix-ui/react-badge": "^1.0.4",
-    "@radix-ui/react-button": "^1.0.4",
-    "@radix-ui/react-card": "^1.0.4",
-    "@radix-ui/react-dropdown-menu": "^2.0.6",
-    "@radix-ui/react-input": "^1.0.4",
-    "@radix-ui/react-label": "^2.0.2",
-    "@radix-ui/react-progress": "^1.0.3",
-    "@radix-ui/react-skeleton": "^1.0.3",
-    "@radix-ui/react-tabs": "^1.0.4",
-    "@radix-ui/react-tooltip": "^1.0.7",
+    "@radix-ui/react-avatar": "^1.1.2",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",   
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-progress": "^1.1.2",  
+    "@radix-ui/react-tabs":  "^1.1.2",
+    "@radix-ui/react-tooltip": "^1.1.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.454.0",
+    "lucide-react": "^0.468.0",
     "next": "15.2.4",
-    "react": "^19",
+    "react": "^18.3.1",
     "react-dom": "^19",
     "recharts": "latest",
     "tailwind-merge": "^2.5.5",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "shadcn": "^2.1.7"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^6.0.0",
-    "@testing-library/react": "^14.0.0",
+    "@jest/types": "^29.6.3",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "@types/node": "^22",
-    "@types/react": "^19",
+    "@types/react": "^19.0.8",
     "@types/react-dom": "^19",
+    "@types/testing-library__dom": "^7.5.0",
+    "@types/testing-library__react": "^10.2.0",
     "conventional-changelog-cli": "^4.1.0",
-    "eslint": "^8.0.0",
-    "eslint-config-next": "^15.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
+    "@typescript-eslint/parser": "^8.1.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15.0.1",
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.0.0",
-    "postcss": "^8.5",
-    "prettier": "^3.0.0",
-    "typescript": "^5"
-  }
+    "prettier": "^3.3.2",
+    "prettier-plugin-tailwindcss": "^0.6.5",
+    "postcss": "^8.4.39",
+    "husky": "^9.1.7",
+    "typescript": "^5.8.3"
+  },
+  "packageManager": "yarn@1.22.22"
 }

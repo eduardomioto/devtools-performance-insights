@@ -1,10 +1,10 @@
 # Sponsors & Funding
 
-Thank you for considering supporting the Advanced Chrome Performance Analyzer! Your contributions help us maintain and improve this open source tool for the web performance community.
+Thank you for considering supporting the Devtools Performance Insights! Your contributions help us maintain and improve this open source tool for the web performance community.
 
 ## 🌟 Why Sponsor Us?
 
-The Advanced Chrome Performance Analyzer is a **free, open source tool** that helps developers worldwide optimize their web applications. Your sponsorship enables us to:
+The Devtools Performance Insights is a **free, open source tool** that helps developers worldwide optimize their web applications. Your sponsorship enables us to:
 
 - **Maintain the Project**: Regular updates, bug fixes, and security patches
 - **Add New Features**: Advanced analysis capabilities and integrations

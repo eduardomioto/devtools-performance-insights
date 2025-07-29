@@ -1,6 +1,6 @@
 # Security Scanning with Snyk
 
-This document outlines our comprehensive security scanning setup using Snyk to protect the Advanced Chrome Performance Analyzer from vulnerabilities.
+This document outlines our comprehensive security scanning setup using Snyk to protect the Devtools Performance Insights from vulnerabilities.
 
 ## 🛡️ Security Scanning Overview
 
@@ -238,4 +238,4 @@ We publish monthly security reports including:
 
 ---
 
-*Security is everyone's responsibility. By following these practices and using automated scanning, we maintain a strong security posture for the Advanced Chrome Performance Analyzer.*
+*Security is everyone's responsibility. By following these practices and using automated scanning, we maintain a strong security posture for the Devtools Performance Insights.*

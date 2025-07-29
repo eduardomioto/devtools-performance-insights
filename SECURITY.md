@@ -11,7 +11,7 @@ We actively support the following versions with security updates:
 
 ## Reporting a Vulnerability
 
-We take security vulnerabilities seriously. If you discover a security vulnerability in the Advanced Chrome Performance Analyzer, please report it responsibly.
+We take security vulnerabilities seriously. If you discover a security vulnerability in the Devtools Performance Insights, please report it responsibly.
 
 ### How to Report
 

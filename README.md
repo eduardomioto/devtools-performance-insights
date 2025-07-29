@@ -1,4 +1,4 @@
-# Advanced Chrome Performance Analyzer
+# Devtools Performance Insights
 
 A comprehensive Next.js application for analyzing complex Chrome DevTools performance profiles, with specialized support for WebAssembly (WASM), 3D models (GLB), HTTP/2-3 protocols, and multi-domain architectures.
 
@@ -36,31 +36,22 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 ## 🛠️ Installation & Setup
 
 1. **Clone the repository**
+   
    ```bash
    git clone <repository-url>
    cd chrome-performance-analyzer
    ```
 
 2. **Install dependencies**
+   
    ```bash
-   npm install
-   
-   # or
    yarn install
-   
-   # or
-   pnpm install
    ```
 
 3. **Run the development server**
+   
    ```bash
-   npm run dev
-   
-   # or
    yarn dev
-   
-   # or
-   pnpm dev
    ```
 
 4. **Open your browser**
@@ -72,13 +63,13 @@ This project includes comprehensive security scanning with Snyk:
 
 ```bash
 # Run security audit locally
-npm audit
+yarn audit
 
 # Check for vulnerabilities with Snyk (requires Snyk CLI)
-npx snyk test
+yarn snyk test
 
 # Monitor project for new vulnerabilities
-npx snyk monitor
+yarn snyk monitor
 ```
 
 ### Automated Security Checks
@@ -215,8 +206,6 @@ chrome-performance-analyzer/
 ### Running Tests
 
 ```bash
-npm run test
-# or
 yarn test
 ```
 
@@ -224,27 +213,27 @@ yarn test
 
 ```bash
 # Run security audit
-npm audit
+yarn audit
 
 # Run Snyk security scan (requires Snyk CLI)
-npx snyk test
+yarn snyk test
 
 # Check for license issues
-npx snyk test --print-deps
+yarn snyk test --print-deps
 ```
 
 ### Building for Production
 
 ```bash
-npm run build
-npm run start
+yarn build
+yarn start
 ```
 
 ### Linting and Formatting
 
 ```bash
-npm run lint
-npm run format
+yarn lint
+yarn format
 ```
 
 ## 🤝 Contributing
