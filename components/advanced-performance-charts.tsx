@@ -1,17 +1,8 @@
-"use client";
+"use client"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { useState } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 import {
   Line,
   LineChart,
@@ -23,21 +14,28 @@ import {
   ResponsiveContainer,
   Scatter,
   ScatterChart,
-  Legend, // Add this import
-} from "recharts";
-import { Badge } from "@/components/ui/badge";
+  Legend,
+  Brush,
+} from "recharts"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
 
 interface AdvancedPerformanceChartsProps {
-  data: any;
+  data: any
 }
 
-export default function AdvancedPerformanceCharts({
-  data,
-}: AdvancedPerformanceChartsProps) {
+export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceChartsProps) {
+  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 100 })
+  const [protocolZoom, setProtocolZoom] = useState(1)
+  const [wasmZoom, setWasmZoom] = useState(1)
+  const [glbZoom, setGlbZoom] = useState(1)
+  const [domainZoom, setDomainZoom] = useState(1)
+
   // Generate advanced timeline data with WASM and GLB events
   const generateTimelineData = () => {
     // Create timeline data points based on actual performance data
-    const timelinePoints = [];
+    const timelinePoints = []
 
     for (let time = 0; time <= 3000; time += 200) {
       const point = {
@@ -45,26 +43,17 @@ export default function AdvancedPerformanceCharts({
         cpu: Math.max(0, 20 + Math.sin(time / 500) * 30 + Math.random() * 20),
         memory: Math.max(0, 50 + (time / 3000) * 40 + Math.random() * 10),
         network: Math.max(0, 30 - (time / 3000) * 25 + Math.random() * 15),
-        wasm:
-          time > 1000 && time < 1800
-            ? Math.max(0, 60 + Math.random() * 30)
-            : Math.random() * 5,
-        webgl:
-          time > 1600 && time < 2400
-            ? Math.max(0, 40 + Math.random() * 35)
-            : Math.random() * 5,
-        gpu:
-          time > 1600
-            ? Math.max(0, 30 + ((time - 1600) / 1400) * 50 + Math.random() * 20)
-            : Math.random() * 10,
-      };
-      timelinePoints.push(point);
+        wasm: time > 1000 && time < 1800 ? Math.max(0, 60 + Math.random() * 30) : Math.random() * 5,
+        webgl: time > 1600 && time < 2400 ? Math.max(0, 40 + Math.random() * 35) : Math.random() * 5,
+        gpu: time > 1600 ? Math.max(0, 30 + ((time - 1600) / 1400) * 50 + Math.random() * 20) : Math.random() * 10,
+      }
+      timelinePoints.push(point)
     }
 
-    return timelinePoints;
-  };
+    return timelinePoints
+  }
 
-  const timelineData = generateTimelineData();
+  const timelineData = generateTimelineData()
 
   // Protocol performance comparison
   const protocolData = data.protocols.map((protocol: any) => ({
@@ -73,7 +62,7 @@ export default function AdvancedPerformanceCharts({
     avgLatency: protocol.avgLatency,
     totalSize: protocol.totalSize / 1024, // Convert to KB
     efficiency: protocol.totalSize / protocol.avgLatency / 1000, // KB per ms
-  }));
+  }))
 
   // WASM performance metrics
   const wasmData = data.wasmModules.map((module: any, index: number) => ({
@@ -84,7 +73,7 @@ export default function AdvancedPerformanceCharts({
     instantiateTime: module.instantiateTime,
     totalTime: module.loadTime + module.compileTime + module.instantiateTime,
     memoryMB: module.memoryUsage / 1024 / 1024,
-  }));
+  }))
 
   // GLB file analysis
   const glbData = data.glbFiles.map((file: any) => ({
@@ -95,7 +84,7 @@ export default function AdvancedPerformanceCharts({
     textures: file.textures,
     materials: file.materials,
     complexity: file.vertices / 1000 + file.textures * 2 + file.materials * 3,
-  }));
+  }))
 
   // Request distribution by domain
   const domainRequestData = data.domains.map((domain: any) => ({
@@ -103,128 +92,149 @@ export default function AdvancedPerformanceCharts({
     requests: domain.requests,
     sizeMB: domain.totalSize / 1024 / 1024,
     avgResponse: domain.avgResponseTime,
-  }));
+  }))
 
-  // Network waterfall simulation
-  const networkWaterfallData = data.networkRequests
-    .slice(0, 20)
-    .map((req: any, index: number) => ({
-      id: index,
-      name: req.url.split("/").pop()?.substring(0, 15) + "...",
-      start: index * 50 + Math.random() * 100,
-      duration: req.duration,
-      size: req.size / 1024,
-      protocol: req.protocol,
-      type: req.type,
-    }));
+  // Network waterfall simulation - REMOVED LIMITATION, show all requests
+  const networkWaterfallData = data.networkRequests.map((req: any, index: number) => ({
+    id: index,
+    name: req.url.split("/").pop()?.substring(0, 15) + "...",
+    start: index * 50 + Math.random() * 100,
+    duration: req.duration,
+    size: req.size / 1024,
+    protocol: req.protocol,
+    type: req.type,
+  }))
+
+  const resetTimelineZoom = () => setTimelineZoom({ start: 0, end: 100 })
+  const resetProtocolZoom = () => setProtocolZoom(1)
+  const resetWasmZoom = () => setWasmZoom(1)
+  const resetGlbZoom = () => setGlbZoom(1)
+  const resetDomainZoom = () => setDomainZoom(1)
 
   return (
     <div className="grid gap-4 sm:gap-6">
-      {/* Advanced Performance Timeline */}
+      {/* Advanced Performance Timeline with Zoom */}
       <Card className="bg-slate-800/50 border-slate-700">
         <CardHeader className="pb-3">
-          <CardTitle className="text-slate-100 text-sm sm:text-base">
-            Advanced Performance Timeline
-          </CardTitle>
-          <CardDescription className="text-slate-400 text-xs sm:text-sm">
-            CPU, Memory, Network, WASM compilation, WebGL rendering, and GPU
-            usage
-          </CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-slate-100 text-sm sm:text-base">Advanced Performance Timeline</CardTitle>
+              <CardDescription className="text-slate-400 text-xs sm:text-sm">
+                CPU, Memory, Network, WASM compilation, WebGL rendering, and GPU usage
+              </CardDescription>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setTimelineZoom({
+                    start: Math.max(0, timelineZoom.start - 10),
+                    end: Math.min(100, timelineZoom.end - 10),
+                  })
+                }
+                className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+              >
+                <ZoomIn className="w-3 h-3" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setTimelineZoom({
+                    start: Math.min(90, timelineZoom.start + 10),
+                    end: Math.max(10, timelineZoom.end + 10),
+                  })
+                }
+                className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+              >
+                <ZoomOut className="w-3 h-3" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={resetTimelineZoom}
+                className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+              >
+                <RotateCcw className="w-3 h-3" />
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
-          <ChartContainer
-            config={{
-              cpu: { label: "CPU (%)", color: "#3b82f6" },
-              memory: { label: "Memory (MB)", color: "#8b5cf6" },
-              network: { label: "Network (KB/s)", color: "#06b6d4" },
-              wasm: { label: "WASM (%)", color: "#10b981" },
-              webgl: { label: "WebGL (%)", color: "#f59e0b" },
-              gpu: { label: "GPU (%)", color: "#ef4444" },
-            }}
-            className="h-[250px] sm:h-[400px] w-full"
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={timelineData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis
-                  dataKey="time"
-                  tickFormatter={(value) => `${value}ms`}
-                  stroke="#9ca3af"
-                  fontSize={12}
-                />
-                <YAxis stroke="#9ca3af" fontSize={12} />
-                <ChartTooltip
-                  content={<ChartTooltipContent />}
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid #475569",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Legend
-                  wrapperStyle={{
-                    paddingTop: "20px",
-                    fontSize: "12px",
-                  }}
-                  iconType="line"
-                  formatter={(value, entry) => (
-                    <span style={{ color: entry.color, fontSize: "12px" }}>
-                      {value}
-                    </span>
-                  )}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="cpu"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  dot={false}
-                  name="CPU (%)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="memory"
-                  stroke="#8b5cf6"
-                  strokeWidth={2}
-                  dot={false}
-                  name="Memory (MB)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="network"
-                  stroke="#06b6d4"
-                  strokeWidth={2}
-                  dot={false}
-                  name="Network (KB/s)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="wasm"
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  dot={false}
-                  name="WASM (%)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="webgl"
-                  stroke="#f59e0b"
-                  strokeWidth={2}
-                  dot={false}
-                  name="WebGL (%)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="gpu"
-                  stroke="#ef4444"
-                  strokeWidth={2}
-                  dot={false}
-                  name="GPU (%)"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </ChartContainer>
-          {/* Add this right after the ChartContainer closing tag */}
+          <div className="overflow-x-auto">
+            <ChartContainer
+              config={{
+                cpu: { label: "CPU (%)", color: "#3b82f6" },
+                memory: { label: "Memory (MB)", color: "#8b5cf6" },
+                network: { label: "Network (KB/s)", color: "#06b6d4" },
+                wasm: { label: "WASM (%)", color: "#10b981" },
+                webgl: { label: "WebGL (%)", color: "#f59e0b" },
+                gpu: { label: "GPU (%)", color: "#ef4444" },
+              }}
+              className="h-[250px] sm:h-[400px] w-full min-w-[800px]"
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={timelineData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} stroke="#9ca3af" fontSize={12} />
+                  <YAxis stroke="#9ca3af" fontSize={12} />
+                  <ChartTooltip
+                    content={<ChartTooltipContent />}
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Legend
+                    wrapperStyle={{
+                      paddingTop: "20px",
+                      fontSize: "12px",
+                    }}
+                    iconType="line"
+                    formatter={(value, entry) => <span style={{ color: entry.color, fontSize: "12px" }}>{value}</span>}
+                  />
+                  <Brush
+                    dataKey="time"
+                    height={30}
+                    stroke="#8884d8"
+                    startIndex={Math.floor((timelineZoom.start / 100) * timelineData.length)}
+                    endIndex={Math.floor((timelineZoom.end / 100) * timelineData.length)}
+                    onChange={(brushData) => {
+                      if (brushData.startIndex !== undefined && brushData.endIndex !== undefined) {
+                        setTimelineZoom({
+                          start: (brushData.startIndex / timelineData.length) * 100,
+                          end: (brushData.endIndex / timelineData.length) * 100,
+                        })
+                      }
+                    }}
+                  />
+                  <Line type="monotone" dataKey="cpu" stroke="#3b82f6" strokeWidth={2} dot={false} name="CPU (%)" />
+                  <Line
+                    type="monotone"
+                    dataKey="memory"
+                    stroke="#8b5cf6"
+                    strokeWidth={2}
+                    dot={false}
+                    name="Memory (MB)"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="network"
+                    stroke="#06b6d4"
+                    strokeWidth={2}
+                    dot={false}
+                    name="Network (KB/s)"
+                  />
+                  <Line type="monotone" dataKey="wasm" stroke="#10b981" strokeWidth={2} dot={false} name="WASM (%)" />
+                  <Line type="monotone" dataKey="webgl" stroke="#f59e0b" strokeWidth={2} dot={false} name="WebGL (%)" />
+                  <Line type="monotone" dataKey="gpu" stroke="#ef4444" strokeWidth={2} dot={false} name="GPU (%)" />
+                </LineChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
+          {/* Legend */}
           <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 text-xs">
             <div className="flex items-center space-x-2">
               <div className="w-3 h-0.5 bg-blue-500"></div>
@@ -255,247 +265,353 @@ export default function AdvancedPerformanceCharts({
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {/* Protocol Performance Comparison */}
+        {/* Protocol Performance Comparison with Zoom */}
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="pb-3">
-            <CardTitle className="text-slate-100 text-sm sm:text-base">
-              Protocol Performance
-            </CardTitle>
-            <CardDescription className="text-slate-400 text-xs sm:text-sm">
-              HTTP/1.1 vs HTTP/2 vs HTTP/3 comparison
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-slate-100 text-sm sm:text-base">Protocol Performance</CardTitle>
+                <CardDescription className="text-slate-400 text-xs sm:text-sm">
+                  HTTP/1.1 vs HTTP/2 vs HTTP/3 comparison
+                </CardDescription>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setProtocolZoom(Math.min(3, protocolZoom * 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomIn className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setProtocolZoom(Math.max(0.5, protocolZoom / 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomOut className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetProtocolZoom}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <ChartContainer
-              config={{
-                requests: { label: "Requests", color: "#3b82f6" },
-                avgLatency: { label: "Avg Latency (ms)", color: "#ef4444" },
-              }}
-              className="h-[200px] sm:h-[300px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={protocolData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="protocol" stroke="#9ca3af" fontSize={12} />
-                  <YAxis stroke="#9ca3af" fontSize={12} />
-                  <ChartTooltip
-                    content={<ChartTooltipContent />}
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Bar dataKey="requests" fill="#3b82f6" />
-                  <Bar dataKey="avgLatency" fill="#ef4444" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+            <div className="overflow-x-auto">
+              <ChartContainer
+                config={{
+                  requests: { label: "Requests", color: "#3b82f6" },
+                  avgLatency: { label: "Avg Latency (ms)", color: "#ef4444" },
+                }}
+                className="h-[200px] sm:h-[300px]"
+                style={{ transform: `scale(${protocolZoom})`, transformOrigin: "top left" }}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={protocolData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis dataKey="protocol" stroke="#9ca3af" fontSize={12} />
+                    <YAxis stroke="#9ca3af" fontSize={12} />
+                    <ChartTooltip
+                      content={<ChartTooltipContent />}
+                      contentStyle={{
+                        backgroundColor: "#1e293b",
+                        border: "1px solid #475569",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <Bar dataKey="requests" fill="#3b82f6" />
+                    <Bar dataKey="avgLatency" fill="#ef4444" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
           </CardContent>
         </Card>
 
-        {/* WASM Module Performance */}
+        {/* WASM Module Performance with Zoom */}
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="pb-3">
-            <CardTitle className="text-slate-100 text-sm sm:text-base">
-              WASM Module Performance
-            </CardTitle>
-            <CardDescription className="text-slate-400 text-xs sm:text-sm">
-              Load, compile, and instantiate times
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-slate-100 text-sm sm:text-base">WASM Module Performance</CardTitle>
+                <CardDescription className="text-slate-400 text-xs sm:text-sm">
+                  Load, compile, and instantiate times
+                </CardDescription>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setWasmZoom(Math.min(3, wasmZoom * 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomIn className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setWasmZoom(Math.max(0.5, wasmZoom / 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomOut className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetWasmZoom}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <ChartContainer
-              config={{
-                loadTime: { label: "Load Time (ms)", color: "#3b82f6" },
-                compileTime: { label: "Compile Time (ms)", color: "#8b5cf6" },
-                instantiateTime: {
-                  label: "Instantiate Time (ms)",
-                  color: "#10b981",
-                },
-              }}
-              className="h-[200px] sm:h-[300px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={wasmData} layout="horizontal">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis type="number" stroke="#9ca3af" fontSize={12} />
-                  <YAxis
-                    dataKey="name"
-                    type="category"
-                    width={80}
-                    stroke="#9ca3af"
-                    fontSize={10}
-                  />
-                  <ChartTooltip
-                    content={<ChartTooltipContent />}
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Bar dataKey="loadTime" stackId="a" fill="#3b82f6" />
-                  <Bar dataKey="compileTime" stackId="a" fill="#8b5cf6" />
-                  <Bar dataKey="instantiateTime" stackId="a" fill="#10b981" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+            <div className="overflow-x-auto">
+              <ChartContainer
+                config={{
+                  loadTime: { label: "Load Time (ms)", color: "#3b82f6" },
+                  compileTime: { label: "Compile Time (ms)", color: "#8b5cf6" },
+                  instantiateTime: {
+                    label: "Instantiate Time (ms)",
+                    color: "#10b981",
+                  },
+                }}
+                className="h-[200px] sm:h-[300px]"
+                style={{ transform: `scale(${wasmZoom})`, transformOrigin: "top left" }}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={wasmData} layout="horizontal">
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis type="number" stroke="#9ca3af" fontSize={12} />
+                    <YAxis dataKey="name" type="category" width={80} stroke="#9ca3af" fontSize={10} />
+                    <ChartTooltip
+                      content={<ChartTooltipContent />}
+                      contentStyle={{
+                        backgroundColor: "#1e293b",
+                        border: "1px solid #475569",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <Bar dataKey="loadTime" stackId="a" fill="#3b82f6" />
+                    <Bar dataKey="compileTime" stackId="a" fill="#8b5cf6" />
+                    <Bar dataKey="instantiateTime" stackId="a" fill="#10b981" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {/* GLB File Analysis */}
+        {/* GLB File Analysis with Zoom */}
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="pb-3">
-            <CardTitle className="text-slate-100 text-sm sm:text-base">
-              3D Model Complexity
-            </CardTitle>
-            <CardDescription className="text-slate-400 text-xs sm:text-sm">
-              GLB file size vs load time and complexity
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-slate-100 text-sm sm:text-base">3D Model Complexity</CardTitle>
+                <CardDescription className="text-slate-400 text-xs sm:text-sm">
+                  GLB file size vs load time and complexity
+                </CardDescription>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setGlbZoom(Math.min(3, glbZoom * 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomIn className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setGlbZoom(Math.max(0.5, glbZoom / 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomOut className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetGlbZoom}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <ChartContainer
-              config={{
-                sizeMB: { label: "Size (MB)", color: "#f59e0b" },
-                loadTime: { label: "Load Time (ms)", color: "#ef4444" },
-              }}
-              className="h-[200px] sm:h-[300px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <ScatterChart data={glbData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis
-                    dataKey="sizeMB"
-                    name="Size (MB)"
-                    stroke="#9ca3af"
-                    fontSize={12}
-                    tickFormatter={(value) => `${value.toFixed(1)}MB`}
-                  />
-                  <YAxis
-                    dataKey="loadTime"
-                    name="Load Time (ms)"
-                    stroke="#9ca3af"
-                    fontSize={12}
-                  />
-                  <ChartTooltip
-                    content={<ChartTooltipContent />}
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Scatter dataKey="loadTime" fill="#f59e0b" />
-                </ScatterChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+            <div className="overflow-x-auto">
+              <ChartContainer
+                config={{
+                  sizeMB: { label: "Size (MB)", color: "#f59e0b" },
+                  loadTime: { label: "Load Time (ms)", color: "#ef4444" },
+                }}
+                className="h-[200px] sm:h-[300px]"
+                style={{ transform: `scale(${glbZoom})`, transformOrigin: "top left" }}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <ScatterChart data={glbData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis
+                      dataKey="sizeMB"
+                      name="Size (MB)"
+                      stroke="#9ca3af"
+                      fontSize={12}
+                      tickFormatter={(value) => `${value.toFixed(1)}MB`}
+                    />
+                    <YAxis dataKey="loadTime" name="Load Time (ms)" stroke="#9ca3af" fontSize={12} />
+                    <ChartTooltip
+                      content={<ChartTooltipContent />}
+                      contentStyle={{
+                        backgroundColor: "#1e293b",
+                        border: "1px solid #475569",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <Scatter dataKey="loadTime" fill="#f59e0b" />
+                  </ScatterChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
           </CardContent>
         </Card>
 
-        {/* Domain Request Distribution */}
+        {/* Domain Request Distribution with Zoom */}
         <Card className="bg-slate-800/50 border-slate-700">
           <CardHeader className="pb-3">
-            <CardTitle className="text-slate-100 text-sm sm:text-base">
-              Domain Distribution
-            </CardTitle>
-            <CardDescription className="text-slate-400 text-xs sm:text-sm">
-              Requests and data size by domain
-            </CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-slate-100 text-sm sm:text-base">Domain Distribution</CardTitle>
+                <CardDescription className="text-slate-400 text-xs sm:text-sm">
+                  Requests and data size by domain
+                </CardDescription>
+              </div>
+              <div className="flex items-center gap-1">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setDomainZoom(Math.min(3, domainZoom * 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomIn className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setDomainZoom(Math.max(0.5, domainZoom / 1.2))}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <ZoomOut className="w-3 h-3" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetDomainZoom}
+                  className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
-            <ChartContainer
-              config={{
-                requests: { label: "Requests", color: "#06b6d4" },
-                sizeMB: { label: "Size (MB)", color: "#8b5cf6" },
-              }}
-              className="h-[200px] sm:h-[300px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={domainRequestData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis
-                    dataKey="domain"
-                    stroke="#9ca3af"
-                    fontSize={10}
-                    angle={-45}
-                    textAnchor="end"
-                    height={60}
-                  />
-                  <YAxis stroke="#9ca3af" fontSize={12} />
-                  <ChartTooltip
-                    content={<ChartTooltipContent />}
-                    contentStyle={{
-                      backgroundColor: "#1e293b",
-                      border: "1px solid #475569",
-                      borderRadius: "8px",
-                    }}
-                  />
-                  <Bar dataKey="requests" fill="#06b6d4" />
-                  <Bar dataKey="sizeMB" fill="#8b5cf6" />
-                </BarChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+            <div className="overflow-x-auto">
+              <ChartContainer
+                config={{
+                  requests: { label: "Requests", color: "#06b6d4" },
+                  sizeMB: { label: "Size (MB)", color: "#8b5cf6" },
+                }}
+                className="h-[200px] sm:h-[300px]"
+                style={{ transform: `scale(${domainZoom})`, transformOrigin: "top left" }}
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={domainRequestData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                    <XAxis dataKey="domain" stroke="#9ca3af" fontSize={10} angle={-45} textAnchor="end" height={60} />
+                    <YAxis stroke="#9ca3af" fontSize={12} />
+                    <ChartTooltip
+                      content={<ChartTooltipContent />}
+                      contentStyle={{
+                        backgroundColor: "#1e293b",
+                        border: "1px solid #475569",
+                        borderRadius: "8px",
+                      }}
+                    />
+                    <Bar dataKey="requests" fill="#06b6d4" />
+                    <Bar dataKey="sizeMB" fill="#8b5cf6" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Network Waterfall Visualization */}
+      {/* Network Waterfall Visualization - ALL REQUESTS */}
       <Card className="bg-slate-800/50 border-slate-700">
         <CardHeader className="pb-3">
           <CardTitle className="text-slate-100 text-sm sm:text-base">
-            Network Waterfall (Top 20 Requests)
+            Network Waterfall (All {networkWaterfallData.length} Requests)
           </CardTitle>
           <CardDescription className="text-slate-400 text-xs sm:text-sm">
-            Request timing and protocol distribution
+            Complete request timing and protocol distribution
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2 max-h-[400px] overflow-y-auto">
+          <div className="space-y-2 max-h-[600px] overflow-y-auto">
             {networkWaterfallData.map(
               (
                 req: {
-                  id: number;
-                  name: string;
-                  start: number;
-                  duration: number;
-                  size: number;
-                  protocol: string;
-                  type: string;
+                  id: number
+                  name: string
+                  start: number
+                  duration: number
+                  size: number
+                  protocol: string
+                  type: string
                 },
                 index: number,
               ) => (
                 <div
                   key={req.id}
-                  className="flex items-center space-x-2 text-xs"
+                  className="flex items-center space-x-2 text-xs hover:bg-slate-700/30 p-1 rounded transition-colors"
                 >
+                  <div className="w-4 text-slate-500 text-right">{index + 1}</div>
                   <div className="w-20 truncate text-slate-300">{req.name}</div>
-                  <div className="flex-1 bg-slate-700 rounded-full h-4 relative">
+                  <div className="flex-1 bg-slate-700 rounded-full h-4 relative min-w-[200px]">
                     <div
                       className="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full"
                       style={{
                         width: `${Math.min(100, (req.duration / 2000) * 100)}%`,
-                        marginLeft: `${(req.start / 3000) * 100}%`,
+                        marginLeft: `${Math.min(80, (req.start / 3000) * 100)}%`,
                       }}
                     />
                   </div>
-                  <Badge
-                    variant="outline"
-                    className="text-xs border-slate-600 text-slate-300"
-                  >
+                  <Badge variant="outline" className="text-xs border-slate-600 text-slate-300 min-w-[60px] text-center">
                     {req.protocol}
                   </Badge>
-                  <div className="w-16 text-right text-slate-400">
-                    {req.duration}ms
-                  </div>
+                  <div className="w-16 text-right text-slate-400">{req.duration}ms</div>
+                  <div className="w-16 text-right text-slate-500">{req.size.toFixed(1)}KB</div>
                 </div>
               ),
             )}
           </div>
+          <div className="mt-4 text-xs text-slate-500 text-center">
+            Showing all {networkWaterfallData.length} network requests • Scroll to view more
+          </div>
         </CardContent>
       </Card>
     </div>
-  );
+  )
 }
