@@ -5,4 +5,3 @@ export default {
     endOfLine: "auto",
     trailingComma: "es5",
   };
-  

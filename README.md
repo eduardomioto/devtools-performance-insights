@@ -36,22 +36,22 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 
 1. **Clone the repository**
    
-   ```bash
+   \`\`\`bash
    git clone <repository-url>
    cd chrome-performance-analyzer
-   ```
+   \`\`\`
 
 2. **Install dependencies**
    
-   ```bash
+   \`\`\`bash
    yarn install
-   ```
+   \`\`\`
 
 3. **Run the development server**
    
-   ```bash
+   \`\`\`bash
    yarn dev
-   ```
+   \`\`\`
 
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
@@ -60,7 +60,7 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 
 This project includes comprehensive security scanning with Snyk:
 
-```bash
+\`\`\`bash
 # Run security audit locally
 yarn audit
 
@@ -69,7 +69,7 @@ yarn snyk test
 
 # Monitor project for new vulnerabilities
 yarn snyk monitor
-```
+\`\`\`
 
 ### Automated Security Checks
 - ✅ **Every Push**: Dependency and code vulnerability scanning
@@ -144,7 +144,7 @@ The analyzer maps Chrome profile data to Core Web Vitals:
 
 Create a `.env.local` file for custom configuration:
 
-```env
+\`\`\`env
 # Optional: Custom API endpoints
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
 
@@ -157,7 +157,7 @@ NEXT_PUBLIC_ENABLE_EXPERIMENTAL_FEATURES=false
 # Security: Snyk configuration
 SNYK_TOKEN=your-snyk-api-token
 SNYK_ORG_ID=your-organization-id
-```
+\`\`\`
 
 ## 🏗️ Architecture
 
@@ -173,7 +173,7 @@ SNYK_ORG_ID=your-organization-id
 
 ### Project Structure
 
-```
+\`\`\`
 chrome-performance-analyzer/
 ├── app/
 │   ├── globals.css          # Global styles and theme
@@ -198,19 +198,19 @@ chrome-performance-analyzer/
 ├── .snyk                   # Snyk configuration
 ├── README.md               # This file
 └── package.json           # Dependencies and scripts
-```
+\`\`\`
 
 ## 🧪 Development
 
 ### Running Tests
 
-```bash
+\`\`\`bash
 yarn test
-```
+\`\`\`
 
 ### Security Testing
 
-```bash
+\`\`\`bash
 # Run security audit
 yarn audit
 
@@ -219,21 +219,21 @@ yarn snyk test
 
 # Check for license issues
 yarn snyk test --print-deps
-```
+\`\`\`
 
 ### Building for Production
 
-```bash
+\`\`\`bash
 yarn build
 yarn start
-```
+\`\`\`
 
 ### Linting and Formatting
 
-```bash
+\`\`\`bash
 yarn lint
 yarn format
-```
+\`\`\`
 
 ## 🤝 Contributing
 
