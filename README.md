@@ -38,28 +38,28 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 ## 🛠️ Installation & Setup
 
 1. **Clone the repository**
-   \`\`\`bash
+   ```bash
    git clone <repository-url>
    cd chrome-performance-analyzer
-   \`\`\`
+   ```
 
 2. **Install dependencies**
-   \`\`\`bash
+   ```bash
    npm install
    # or
    yarn install
    # or
    pnpm install
-   \`\`\`
+   ```
 
 3. **Run the development server**
-   \`\`\`bash
+   ```bash
    npm run dev
    # or
    yarn dev
    # or
    pnpm dev
-   \`\`\`
+   ```
 
 4. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
@@ -68,7 +68,7 @@ We take security seriously. This project uses **Snyk** for comprehensive securit
 
 This project includes comprehensive security scanning with Snyk:
 
-\`\`\`bash
+```bash
 # Run security audit locally
 npm audit
 
@@ -77,7 +77,7 @@ npx snyk test
 
 # Monitor project for new vulnerabilities
 npx snyk monitor
-\`\`\`
+```
 
 ### Automated Security Checks
 - ✅ **Every Push**: Dependency and code vulnerability scanning
@@ -85,47 +85,6 @@ npx snyk monitor
 - ✅ **Daily**: Comprehensive security audit
 - ✅ **Container**: Docker image security scanning
 - ✅ **IaC**: Infrastructure configuration security
-
-## 💰 Sponsorship
-
-[![GitHub Sponsors](https://img.shields.io/badge/Sponsor-GitHub-pink?style=for-the-badge&logo=github)](https://github.com/sponsors/maintainer1)
-[![Open Collective](https://img.shields.io/badge/Sponsor-Open%20Collective-blue?style=for-the-badge&logo=opencollective)](https://opencollective.com/chrome-performance-analyzer)
-
-Support the development of this open source tool:
-
-### 🥉 Bronze Sponsors ($5/month)
-- Sponsor badge on GitHub profile
-- Listed in README sponsors section
-- Early access to release notes
-
-### 🥈 Silver Sponsors ($25/month)
-- Small logo in project README
-- Priority support channel
-- Feature request consideration
-
-### 🥇 Gold Sponsors ($100/month)
-- Medium logo placement
-- Quarterly calls with maintainers
-- Custom feature development consideration
-
-[**Become a Sponsor →**](SPONSORS.md)
-
-## 🏆 Current Sponsors
-
-### 💎 Platinum Sponsors
-*Be our first Platinum Sponsor!*
-
-### 🥇 Gold Sponsors
-*Your company logo here*
-
-### 🥈 Silver Sponsors
-- 🌟 **[Your Company](https://example.com)** - Web Performance Consulting
-
-### 🥉 Bronze Sponsors
-- 👤 **[@developer1](https://github.com/developer1)** - Senior Frontend Developer
-- 👤 **[@developer2](https://github.com/developer2)** - Performance Engineer
-
-*Want to see your name here? [Become a sponsor!](SPONSORS.md)*
 
 ## 📊 How to Use
 
@@ -193,7 +152,7 @@ The analyzer maps Chrome profile data to Core Web Vitals:
 
 Create a `.env.local` file for custom configuration:
 
-\`\`\`env
+```env
 # Optional: Custom API endpoints
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
 
@@ -206,7 +165,7 @@ NEXT_PUBLIC_ENABLE_EXPERIMENTAL_FEATURES=false
 # Security: Snyk configuration
 SNYK_TOKEN=your-snyk-api-token
 SNYK_ORG_ID=your-organization-id
-\`\`\`
+```
 
 ## 🏗️ Architecture
 
@@ -222,7 +181,7 @@ SNYK_ORG_ID=your-organization-id
 
 ### Project Structure
 
-\`\`\`
+```
 chrome-performance-analyzer/
 ├── app/
 │   ├── globals.css          # Global styles and theme
@@ -247,21 +206,21 @@ chrome-performance-analyzer/
 ├── .snyk                   # Snyk configuration
 ├── README.md               # This file
 └── package.json           # Dependencies and scripts
-\`\`\`
+```
 
 ## 🧪 Development
 
 ### Running Tests
 
-\`\`\`bash
+```bash
 npm run test
 # or
 yarn test
-\`\`\`
+```
 
 ### Security Testing
 
-\`\`\`bash
+```bash
 # Run security audit
 npm audit
 
@@ -270,21 +229,21 @@ npx snyk test
 
 # Check for license issues
 npx snyk test --print-deps
-\`\`\`
+```
 
 ### Building for Production
 
-\`\`\`bash
+```bash
 npm run build
 npm run start
-\`\`\`
+```
 
 ### Linting and Formatting
 
-\`\`\`bash
+```bash
 npm run lint
 npm run format
-\`\`\`
+```
 
 ## 🤝 Contributing
 
