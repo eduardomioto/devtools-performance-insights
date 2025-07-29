@@ -79,7 +79,7 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
     const [protocol, priority] = key.split("-");
     return { protocol, priority, count };
   });
-  
+
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Protocol Overview Cards */}

@@ -4,7 +4,14 @@
 // Used only when user clicks "Load Complex Sample" button
 // =============================================================================
 
-import { ComplexPerformanceData, DomainInfo, GLBFile, NetworkRequest, ProtocolInfo, WasmModule } from "@/types/profiling-type"
+import {
+  ComplexPerformanceData,
+  DomainInfo,
+  GLBFile,
+  NetworkRequest,
+  ProtocolInfo,
+  WasmModule,
+} from "@/types/profiling-type";
 
 // Generate complex sample data for demo purposes
 export function generateComplexSampleData(): ComplexPerformanceData {
@@ -18,13 +25,21 @@ export function generateComplexSampleData(): ComplexPerformanceData {
       "os-version": "11.0.0",
       "chrome-version": "120.0.6099.109",
     },
-    categories: ["loading", "navigation", "scripting", "rendering", "painting", "wasm", "webgl"],
+    categories: [
+      "loading",
+      "navigation",
+      "scripting",
+      "rendering",
+      "painting",
+      "wasm",
+      "webgl",
+    ],
     networkRequests: generateSampleNetworkRequests(),
     wasmModules: generateSampleWasmModules(),
     glbFiles: generateSampleGLBFiles(),
     domains: generateSampleDomainInfo(),
     protocols: generateSampleProtocolInfo(),
-  }
+  };
 }
 
 function generateSampleTraceEvents() {
@@ -91,13 +106,29 @@ function generateSampleTraceEvents() {
         },
       },
     },
-  ]
+  ];
 }
 
 function generateSampleNetworkRequests(): NetworkRequest[] {
-  const domains = ["app.example.com", "cdn.example.com", "api.example.com", "assets.example.com", "models.example.com"]
-  const protocols = ["http/1.1", "http/2", "http/3"]
-  const types = ["document", "script", "stylesheet", "image", "font", "xhr", "fetch", "wasm", "other"]
+  const domains = [
+    "app.example.com",
+    "cdn.example.com",
+    "api.example.com",
+    "assets.example.com",
+    "models.example.com",
+  ];
+  const protocols = ["http/1.1", "http/2", "http/3"];
+  const types = [
+    "document",
+    "script",
+    "stylesheet",
+    "image",
+    "font",
+    "xhr",
+    "fetch",
+    "wasm",
+    "other",
+  ];
 
   return Array.from({ length: 247 }, (_, i) => ({
     url: `https://${domains[i % domains.length]}/resource-${i}`,
@@ -108,8 +139,9 @@ function generateSampleNetworkRequests(): NetworkRequest[] {
     size: Math.floor(Math.random() * 500000) + 1000,
     duration: Math.floor(Math.random() * 2000) + 50,
     type: types[Math.floor(Math.random() * types.length)],
-    priority: Math.random() > 0.7 ? "high" : Math.random() > 0.4 ? "medium" : "low",
-  }))
+    priority:
+      Math.random() > 0.7 ? "high" : Math.random() > 0.4 ? "medium" : "low",
+  }));
 }
 
 function generateSampleWasmModules(): WasmModule[] {
@@ -138,7 +170,7 @@ function generateSampleWasmModules(): WasmModule[] {
       instantiateTime: 45,
       memoryUsage: 4194304,
     },
-  ]
+  ];
 }
 
 function generateSampleGLBFiles(): GLBFile[] {
@@ -175,7 +207,7 @@ function generateSampleGLBFiles(): GLBFile[] {
       textures: 8,
       materials: 6,
     },
-  ]
+  ];
 }
 
 function generateSampleDomainInfo(): DomainInfo[] {
@@ -215,7 +247,7 @@ function generateSampleDomainInfo(): DomainInfo[] {
       avgResponseTime: 2800,
       protocols: ["http/3"],
     },
-  ]
+  ];
 }
 
 function generateSampleProtocolInfo(): ProtocolInfo[] {
@@ -241,5 +273,5 @@ function generateSampleProtocolInfo(): ProtocolInfo[] {
       avgLatency: 280,
       domains: ["legacy.example.com"],
     },
-  ]
+  ];
 }

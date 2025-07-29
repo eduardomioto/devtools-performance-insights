@@ -1,12 +1,18 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Upload,
   FileText,
@@ -19,112 +25,129 @@ import {
   Info,
   TrendingDown,
   TrendingUp,
-} from "lucide-react"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Badge } from "@/components/ui/badge"
-import { Skeleton } from "@/components/ui/skeleton"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import AdvancedPerformanceCharts from "@/components/advanced-performance-charts"
-import ComplexIssuesAnalysis from "@/components/complex-issues-analysis"
-import AdvancedRecommendations from "@/components/advanced-recommendations"
-import ResourceAnalysis from "@/components/resource-analysis"
-import ProtocolAnalysis from "@/components/protocol-analysis"
+} from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
-  generateComplexSampleData
-} from "@/lib/sample-data"
-import type { ComplexPerformanceData, NetworkRequest, WasmModule, GLBFile, DomainInfo, ProtocolInfo } from "@/types/profiling-type"
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import AdvancedPerformanceCharts from "@/components/advanced-performance-charts";
+import ComplexIssuesAnalysis from "@/components/complex-issues-analysis";
+import AdvancedRecommendations from "@/components/advanced-recommendations";
+import ResourceAnalysis from "@/components/resource-analysis";
+import ProtocolAnalysis from "@/components/protocol-analysis";
+import { generateComplexSampleData } from "@/lib/sample-data";
+import type {
+  ComplexPerformanceData,
+  NetworkRequest,
+  WasmModule,
+  GLBFile,
+  DomainInfo,
+  ProtocolInfo,
+} from "@/types/profiling-type";
 
 export default function HomePage() {
-  const [performanceData, setPerformanceData] = useState<ComplexPerformanceData | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState("overview")
-  const [uploadProgress, setUploadProgress] = useState(0)
+  const [performanceData, setPerformanceData] =
+    useState<ComplexPerformanceData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("overview");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (!file) return
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
 
-    setIsLoading(true)
-    setError(null)
-    setUploadProgress(0)
+    setIsLoading(true);
+    setError(null);
+    setUploadProgress(0);
 
     try {
       // Simulate upload progress
       const progressInterval = setInterval(() => {
         setUploadProgress((prev) => {
           if (prev >= 90) {
-            clearInterval(progressInterval)
-            return 90
+            clearInterval(progressInterval);
+            return 90;
           }
-          return prev + 10
-        })
-      }, 100)
+          return prev + 10;
+        });
+      }, 100);
 
-      const text = await file.text()
-      const data = JSON.parse(text)
+      const text = await file.text();
+      const data = JSON.parse(text);
 
       // Enhanced validation for Chrome performance profiles
       if (!data.traceEvents && !data.metadata) {
-        throw new Error("Invalid Chrome performance profile format")
+        throw new Error("Invalid Chrome performance profile format");
       }
 
       // Process the actual uploaded data - NO SAMPLE DATA MIXED IN
-      const processedData = processRealPerformanceData(data)
-      setPerformanceData(processedData)
-      setUploadProgress(100)
+      const processedData = processRealPerformanceData(data);
+      setPerformanceData(processedData);
+      setUploadProgress(100);
     } catch (err) {
-      setError("Failed to parse performance profile. Please ensure it's a valid Chrome DevTools performance profile.")
+      setError(
+        "Failed to parse performance profile. Please ensure it's a valid Chrome DevTools performance profile.",
+      );
     } finally {
-      setIsLoading(false)
-      setTimeout(() => setUploadProgress(0), 1000)
+      setIsLoading(false);
+      setTimeout(() => setUploadProgress(0), 1000);
     }
-  }
+  };
 
   const handleComplexSampleData = () => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     // This is ONLY for demo purposes - generates fake sample data
     setTimeout(() => {
-      const complexSampleData = generateComplexSampleData()
-      setPerformanceData(complexSampleData)
-      setIsLoading(false)
-    }, 1500)
-  }
+      const complexSampleData = generateComplexSampleData();
+      setPerformanceData(complexSampleData);
+      setIsLoading(false);
+    }, 1500);
+  };
 
   // THIS FUNCTION PROCESSES REAL UPLOADED DATA ONLY
   const processRealPerformanceData = (rawData: any): ComplexPerformanceData => {
-    console.log("Processing real Chrome DevTools data:", rawData)
+    console.log("Processing real Chrome DevTools data:", rawData);
 
     // Extract trace events from the uploaded file
-    const traceEvents = rawData.traceEvents || []
-    console.log(`Found ${traceEvents.length} trace events`)
+    const traceEvents = rawData.traceEvents || [];
+    console.log(`Found ${traceEvents.length} trace events`);
 
     // Extract metadata from the uploaded file
-    const metadata = rawData.metadata || {}
+    const metadata = rawData.metadata || {};
 
     // Extract categories from actual trace events
-    const categories = [...new Set(traceEvents.map((event: any) => event.cat).filter(Boolean))]
-    console.log("Categories found:", categories)
+    const categories = [
+      ...new Set(traceEvents.map((event: any) => event.cat).filter(Boolean)),
+    ];
+    console.log("Categories found:", categories);
 
     // Process network requests from REAL trace events
-    const networkRequests = extractNetworkRequestsFromTraceEvents(traceEvents)
-    console.log(`Extracted ${networkRequests.length} network requests`)
+    const networkRequests = extractNetworkRequestsFromTraceEvents(traceEvents);
+    console.log(`Extracted ${networkRequests.length} network requests`);
 
     // Process WASM modules from REAL trace events
-    const wasmModules = extractWasmModulesFromTraceEvents(traceEvents)
-    console.log(`Found ${wasmModules.length} WASM modules`)
+    const wasmModules = extractWasmModulesFromTraceEvents(traceEvents);
+    console.log(`Found ${wasmModules.length} WASM modules`);
 
     // Process GLB files from REAL trace events
-    const glbFiles = extractGLBFilesFromTraceEvents(traceEvents)
-    console.log(`Found ${glbFiles.length} GLB files`)
+    const glbFiles = extractGLBFilesFromTraceEvents(traceEvents);
+    console.log(`Found ${glbFiles.length} GLB files`);
 
     // Generate domain info from REAL network requests
-    const domains = generateDomainInfoFromRealRequests(networkRequests)
+    const domains = generateDomainInfoFromRealRequests(networkRequests);
 
     // Generate protocol info from REAL network requests
-    const protocols = generateProtocolInfoFromRealRequests(networkRequests)
+    const protocols = generateProtocolInfoFromRealRequests(networkRequests);
 
     return {
       traceEvents,
@@ -135,15 +158,17 @@ export default function HomePage() {
       glbFiles,
       domains,
       protocols,
-    }
-  }
+    };
+  };
 
   // REAL DATA EXTRACTION FUNCTIONS (process actual Chrome trace events)
-  const extractNetworkRequestsFromTraceEvents = (traceEvents: any[]): NetworkRequest[] => {
-    const requests: NetworkRequest[] = []
-    const requestMap = new Map()
+  const extractNetworkRequestsFromTraceEvents = (
+    traceEvents: any[],
+  ): NetworkRequest[] => {
+    const requests: NetworkRequest[] = [];
+    const requestMap = new Map();
 
-    console.log("Extracting network requests from trace events...")
+    console.log("Extracting network requests from trace events...");
 
     traceEvents.forEach((event) => {
       // Look for actual Chrome network trace events
@@ -153,13 +178,13 @@ export default function HomePage() {
         event.name === "ResourceFinish" ||
         (event.ph === "X" && event.cat?.includes("devtools.timeline"))
       ) {
-        const args = event.args || {}
-        const data = args.data || {}
+        const args = event.args || {};
+        const data = args.data || {};
 
         if (data.url) {
           try {
-            const url = new URL(data.url)
-            const requestId = data.requestId || event.id || data.url
+            const url = new URL(data.url);
+            const requestId = data.requestId || event.id || data.url;
 
             if (!requestMap.has(requestId)) {
               requestMap.set(requestId, {
@@ -172,37 +197,41 @@ export default function HomePage() {
                 duration: event.dur ? event.dur / 1000 : 0, // Convert microseconds to milliseconds
                 type: data.resourceType || data.mimeType || "other",
                 priority: data.priority || "medium",
-              })
+              });
             }
 
-            const request = requestMap.get(requestId)
+            const request = requestMap.get(requestId);
 
             // Update request data based on event type
             if (event.name === "ResourceReceiveResponse") {
-              request.status = data.statusCode || request.status
-              request.size = data.encodedDataLength || request.size
+              request.status = data.statusCode || request.status;
+              request.size = data.encodedDataLength || request.size;
             }
 
             if (event.dur) {
-              request.duration = Math.max(request.duration, event.dur / 1000)
+              request.duration = Math.max(request.duration, event.dur / 1000);
             }
           } catch (e) {
-            console.warn("Invalid URL in trace event:", data.url)
+            console.warn("Invalid URL in trace event:", data.url);
           }
         }
       }
-    })
+    });
 
-    const extractedRequests = Array.from(requestMap.values())
-    console.log(`Extracted ${extractedRequests.length} unique network requests`)
-    return extractedRequests
-  }
+    const extractedRequests = Array.from(requestMap.values());
+    console.log(
+      `Extracted ${extractedRequests.length} unique network requests`,
+    );
+    return extractedRequests;
+  };
 
-  const extractWasmModulesFromTraceEvents = (traceEvents: any[]): WasmModule[] => {
-    const modules: WasmModule[] = []
-    const moduleMap = new Map()
+  const extractWasmModulesFromTraceEvents = (
+    traceEvents: any[],
+  ): WasmModule[] => {
+    const modules: WasmModule[] = [];
+    const moduleMap = new Map();
 
-    console.log("Extracting WASM modules from trace events...")
+    console.log("Extracting WASM modules from trace events...");
 
     traceEvents.forEach((event) => {
       // Look for WebAssembly related events
@@ -212,10 +241,14 @@ export default function HomePage() {
         event.name === "v8.wasm.compiledModule" ||
         event.name === "v8.wasm.instantiateModule"
       ) {
-        const args = event.args || {}
-        const data = args.data || {}
+        const args = event.args || {};
+        const data = args.data || {};
 
-        const moduleName = data.url || data.name || args.url || `wasm-module-${Date.now()}-${Math.random()}`
+        const moduleName =
+          data.url ||
+          data.name ||
+          args.url ||
+          `wasm-module-${Date.now()}-${Math.random()}`;
 
         if (!moduleMap.has(moduleName)) {
           moduleMap.set(moduleName, {
@@ -225,43 +258,43 @@ export default function HomePage() {
             compileTime: 0,
             instantiateTime: 0,
             memoryUsage: data.memoryUsage || args.memoryUsage || 0,
-          })
+          });
         }
 
-        const module = moduleMap.get(moduleName)
+        const module = moduleMap.get(moduleName);
 
         // Extract timing information based on event name
-        const durationMs = event.dur ? event.dur / 1000 : 0
+        const durationMs = event.dur ? event.dur / 1000 : 0;
 
         if (event.name?.toLowerCase().includes("compile")) {
-          module.compileTime = Math.max(module.compileTime, durationMs)
+          module.compileTime = Math.max(module.compileTime, durationMs);
         } else if (event.name?.toLowerCase().includes("instantiate")) {
-          module.instantiateTime = Math.max(module.instantiateTime, durationMs)
+          module.instantiateTime = Math.max(module.instantiateTime, durationMs);
         } else if (event.name?.toLowerCase().includes("load")) {
-          module.loadTime = Math.max(module.loadTime, durationMs)
+          module.loadTime = Math.max(module.loadTime, durationMs);
         }
 
         // Update size if available
         if (data.size || args.size) {
-          module.size = Math.max(module.size, data.size || args.size)
+          module.size = Math.max(module.size, data.size || args.size);
         }
       }
-    })
+    });
 
-    const extractedModules = Array.from(moduleMap.values())
-    console.log(`Extracted ${extractedModules.length} WASM modules`)
-    return extractedModules
-  }
+    const extractedModules = Array.from(moduleMap.values());
+    console.log(`Extracted ${extractedModules.length} WASM modules`);
+    return extractedModules;
+  };
 
   const extractGLBFilesFromTraceEvents = (traceEvents: any[]): GLBFile[] => {
-    const files: GLBFile[] = []
-    const fileMap = new Map()
+    const files: GLBFile[] = [];
+    const fileMap = new Map();
 
-    console.log("Extracting GLB files from trace events...")
+    console.log("Extracting GLB files from trace events...");
 
     traceEvents.forEach((event) => {
-      const args = event.args || {}
-      const data = args.data || {}
+      const args = event.args || {};
+      const data = args.data || {};
 
       // Look for 3D model file requests
       if (
@@ -271,7 +304,8 @@ export default function HomePage() {
           data.mimeType === "model/gltf-binary" ||
           data.mimeType === "model/gltf+json")
       ) {
-        const fileName = data.url.split("/").pop() || `model-${Date.now()}-${Math.random()}`
+        const fileName =
+          data.url.split("/").pop() || `model-${Date.now()}-${Math.random()}`;
 
         if (!fileMap.has(fileName)) {
           fileMap.set(fileName, {
@@ -281,29 +315,34 @@ export default function HomePage() {
             vertices: data.vertices || 0,
             textures: data.textures || 0,
             materials: data.materials || 0,
-          })
+          });
         }
 
-        const file = fileMap.get(fileName)
+        const file = fileMap.get(fileName);
 
         // Update file information
         if (event.dur) {
-          file.loadTime = Math.max(file.loadTime, event.dur / 1000)
+          file.loadTime = Math.max(file.loadTime, event.dur / 1000);
         }
 
         if (data.encodedDataLength || data.decodedBodyLength) {
-          file.size = Math.max(file.size, data.encodedDataLength || data.decodedBodyLength)
+          file.size = Math.max(
+            file.size,
+            data.encodedDataLength || data.decodedBodyLength,
+          );
         }
       }
-    })
+    });
 
-    const extractedFiles = Array.from(fileMap.values())
-    console.log(`Extracted ${extractedFiles.length} GLB/GLTF files`)
-    return extractedFiles
-  }
+    const extractedFiles = Array.from(fileMap.values());
+    console.log(`Extracted ${extractedFiles.length} GLB/GLTF files`);
+    return extractedFiles;
+  };
 
-  const generateDomainInfoFromRealRequests = (requests: NetworkRequest[]): DomainInfo[] => {
-    const domainMap = new Map()
+  const generateDomainInfoFromRealRequests = (
+    requests: NetworkRequest[],
+  ): DomainInfo[] => {
+    const domainMap = new Map();
 
     requests.forEach((request) => {
       if (!domainMap.has(request.domain)) {
@@ -313,28 +352,33 @@ export default function HomePage() {
           totalSize: 0,
           totalResponseTime: 0,
           protocols: new Set(),
-        })
+        });
       }
 
-      const domain = domainMap.get(request.domain)
-      domain.requests++
-      domain.totalSize += request.size
-      domain.totalResponseTime += request.duration
-      domain.protocols.add(request.protocol)
-    })
+      const domain = domainMap.get(request.domain);
+      domain.requests++;
+      domain.totalSize += request.size;
+      domain.totalResponseTime += request.duration;
+      domain.protocols.add(request.protocol);
+    });
 
     // Calculate average response times and convert protocols set to array
     return Array.from(domainMap.values()).map((domain) => ({
       domain: domain.domain,
       requests: domain.requests,
       totalSize: domain.totalSize,
-      avgResponseTime: domain.requests > 0 ? Math.round(domain.totalResponseTime / domain.requests) : 0,
+      avgResponseTime:
+        domain.requests > 0
+          ? Math.round(domain.totalResponseTime / domain.requests)
+          : 0,
       protocols: Array.from(domain.protocols),
-    }))
-  }
+    }));
+  };
 
-  const generateProtocolInfoFromRealRequests = (requests: NetworkRequest[]): ProtocolInfo[] => {
-    const protocolMap = new Map()
+  const generateProtocolInfoFromRealRequests = (
+    requests: NetworkRequest[],
+  ): ProtocolInfo[] => {
+    const protocolMap = new Map();
 
     requests.forEach((request) => {
       if (!protocolMap.has(request.protocol)) {
@@ -344,68 +388,86 @@ export default function HomePage() {
           totalSize: 0,
           totalLatency: 0,
           domains: new Set(),
-        })
+        });
       }
 
-      const protocol = protocolMap.get(request.protocol)
-      protocol.requests++
-      protocol.totalSize += request.size
-      protocol.totalLatency += request.duration
-      protocol.domains.add(request.domain)
-    })
+      const protocol = protocolMap.get(request.protocol);
+      protocol.requests++;
+      protocol.totalSize += request.size;
+      protocol.totalLatency += request.duration;
+      protocol.domains.add(request.domain);
+    });
 
     // Calculate average latencies and convert domains set to array
     return Array.from(protocolMap.values()).map((protocol) => ({
       protocol: protocol.protocol,
       requests: protocol.requests,
       totalSize: protocol.totalSize,
-      avgLatency: protocol.requests > 0 ? Math.round(protocol.totalLatency / protocol.requests) : 0,
+      avgLatency:
+        protocol.requests > 0
+          ? Math.round(protocol.totalLatency / protocol.requests)
+          : 0,
       domains: Array.from(protocol.domains),
-    }))
-  }
+    }));
+  };
 
   const getPerformanceScore = () => {
-    if (!performanceData) return 0
+    if (!performanceData) return 0;
 
     // Calculate score based on actual data
-    let score = 100
+    let score = 100;
 
     // Penalize for slow WASM compilation
-    const wasmPenalty = performanceData.wasmModules.reduce((acc, mod) => acc + (mod.compileTime > 100 ? 5 : 0), 0)
+    const wasmPenalty = performanceData.wasmModules.reduce(
+      (acc, mod) => acc + (mod.compileTime > 100 ? 5 : 0),
+      0,
+    );
 
     // Penalize for large GLB files
-    const glbPenalty = performanceData.glbFiles.reduce((acc, file) => acc + (file.size > 1000000 ? 10 : 0), 0)
+    const glbPenalty = performanceData.glbFiles.reduce(
+      (acc, file) => acc + (file.size > 1000000 ? 10 : 0),
+      0,
+    );
 
     // Penalize for too many requests
-    const requestsPenalty = performanceData.networkRequests.length > 100 ? 15 : 0
+    const requestsPenalty =
+      performanceData.networkRequests.length > 100 ? 15 : 0;
 
     // Penalize for slow network requests
-    const slowRequestsPenalty = performanceData.networkRequests.filter((req) => req.duration > 1000).length * 2
+    const slowRequestsPenalty =
+      performanceData.networkRequests.filter((req) => req.duration > 1000)
+        .length * 2;
 
-    score = Math.max(0, score - wasmPenalty - glbPenalty - requestsPenalty - slowRequestsPenalty)
-    return Math.round(score)
-  }
+    score = Math.max(
+      0,
+      score - wasmPenalty - glbPenalty - requestsPenalty - slowRequestsPenalty,
+    );
+    return Math.round(score);
+  };
 
   const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-green-400"
-    if (score >= 70) return "text-yellow-400"
-    if (score >= 50) return "text-orange-400"
-    return "text-red-400"
-  }
+    if (score >= 90) return "text-green-400";
+    if (score >= 70) return "text-yellow-400";
+    if (score >= 50) return "text-orange-400";
+    return "text-red-400";
+  };
 
   const getScoreIcon = (score: number) => {
-    if (score >= 90) return <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
-    if (score >= 70) return <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
-    if (score >= 50) return <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />
-    return <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
-  }
+    if (score >= 90)
+      return <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />;
+    if (score >= 70)
+      return <Activity className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />;
+    if (score >= 50)
+      return <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />;
+    return <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />;
+  };
 
   const criticalIssuesCount = performanceData
     ? performanceData.wasmModules.filter((m) => m.compileTime > 100).length +
       performanceData.glbFiles.filter((f) => f.size > 20000000).length +
       performanceData.networkRequests.filter((r) => r.duration > 2000).length +
       (performanceData.networkRequests.length > 200 ? 1 : 0)
-    : 0
+    : 0;
 
   return (
     <TooltipProvider>
@@ -422,14 +484,15 @@ export default function HomePage() {
               </h1>
             </div>
             <p className="text-sm sm:text-lg text-slate-300 max-w-3xl mx-auto">
-              Analyze complex Chrome profiles with WASM, GLB files, HTTP/2-3, and multi-domain architectures
+              Analyze complex Chrome profiles with WASM, GLB files, HTTP/2-3,
+              and multi-domain architectures
             </p>
             {performanceData && (
               <div className="flex items-center justify-center gap-2 text-sm text-slate-400">
                 <Info className="w-4 h-4" />
                 <span>
-                  Profile loaded • {performanceData.networkRequests.length} requests • {performanceData.domains.length}{" "}
-                  domains
+                  Profile loaded • {performanceData.networkRequests.length}{" "}
+                  requests • {performanceData.domains.length} domains
                 </span>
               </div>
             )}
@@ -444,12 +507,16 @@ export default function HomePage() {
                   Upload Performance Profile
                 </CardTitle>
                 <CardDescription className="text-slate-400">
-                  Chrome DevTools performance profile with complex web applications
+                  Chrome DevTools performance profile with complex web
+                  applications
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-3">
-                  <Label htmlFor="profile-upload" className="text-slate-200 font-medium">
+                  <Label
+                    htmlFor="profile-upload"
+                    className="text-slate-200 font-medium"
+                  >
                     Performance Profile (.json)
                   </Label>
                   <div className="relative">
@@ -469,8 +536,13 @@ export default function HomePage() {
                     )}
                   </div>
                   <div className="text-xs text-slate-500 space-y-1">
-                    <p>• Export from Chrome DevTools → Performance tab → Export</p>
-                    <p>• Supports profiles with WASM, WebGL, and complex network patterns</p>
+                    <p>
+                      • Export from Chrome DevTools → Performance tab → Export
+                    </p>
+                    <p>
+                      • Supports profiles with WASM, WebGL, and complex network
+                      patterns
+                    </p>
                     <p>• File size limit: 50MB</p>
                   </div>
                 </div>
@@ -485,7 +557,9 @@ export default function HomePage() {
                 </div>
 
                 <div className="text-center space-y-3">
-                  <p className="text-sm text-slate-400">Explore with complex sample data</p>
+                  <p className="text-sm text-slate-400">
+                    Explore with complex sample data
+                  </p>
                   <Button
                     variant="outline"
                     onClick={handleComplexSampleData}
@@ -505,14 +579,20 @@ export default function HomePage() {
                     )}
                   </Button>
                   <div className="text-xs text-slate-500">
-                    Includes: 247 requests, 3 WASM modules, 4 GLB files, 5 domains
+                    Includes: 247 requests, 3 WASM modules, 4 GLB files, 5
+                    domains
                   </div>
                 </div>
 
                 {error && (
-                  <Alert variant="destructive" className="bg-red-900/20 border-red-800">
+                  <Alert
+                    variant="destructive"
+                    className="bg-red-900/20 border-red-800"
+                  >
                     <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription className="text-red-200">{error}</AlertDescription>
+                    <AlertDescription className="text-red-200">
+                      {error}
+                    </AlertDescription>
                   </Alert>
                 )}
 
@@ -520,7 +600,9 @@ export default function HomePage() {
                   <div className="text-center py-6 space-y-3">
                     <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mx-auto"></div>
                     <div className="space-y-2">
-                      <p className="text-sm text-slate-400">Processing performance data...</p>
+                      <p className="text-sm text-slate-400">
+                        Processing performance data...
+                      </p>
                       <div className="flex justify-center space-x-1">
                         <Skeleton className="h-2 w-16 bg-slate-700" />
                         <Skeleton className="h-2 w-12 bg-slate-700" />
@@ -545,8 +627,12 @@ export default function HomePage() {
                         <div className="flex items-center space-x-2">
                           {getScoreIcon(getPerformanceScore())}
                           <div>
-                            <p className="text-xs sm:text-sm font-medium text-slate-400">Performance Score</p>
-                            <p className={`text-lg sm:text-2xl font-bold ${getScoreColor(getPerformanceScore())}`}>
+                            <p className="text-xs sm:text-sm font-medium text-slate-400">
+                              Performance Score
+                            </p>
+                            <p
+                              className={`text-lg sm:text-2xl font-bold ${getScoreColor(getPerformanceScore())}`}
+                            >
                               {getPerformanceScore()}
                             </p>
                           </div>
@@ -555,7 +641,10 @@ export default function HomePage() {
                     </Card>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>Overall performance score based on WASM, GLB, and network metrics</p>
+                    <p>
+                      Overall performance score based on WASM, GLB, and network
+                      metrics
+                    </p>
                   </TooltipContent>
                 </Tooltip>
 
@@ -566,7 +655,9 @@ export default function HomePage() {
                         <div className="flex items-center space-x-2">
                           <Database className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
                           <div>
-                            <p className="text-xs sm:text-sm font-medium text-slate-400">Network Requests</p>
+                            <p className="text-xs sm:text-sm font-medium text-slate-400">
+                              Network Requests
+                            </p>
                             <p className="text-lg sm:text-2xl font-bold text-blue-400">
                               {performanceData.networkRequests.length}
                             </p>
@@ -587,7 +678,9 @@ export default function HomePage() {
                         <div className="flex items-center space-x-2">
                           <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
                           <div>
-                            <p className="text-xs sm:text-sm font-medium text-slate-400">WASM Modules</p>
+                            <p className="text-xs sm:text-sm font-medium text-slate-400">
+                              WASM Modules
+                            </p>
                             <p className="text-lg sm:text-2xl font-bold text-purple-400">
                               {performanceData.wasmModules.length}
                             </p>
@@ -597,7 +690,9 @@ export default function HomePage() {
                     </Card>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>WebAssembly modules with compilation and execution metrics</p>
+                    <p>
+                      WebAssembly modules with compilation and execution metrics
+                    </p>
                   </TooltipContent>
                 </Tooltip>
 
@@ -608,7 +703,9 @@ export default function HomePage() {
                         <div className="flex items-center space-x-2">
                           <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-orange-400" />
                           <div>
-                            <p className="text-xs sm:text-sm font-medium text-slate-400">3D Models</p>
+                            <p className="text-xs sm:text-sm font-medium text-slate-400">
+                              3D Models
+                            </p>
                             <p className="text-lg sm:text-2xl font-bold text-orange-400">
                               {performanceData.glbFiles.length}
                             </p>
@@ -629,7 +726,9 @@ export default function HomePage() {
                         <div className="flex items-center space-x-2">
                           <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
                           <div>
-                            <p className="text-xs sm:text-sm font-medium text-slate-400">Domains</p>
+                            <p className="text-xs sm:text-sm font-medium text-slate-400">
+                              Domains
+                            </p>
                             <p className="text-lg sm:text-2xl font-bold text-cyan-400">
                               {performanceData.domains.length}
                             </p>
@@ -650,15 +749,22 @@ export default function HomePage() {
                         <div className="flex items-center space-x-2">
                           <AlertTriangle className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
                           <div>
-                            <p className="text-xs sm:text-sm font-medium text-slate-400">Critical Issues</p>
-                            <p className="text-lg sm:text-2xl font-bold text-red-400">{criticalIssuesCount}</p>
+                            <p className="text-xs sm:text-sm font-medium text-slate-400">
+                              Critical Issues
+                            </p>
+                            <p className="text-lg sm:text-2xl font-bold text-red-400">
+                              {criticalIssuesCount}
+                            </p>
                           </div>
                         </div>
                       </CardContent>
                     </Card>
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>High-impact performance issues requiring immediate attention</p>
+                    <p>
+                      High-impact performance issues requiring immediate
+                      attention
+                    </p>
                   </TooltipContent>
                 </Tooltip>
               </div>
@@ -668,8 +774,10 @@ export default function HomePage() {
                 <Alert className="bg-red-900/20 border-red-800">
                   <AlertTriangle className="h-4 w-4" />
                   <AlertDescription className="text-red-200">
-                    <strong>{criticalIssuesCount} critical performance issues</strong> detected that may significantly
-                    impact user experience.
+                    <strong>
+                      {criticalIssuesCount} critical performance issues
+                    </strong>{" "}
+                    detected that may significantly impact user experience.
                     <Button
                       variant="link"
                       className="text-red-300 p-0 ml-2 h-auto"
@@ -711,18 +819,25 @@ export default function HomePage() {
                               >
                                 {protocol.protocol.toUpperCase()}
                               </Badge>
-                              <span className="text-xs sm:text-sm text-slate-300">{protocol.requests} requests</span>
+                              <span className="text-xs sm:text-sm text-slate-300">
+                                {protocol.requests} requests
+                              </span>
                             </div>
                             <div className="text-right">
                               <span className="text-xs sm:text-sm text-slate-300">
-                                {(protocol.totalSize / 1024 / 1024).toFixed(1)}MB
+                                {(protocol.totalSize / 1024 / 1024).toFixed(1)}
+                                MB
                               </span>
-                              <p className="text-xs text-slate-500">{protocol.avgLatency}ms avg</p>
+                              <p className="text-xs text-slate-500">
+                                {protocol.avgLatency}ms avg
+                              </p>
                             </div>
                           </div>
                         ))
                       ) : (
-                        <p className="text-slate-400 text-sm">No protocol data available</p>
+                        <p className="text-slate-400 text-sm">
+                          No protocol data available
+                        </p>
                       )}
                     </div>
                   </CardContent>
@@ -744,12 +859,19 @@ export default function HomePage() {
                             className="flex items-center justify-between p-2 bg-slate-700/30 rounded-lg"
                           >
                             <div className="flex-1 min-w-0">
-                              <p className="text-xs sm:text-sm text-slate-300 truncate font-medium">{domain.domain}</p>
+                              <p className="text-xs sm:text-sm text-slate-300 truncate font-medium">
+                                {domain.domain}
+                              </p>
                               <div className="flex items-center gap-2 mt-1">
-                                <span className="text-xs text-slate-500">{domain.requests} requests</span>
-                                <span className="text-xs text-slate-500">•</span>
                                 <span className="text-xs text-slate-500">
-                                  {(domain.totalSize / 1024 / 1024).toFixed(1)}MB
+                                  {domain.requests} requests
+                                </span>
+                                <span className="text-xs text-slate-500">
+                                  •
+                                </span>
+                                <span className="text-xs text-slate-500">
+                                  {(domain.totalSize / 1024 / 1024).toFixed(1)}
+                                  MB
                                 </span>
                               </div>
                             </div>
@@ -769,7 +891,9 @@ export default function HomePage() {
                           </div>
                         ))
                       ) : (
-                        <p className="text-slate-400 text-sm">No domain data available</p>
+                        <p className="text-slate-400 text-sm">
+                          No domain data available
+                        </p>
                       )}
                     </div>
                   </CardContent>
@@ -777,7 +901,11 @@ export default function HomePage() {
               </div>
 
               {/* Enhanced Main Analysis Tabs */}
-              <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+              <Tabs
+                value={activeTab}
+                onValueChange={setActiveTab}
+                className="space-y-4"
+              >
                 <div className="mobile-scroll">
                   <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
                     <TabsTrigger
@@ -786,19 +914,35 @@ export default function HomePage() {
                     >
                       Overview
                     </TabsTrigger>
-                    <TabsTrigger value="resources" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+                    <TabsTrigger
+                      value="resources"
+                      className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
+                    >
                       Resources
-                      <Badge variant="secondary" className="ml-1 text-xs bg-slate-600">
-                        {performanceData.wasmModules.length + performanceData.glbFiles.length}
+                      <Badge
+                        variant="secondary"
+                        className="ml-1 text-xs bg-slate-600"
+                      >
+                        {performanceData.wasmModules.length +
+                          performanceData.glbFiles.length}
                       </Badge>
                     </TabsTrigger>
-                    <TabsTrigger value="protocols" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+                    <TabsTrigger
+                      value="protocols"
+                      className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
+                    >
                       Protocols
-                      <Badge variant="secondary" className="ml-1 text-xs bg-slate-600">
+                      <Badge
+                        variant="secondary"
+                        className="ml-1 text-xs bg-slate-600"
+                      >
                         {performanceData.protocols.length}
                       </Badge>
                     </TabsTrigger>
-                    <TabsTrigger value="charts" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+                    <TabsTrigger
+                      value="charts"
+                      className="text-xs sm:text-sm data-[state=active]:bg-slate-700"
+                    >
                       Charts
                     </TabsTrigger>
                     <TabsTrigger
@@ -851,7 +995,9 @@ export default function HomePage() {
                 <CardContent className="p-4 text-center">
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     <div className="text-sm text-slate-400">
-                      Analysis complete • {performanceData.networkRequests.length} requests processed
+                      Analysis complete •{" "}
+                      {performanceData.networkRequests.length} requests
+                      processed
                     </div>
                     <Button
                       variant="outline"
@@ -869,5 +1015,5 @@ export default function HomePage() {
         </div>
       </div>
     </TooltipProvider>
-  )
+  );
 }
