@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 interface NetworkWaterfallChartProps {
-  data: any[]
+  data: any[];
 }
 
 export function NetworkWaterfallChart({ data }: NetworkWaterfallChartProps) {
@@ -49,5 +49,5 @@ export function NetworkWaterfallChart({ data }: NetworkWaterfallChartProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

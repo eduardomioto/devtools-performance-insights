@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Brush } from "recharts"
-import { Button } from "@/components/ui/button"
-import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend, Brush } from "recharts";
+import { Button } from "@/components/ui/button";
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 interface PerformanceTimelineChartProps {
-  data: any[]
+  data: any[];
 }
 
 export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps) {
-  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 100 })
+  const [timelineZoom, setTimelineZoom] = useState({ start: 0, end: 100 });
 
-  const resetTimelineZoom = () => setTimelineZoom({ start: 0, end: 100 })
+  const resetTimelineZoom = () => setTimelineZoom({ start: 0, end: 100 });
 
   return (
     <Card className="bg-slate-800/50 border-slate-700">
@@ -109,7 +109,7 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
                       setTimelineZoom({
                         start: (brushData.startIndex / data.length) * 100,
                         end: (brushData.endIndex / data.length) * 100,
-                      })
+                      });
                     }
                   }}
                 />
@@ -166,5 +166,5 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
-import { Button } from "@/components/ui/button"
-import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts";
+import { Button } from "@/components/ui/button";
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 interface DomainDistributionChartProps {
-  data: any[]
+  data: any[];
 }
 
 export function DomainDistributionChart({ data }: DomainDistributionChartProps) {
-  const [domainZoom, setDomainZoom] = useState(1)
+  const [domainZoom, setDomainZoom] = useState(1);
 
-  const resetDomainZoom = () => setDomainZoom(1)
+  const resetDomainZoom = () => setDomainZoom(1);
 
   return (
     <Card className="bg-slate-800/50 border-slate-700">
@@ -85,5 +85,5 @@ export function DomainDistributionChart({ data }: DomainDistributionChartProps) 
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
