@@ -1,0 +1,21 @@
+{
+  "version": "v1.0.0",
+  "ignore": {},
+  "patch": {},
+  "exclude": {
+    "global": [
+      "test/**",
+      "tests/**",
+      "**/*.test.js",
+      "**/*.test.ts",
+      "**/*.spec.js",
+      "**/*.spec.ts",
+      "**/node_modules/**"
+    ]
+  },
+  "language-settings": {
+    "javascript": {
+      "ignore-dev-deps": true
+    }
+  }
+}

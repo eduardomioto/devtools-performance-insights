@@ -1,0 +1,36 @@
+# GitHub Sponsors and funding configuration
+# This file enables the "Sponsor" button on the repository
+
+# GitHub Sponsors
+github: [maintainer1, maintainer2]
+
+# Open Collective
+open_collective: chrome-performance-analyzer
+
+# Ko-fi
+ko_fi: chromeperf
+
+# Tidelift
+tidelift: npm/chrome-performance-analyzer
+
+# Community Bridge
+community_bridge: chrome-performance-analyzer
+
+# Liberapay
+liberapay: chrome-perf-team
+
+# IssueHunt
+issuehunt: chrome-performance-analyzer
+
+# Otechie
+otechie: chrome-perf-maintainers
+
+# LFX Crowdfunding (Linux Foundation)
+lfx_crowdfunding: chrome-performance-analyzer
+
+# Custom funding URLs
+custom: [
+  "https://www.buymeacoffee.com/chromeperf",
+  "https://www.patreon.com/chromeperformance",
+  "https://paypal.me/chromeperformanceanalyzer"
+]

@@ -1,0 +1,22 @@
+# Snyk configuration file
+# https://docs.snyk.io/snyk-cli/test-for-vulnerabilities/the-.snyk-file
+
+# Language settings
+language-settings:
+  javascript:
+    # Ignore dev dependencies in production scans
+    ignore-dev-deps: true
+
+# Patches to apply
+patches: {}
+
+# Vulnerabilities to ignore
+ignore:
+  # Example: Ignore a specific vulnerability with justification
+  # SNYK-JS-LODASH-567746:
+  #   - '*':
+  #       reason: 'This vulnerability does not affect our usage pattern'
+  #       expires: '2024-12-31T23:59:59.999Z'
+
+# Version of this file format
+version: v1.0.0
