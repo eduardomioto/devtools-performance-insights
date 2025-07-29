@@ -31,14 +31,9 @@ import AdvancedRecommendations from "@/components/advanced-recommendations"
 import ResourceAnalysis from "@/components/resource-analysis"
 import ProtocolAnalysis from "@/components/protocol-analysis"
 import {
-  generateComplexSampleData,
-  type ComplexPerformanceData,
-  type NetworkRequest,
-  type WasmModule,
-  type GLBFile,
-  type DomainInfo,
-  type ProtocolInfo,
+  generateComplexSampleData
 } from "@/lib/sample-data"
+import type { ComplexPerformanceData, NetworkRequest, WasmModule, GLBFile, DomainInfo, ProtocolInfo } from "@/types/profiling-type"
 
 export default function HomePage() {
   const [performanceData, setPerformanceData] = useState<ComplexPerformanceData | null>(null)
