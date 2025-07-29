@@ -1,14 +1,38 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Bar, BarChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from "recharts"
-import { Wifi, Globe, Zap, Clock, TrendingUp, AlertTriangle } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import {
+  ChartContainer,
+  ChartTooltip,
+  ChartTooltipContent,
+} from "@/components/ui/chart";
+import {
+  Bar,
+  BarChart,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  ResponsiveContainer,
+} from "recharts";
+import {
+  Wifi,
+  Globe,
+  Zap,
+  Clock,
+  TrendingUp,
+  AlertTriangle,
+} from "lucide-react";
 
 interface ProtocolAnalysisProps {
-  data: any
+  data: any;
 }
 
 export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
@@ -20,7 +44,7 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
     avgLatency: protocol.avgLatency,
     totalSizeMB: (protocol.totalSize / 1024 / 1024).toFixed(1),
     domains: protocol.domains.length,
-  }))
+  }));
 
   // Domain performance by protocol
   const domainProtocolData = data.domains.map((domain: any) => ({
@@ -30,35 +54,41 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
     http3: domain.protocols.includes("http/3") ? domain.requests * 0.5 : 0,
     totalRequests: domain.requests,
     avgResponse: domain.avgResponseTime,
-  }))
+  }));
 
   // Connection multiplexing analysis
   const multiplexingData = [
-    { protocol: "HTTP/1.1", maxConnections: 6, efficiency: 30, color: "#ef4444" },
+    {
+      protocol: "HTTP/1.1",
+      maxConnections: 6,
+      efficiency: 30,
+      color: "#ef4444",
+    },
     { protocol: "HTTP/2", maxConnections: 1, efficiency: 85, color: "#3b82f6" },
     { protocol: "HTTP/3", maxConnections: 1, efficiency: 95, color: "#10b981" },
-  ]
+  ];
 
   // Request priority analysis
   const priorityData = data.networkRequests.reduce((acc: any, req: any) => {
-    const key = `${req.protocol}-${req.priority}`
-    acc[key] = (acc[key] || 0) + 1
-    return acc
-  }, {})
+    const key = `${req.protocol}-${req.priority}`;
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
 
   const priorityChartData = Object.entries(priorityData).map(([key, count]) => {
-    const [protocol, priority] = key.split("-")
-    return { protocol, priority, count }
-  })
-
-  const COLORS = ["#3b82f6", "#8b5cf6", "#06b6d4", "#10b981", "#f59e0b", "#ef4444"]
-
+    const [protocol, priority] = key.split("-");
+    return { protocol, priority, count };
+  });
+  
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Protocol Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {data.protocols.map((protocol: any, index: number) => (
-          <Card key={protocol.protocol} className="bg-slate-800/50 border-slate-700">
+          <Card
+            key={protocol.protocol}
+            className="bg-slate-800/50 border-slate-700"
+          >
             <CardHeader className="pb-3">
               <CardTitle className="text-slate-100 flex items-center gap-2 text-sm sm:text-base">
                 <Wifi className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -69,31 +99,50 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <p className="text-slate-400">Requests</p>
-                  <p className="text-slate-100 font-bold text-lg">{protocol.requests}</p>
+                  <p className="text-slate-100 font-bold text-lg">
+                    {protocol.requests}
+                  </p>
                 </div>
                 <div>
                   <p className="text-slate-400">Avg Latency</p>
-                  <p className="text-slate-100 font-bold text-lg">{protocol.avgLatency}ms</p>
+                  <p className="text-slate-100 font-bold text-lg">
+                    {protocol.avgLatency}ms
+                  </p>
                 </div>
               </div>
 
               <div>
                 <p className="text-slate-400 text-sm mb-1">Total Size</p>
-                <p className="text-slate-100 font-medium">{(protocol.totalSize / 1024 / 1024).toFixed(1)}MB</p>
+                <p className="text-slate-100 font-medium">
+                  {(protocol.totalSize / 1024 / 1024).toFixed(1)}MB
+                </p>
                 <Progress
-                  value={(protocol.totalSize / Math.max(...data.protocols.map((p: any) => p.totalSize))) * 100}
+                  value={
+                    (protocol.totalSize /
+                      Math.max(
+                        ...data.protocols.map((p: any) => p.totalSize),
+                      )) *
+                    100
+                  }
                   className="mt-1"
                 />
               </div>
 
               <div className="flex flex-wrap gap-1">
                 {protocol.domains.slice(0, 3).map((domain: string) => (
-                  <Badge key={domain} variant="outline" className="text-xs border-slate-600 text-slate-300">
+                  <Badge
+                    key={domain}
+                    variant="outline"
+                    className="text-xs border-slate-600 text-slate-300"
+                  >
                     {domain.replace(".example.com", "")}
                   </Badge>
                 ))}
                 {protocol.domains.length > 3 && (
-                  <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
+                  <Badge
+                    variant="outline"
+                    className="text-xs border-slate-600 text-slate-300"
+                  >
                     +{protocol.domains.length - 3}
                   </Badge>
                 )}
@@ -111,7 +160,9 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
               <TrendingUp className="w-5 h-5" />
               Protocol Efficiency
             </CardTitle>
-            <CardDescription className="text-slate-400">Data throughput per latency unit (KB/ms)</CardDescription>
+            <CardDescription className="text-slate-400">
+              Data throughput per latency unit (KB/ms)
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ChartContainer
@@ -148,7 +199,9 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
               <Zap className="w-5 h-5" />
               Connection Multiplexing
             </CardTitle>
-            <CardDescription className="text-slate-400">Protocol efficiency and connection limits</CardDescription>
+            <CardDescription className="text-slate-400">
+              Protocol efficiency and connection limits
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -156,13 +209,21 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
                 <div key={item.protocol} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
-                      <span className="text-sm font-medium text-slate-100">{item.protocol}</span>
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className="text-sm font-medium text-slate-100">
+                        {item.protocol}
+                      </span>
                     </div>
                     <div className="text-right text-sm">
-                      <p className="text-slate-100">{item.efficiency}% efficient</p>
+                      <p className="text-slate-100">
+                        {item.efficiency}% efficient
+                      </p>
                       <p className="text-slate-400">
-                        {item.maxConnections} connection{item.maxConnections > 1 ? "s" : ""}
+                        {item.maxConnections} connection
+                        {item.maxConnections > 1 ? "s" : ""}
                       </p>
                     </div>
                   </div>
@@ -181,7 +242,9 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
             <Globe className="w-5 h-5" />
             Domain Protocol Distribution
           </CardTitle>
-          <CardDescription className="text-slate-400">Protocol usage across different domains</CardDescription>
+          <CardDescription className="text-slate-400">
+            Protocol usage across different domains
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ChartContainer
@@ -195,7 +258,14 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={domainProtocolData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="domain" stroke="#9ca3af" fontSize={10} angle={-45} textAnchor="end" height={60} />
+                <XAxis
+                  dataKey="domain"
+                  stroke="#9ca3af"
+                  fontSize={10}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
+                />
                 <YAxis stroke="#9ca3af" fontSize={12} />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
@@ -222,13 +292,18 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
               <Clock className="w-5 h-5" />
               Request Priority Distribution
             </CardTitle>
-            <CardDescription className="text-slate-400">Priority levels across protocols</CardDescription>
+            <CardDescription className="text-slate-400">
+              Priority levels across protocols
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
               {["high", "medium", "low"].map((priority) => {
-                const priorityRequests = data.networkRequests.filter((req: any) => req.priority === priority)
-                const percentage = (priorityRequests.length / data.networkRequests.length) * 100
+                const priorityRequests = data.networkRequests.filter(
+                  (req: any) => req.priority === priority,
+                );
+                const percentage =
+                  (priorityRequests.length / data.networkRequests.length) * 100;
 
                 return (
                   <div key={priority} className="space-y-2">
@@ -246,13 +321,17 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
                         >
                           {priority.toUpperCase()}
                         </Badge>
-                        <span className="text-sm text-slate-300">{priorityRequests.length} requests</span>
+                        <span className="text-sm text-slate-300">
+                          {priorityRequests.length} requests
+                        </span>
                       </div>
-                      <span className="text-sm text-slate-400">{percentage.toFixed(1)}%</span>
+                      <span className="text-sm text-slate-400">
+                        {percentage.toFixed(1)}%
+                      </span>
                     </div>
                     <Progress value={percentage} className="h-2" />
                   </div>
-                )
+                );
               })}
             </div>
           </CardContent>
@@ -265,7 +344,9 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
               <AlertTriangle className="w-5 h-5" />
               Protocol Issues
             </CardTitle>
-            <CardDescription className="text-slate-400">Identified protocol-related performance issues</CardDescription>
+            <CardDescription className="text-slate-400">
+              Identified protocol-related performance issues
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -273,13 +354,20 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
                 <div className="bg-red-900/20 border border-red-800 rounded-lg p-3">
                   <div className="flex items-center space-x-2 mb-2">
                     <AlertTriangle className="w-4 h-4 text-red-400" />
-                    <h4 className="text-red-400 font-medium">HTTP/1.1 Usage Detected</h4>
+                    <h4 className="text-red-400 font-medium">
+                      HTTP/1.1 Usage Detected
+                    </h4>
                   </div>
                   <p className="text-red-200 text-sm">
-                    {data.protocols.find((p: any) => p.protocol === "http/1.1")?.requests} requests still using HTTP/1.1
+                    {
+                      data.protocols.find((p: any) => p.protocol === "http/1.1")
+                        ?.requests
+                    }{" "}
+                    requests still using HTTP/1.1
                   </p>
                   <p className="text-red-300 text-xs mt-1">
-                    Consider upgrading to HTTP/2 or HTTP/3 for better performance
+                    Consider upgrading to HTTP/2 or HTTP/3 for better
+                    performance
                   </p>
                 </div>
               )}
@@ -288,10 +376,16 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
                 <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-3">
                   <div className="flex items-center space-x-2 mb-2">
                     <Clock className="w-4 h-4 text-yellow-400" />
-                    <h4 className="text-yellow-400 font-medium">High Latency Domains</h4>
+                    <h4 className="text-yellow-400 font-medium">
+                      High Latency Domains
+                    </h4>
                   </div>
                   <p className="text-yellow-200 text-sm">
-                    {data.domains.filter((d: any) => d.avgResponseTime > 1000).length} domains with &gt;1s response time
+                    {
+                      data.domains.filter((d: any) => d.avgResponseTime > 1000)
+                        .length
+                    }{" "}
+                    domains with &gt;1s response time
                   </p>
                   <p className="text-yellow-300 text-xs mt-1">
                     Consider CDN optimization or server location improvements
@@ -303,17 +397,25 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
                 <div className="bg-orange-900/20 border border-orange-800 rounded-lg p-3">
                   <div className="flex items-center space-x-2 mb-2">
                     <Wifi className="w-4 h-4 text-orange-400" />
-                    <h4 className="text-orange-400 font-medium">High Request Count</h4>
+                    <h4 className="text-orange-400 font-medium">
+                      High Request Count
+                    </h4>
                   </div>
-                  <p className="text-orange-200 text-sm">{data.networkRequests.length} total requests detected</p>
-                  <p className="text-orange-300 text-xs mt-1">Consider request bundling and resource optimization</p>
+                  <p className="text-orange-200 text-sm">
+                    {data.networkRequests.length} total requests detected
+                  </p>
+                  <p className="text-orange-300 text-xs mt-1">
+                    Consider request bundling and resource optimization
+                  </p>
                 </div>
               )}
 
               <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-3">
                 <div className="flex items-center space-x-2 mb-2">
                   <TrendingUp className="w-4 h-4 text-blue-400" />
-                  <h4 className="text-blue-400 font-medium">Protocol Recommendations</h4>
+                  <h4 className="text-blue-400 font-medium">
+                    Protocol Recommendations
+                  </h4>
                 </div>
                 <ul className="text-blue-200 text-sm space-y-1">
                   <li>• Migrate remaining HTTP/1.1 requests to HTTP/2+</li>
@@ -327,5 +429,5 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
         </Card>
       </div>
     </div>
-  )
+  );
 }
