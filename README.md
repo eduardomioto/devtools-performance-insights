@@ -286,3 +286,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [![Security](https://img.shields.io/badge/security-Snyk-4C4A73.svg)](https://snyk.io/)
 [![Sponsors](https://img.shields.io/badge/sponsors-welcome-brightgreen.svg)](SPONSORS.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+
+## 🧩 Alternatives
+- [Speedscope](https://www.speedscope.app/) ![Speedscope Icon](https://www.speedscope.app/favicon.ico)
+- [Perfetto UI](https://ui.perfetto.dev/) ![Perfetto Icon](https://ui.perfetto.dev/favicon.ico)Alternatives
+
