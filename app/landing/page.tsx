@@ -1,83 +1,102 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment, Float, Text3D, MeshTransmissionMaterial } from "@react-three/drei"
+import { OrbitControls, Text3D, Environment, Float } from "@react-three/drei"
+import { Suspense, useRef, useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Zap, BarChart3, Shield, Cpu, Globe, Sparkles } from "lucide-react"
+import { ArrowRight, Zap, BarChart3, Cpu, Globe, ChevronDown } from "lucide-react"
 import Link from "next/link"
-
-function FloatingCube({ position, color }: { position: [number, number, number]; color: string }) {
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh position={position}>
-        <boxGeometry args={[0.5, 0.5, 0.5]} />
-        <MeshTransmissionMaterial
-          color={color}
-          thickness={0.2}
-          roughness={0}
-          transmission={1}
-          ior={1.2}
-          chromaticAberration={0.02}
-          backside
-        />
-      </mesh>
-    </Float>
-  )
-}
+import type * as THREE from "three"
 
 function Scene() {
+  const meshRef = useRef<THREE.Mesh>(null)
+  const groupRef = useRef<THREE.Group>(null)
+
   return (
     <>
+      <Environment preset="city" />
       <ambientLight intensity={0.5} />
       <pointLight position={[10, 10, 10]} />
-      <Float speed={1.5} rotationIntensity={0.5} floatIntensity={1}>
-        <Text3D
-          font="/fonts/Inter_Bold.json"
-          size={1.2}
-          height={0.2}
-          curveSegments={12}
-          bevelEnabled
-          bevelThickness={0.02}
-          bevelSize={0.02}
-          bevelOffset={0}
-          bevelSegments={5}
-          position={[-3, 0, 0]}
-        >
-          PERF
-          <MeshTransmissionMaterial
-            color="#3b82f6"
-            thickness={0.3}
-            roughness={0.1}
-            transmission={0.9}
-            ior={1.5}
-            chromaticAberration={0.05}
-            backside
-          />
-        </Text3D>
-      </Float>
 
-      <FloatingCube position={[-2, 2, -1]} color="#8b5cf6" />
-      <FloatingCube position={[2, -1, 1]} color="#06b6d4" />
-      <FloatingCube position={[3, 1.5, -2]} color="#10b981" />
-      <FloatingCube position={[-1, -2, 2]} color="#f59e0b" />
+      <group ref={groupRef}>
+        <Float speed={1.5} rotationIntensity={0.5} floatIntensity={0.5}>
+          <Text3D
+            font="/fonts/Geist_Bold.json"
+            size={2}
+            height={0.2}
+            curveSegments={12}
+            bevelEnabled
+            bevelThickness={0.02}
+            bevelSize={0.02}
+            bevelOffset={0}
+            bevelSegments={5}
+            position={[-3, 0, 0]}
+          >
+            PERF
+            <meshPhysicalMaterial
+              color="#00ff88"
+              transmission={0.9}
+              opacity={0.8}
+              metalness={0.1}
+              roughness={0.1}
+              ior={1.5}
+              thickness={0.01}
+              specularIntensity={1}
+              specularColor="#ffffff"
+              envMapIntensity={1}
+              clearcoat={1}
+              clearcoatRoughness={0.1}
+            />
+          </Text3D>
+        </Float>
 
-      <Environment preset="city" />
-      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+        {/* Floating cubes */}
+        {Array.from({ length: 8 }).map((_, i) => (
+          <Float
+            key={i}
+            speed={1 + i * 0.2}
+            rotationIntensity={0.5}
+            floatIntensity={0.5}
+            position={[(Math.random() - 0.5) * 20, (Math.random() - 0.5) * 10, (Math.random() - 0.5) * 10]}
+          >
+            <mesh ref={meshRef}>
+              <boxGeometry args={[0.5, 0.5, 0.5]} />
+              <meshPhysicalMaterial
+                color={`hsl(${i * 45}, 70%, 60%)`}
+                transmission={0.8}
+                opacity={0.7}
+                metalness={0.2}
+                roughness={0.2}
+                ior={1.5}
+                thickness={0.01}
+              />
+            </mesh>
+          </Float>
+        ))}
+      </group>
+
+      <OrbitControls
+        enablePan={false}
+        enableZoom={false}
+        maxPolarAngle={Math.PI / 2}
+        minPolarAngle={Math.PI / 3}
+        autoRotate
+        autoRotateSpeed={0.5}
+      />
     </>
   )
 }
 
-export default function LandingPage() {
+function AnimatedBackground() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: -(e.clientY / window.innerHeight) * 2 + 1,
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100,
       })
     }
 
@@ -86,199 +105,213 @@ export default function LandingPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 opacity-30">
+    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      {/* Gradient orbs */}
+      <div
+        className="absolute w-96 h-96 rounded-full opacity-20 blur-3xl animate-pulse"
+        style={{
+          background: "radial-gradient(circle, #00ff88 0%, transparent 70%)",
+          left: `${mousePosition.x * 0.1}%`,
+          top: `${mousePosition.y * 0.1}%`,
+          transform: "translate(-50%, -50%)",
+          transition: "all 0.3s ease-out",
+        }}
+      />
+      <div
+        className="absolute w-80 h-80 rounded-full opacity-15 blur-3xl animate-bounce"
+        style={{
+          background: "radial-gradient(circle, #0088ff 0%, transparent 70%)",
+          right: `${mousePosition.x * 0.05}%`,
+          bottom: `${mousePosition.y * 0.05}%`,
+          animationDelay: "1s",
+          animationDuration: "3s",
+        }}
+      />
+      <div
+        className="absolute w-64 h-64 rounded-full opacity-10 blur-2xl animate-pulse"
+        style={{
+          background: "radial-gradient(circle, #ff0088 0%, transparent 70%)",
+          left: `${50 + mousePosition.x * 0.02}%`,
+          top: `${50 + mousePosition.y * 0.02}%`,
+          transform: "translate(-50%, -50%)",
+          animationDelay: "2s",
+        }}
+      />
+
+      {/* Floating particles */}
+      {Array.from({ length: 20 }).map((_, i) => (
         <div
-          className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse"
+          key={i}
+          className="absolute w-2 h-2 bg-green-400 rounded-full opacity-30 animate-bounce"
           style={{
-            transform: `translate(${mousePosition.x * 20}px, ${mousePosition.y * 20}px)`,
-            transition: "transform 0.3s ease-out",
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 3}s`,
+            animationDuration: `${2 + Math.random() * 2}s`,
           }}
         />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-bounce" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-bounce delay-1000" />
-        <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-cyan-500/10 rounded-full blur-2xl animate-pulse delay-500" />
-      </div>
+      ))}
+    </div>
+  )
+}
+
+export default function LandingPage() {
+  return (
+    <div className="min-h-screen bg-black text-white overflow-hidden">
+      <AnimatedBackground />
 
       {/* Navigation */}
-      <nav className="relative z-10 flex items-center justify-between p-6 max-w-7xl mx-auto">
+      <nav className="relative z-50 flex items-center justify-between p-6 backdrop-blur-sm bg-black/20">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-            <Zap className="w-5 h-5 text-white" />
-          </div>
-          <span className="text-xl font-bold text-white">PerfAnalyzer</span>
+          <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg" />
+          <span className="text-xl font-bold">PerfAnalyzer</span>
         </div>
         <div className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-gray-300 hover:text-white transition-colors">
+          <Link href="#features" className="hover:text-green-400 transition-colors">
             Features
-          </a>
-          <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">
+          </Link>
+          <Link href="#pricing" className="hover:text-green-400 transition-colors">
             Pricing
-          </a>
-          <a href="#docs" className="text-gray-300 hover:text-white transition-colors">
+          </Link>
+          <Link href="#docs" className="hover:text-green-400 transition-colors">
             Docs
-          </a>
-          <Button variant="outline" className="border-white/20 text-white hover:bg-white/10 bg-transparent">
-            Sign In
+          </Link>
+          <Button
+            variant="outline"
+            className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black bg-transparent"
+          >
+            <Link href="/">Try Demo</Link>
           </Button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-20 pb-32">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative z-10 min-h-screen flex items-center">
+        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
-              <Badge className="bg-blue-500/20 text-blue-300 border-blue-500/30">
-                <Sparkles className="w-4 h-4 mr-2" />
-                Next-Gen Performance Analysis
+              <Badge className="bg-green-400/20 text-green-400 border-green-400/30">
+                🚀 Next-Gen Performance Analysis
               </Badge>
-              <h1 className="text-5xl lg:text-7xl font-bold text-white leading-tight">
-                Analyze Your
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+                Unlock Your
+                <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
                   {" "}
                   Web Performance
                 </span>
-                <br />
-                Like Never Before
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed">
-                Revolutionary Chrome DevTools profiling analysis with AI-powered insights, real-time monitoring, and
-                advanced visualization for modern web applications.
+                Advanced Chrome DevTools performance analysis with WASM optimization, GLB complexity insights, and
+                multi-protocol support. Built for the future of web development.
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-4 text-lg"
-                >
-                  Start Analyzing
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
               <Button
                 size="lg"
-                variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg bg-transparent"
+                className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-semibold"
               >
+                <Link href="/" className="flex items-center">
+                  Start Analyzing <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+              <Button size="lg" variant="outline" className="border-gray-600 hover:bg-gray-800 bg-transparent">
                 Watch Demo
               </Button>
             </div>
 
-            <div className="flex items-center space-x-8 pt-8">
+            <div className="grid grid-cols-3 gap-8 pt-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">99.9%</div>
+                <div className="text-3xl font-bold text-green-400">99.9%</div>
                 <div className="text-sm text-gray-400">Accuracy</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">10x</div>
-                <div className="text-sm text-gray-400">Faster Analysis</div>
+                <div className="text-3xl font-bold text-blue-400">50+</div>
+                <div className="text-sm text-gray-400">Metrics</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">50+</div>
-                <div className="text-sm text-gray-400">Metrics Tracked</div>
+                <div className="text-3xl font-bold text-purple-400">10x</div>
+                <div className="text-sm text-gray-400">Faster</div>
               </div>
             </div>
           </div>
 
-          <div className="h-96 lg:h-[500px]">
-            <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
-              <Scene />
+          <div className="relative h-96 lg:h-[600px]">
+            <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+              <Suspense fallback={null}>
+                <Scene />
+              </Suspense>
             </Canvas>
           </div>
         </div>
-      </div>
+
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          <ChevronDown className="h-8 w-8 text-gray-400" />
+        </div>
+      </section>
 
       {/* Features Section */}
-      <section id="features" className="relative z-10 py-32 bg-black/20 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6">
+      <section id="features" className="relative z-10 py-24 bg-gradient-to-b from-transparent to-gray-900/50">
+        <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-              Powerful Features for
-              <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              Cutting-Edge
+              <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
                 {" "}
-                Modern Developers
+                Features
               </span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Everything you need to optimize your web application's performance with cutting-edge analysis tools.
+              Powered by advanced algorithms and machine learning to provide unprecedented insights into your web
+              application performance.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center mb-6">
-                  <BarChart3 className="w-6 h-6 text-white" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <Zap className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">Advanced Analytics</h3>
-                <p className="text-gray-300">
-                  Deep dive into performance metrics with interactive charts, timeline analysis, and comprehensive
-                  reporting.
+                <h3 className="text-xl font-semibold mb-3">WASM Analysis</h3>
+                <p className="text-gray-400">
+                  Deep insights into WebAssembly performance, compilation times, and optimization opportunities.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center mb-6">
-                  <Cpu className="w-6 h-6 text-white" />
+            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <BarChart3 className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">WASM & WebGL Analysis</h3>
-                <p className="text-gray-300">
-                  Specialized analysis for WebAssembly modules and WebGL applications with detailed performance
-                  insights.
+                <h3 className="text-xl font-semibold mb-3">GLB Optimization</h3>
+                <p className="text-gray-400">
+                  Analyze 3D model complexity, loading patterns, and rendering performance for GLB files.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mb-6">
-                  <Globe className="w-6 h-6 text-white" />
+            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <Cpu className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">Network Optimization</h3>
-                <p className="text-gray-300">
-                  Analyze network requests, identify bottlenecks, and optimize resource loading strategies.
+                <h3 className="text-xl font-semibold mb-3">Real-time Monitoring</h3>
+                <p className="text-gray-400">
+                  Live performance metrics with advanced timeline visualization and bottleneck detection.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center mb-6">
-                  <Shield className="w-6 h-6 text-white" />
+            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+              <CardContent className="p-6 text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                  <Globe className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-4">Security Scanning</h3>
-                <p className="text-gray-300">
-                  Built-in security analysis to identify potential vulnerabilities and performance security issues.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center mb-6">
-                  <Zap className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4">Real-time Monitoring</h3>
-                <p className="text-gray-300">
-                  Live performance monitoring with instant alerts and automated optimization suggestions.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              <CardContent className="p-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-lg flex items-center justify-center mb-6">
-                  <Sparkles className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-white mb-4">AI-Powered Insights</h3>
-                <p className="text-gray-300">
-                  Machine learning algorithms provide intelligent recommendations for performance optimization.
+                <h3 className="text-xl font-semibold mb-3">Multi-Protocol</h3>
+                <p className="text-gray-400">
+                  Support for HTTP/1.1, HTTP/2, HTTP/3, and WebSocket performance analysis.
                 </p>
               </CardContent>
             </Card>
@@ -287,62 +320,110 @@ export default function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative z-10 py-32">
-        <div className="max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Ready to Optimize Your
-            <span className="bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-              {" "}
-              Performance?
-            </span>
-          </h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Join thousands of developers who trust PerfAnalyzer to deliver lightning-fast web experiences.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link href="/">
+      <section className="relative z-10 py-24">
+        <div className="container mx-auto px-6 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+              Ready to
+              <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
+                {" "}
+                Optimize
+              </span>
+              ?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Join thousands of developers who trust PerfAnalyzer for their performance optimization needs.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white px-12 py-4 text-lg"
+                className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-semibold"
               >
-                Get Started Free
-                <ArrowRight className="w-5 h-5 ml-2" />
+                <Link href="/" className="flex items-center">
+                  Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
               </Button>
-            </Link>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/20 text-white hover:bg-white/10 px-12 py-4 text-lg bg-transparent"
-            >
-              Schedule Demo
-            </Button>
+              <Button size="lg" variant="outline" className="border-gray-600 hover:bg-gray-800 bg-transparent">
+                Contact Sales
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 py-12">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-4 md:mb-0">
-              <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                <Zap className="w-5 h-5 text-white" />
+      <footer className="relative z-10 border-t border-gray-800 py-12 bg-gray-900/50 backdrop-blur-sm">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg" />
+                <span className="text-xl font-bold">PerfAnalyzer</span>
               </div>
-              <span className="text-xl font-bold text-white">PerfAnalyzer</span>
+              <p className="text-gray-400">Next-generation performance analysis for modern web applications.</p>
             </div>
-            <div className="flex items-center space-x-8">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Privacy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Terms
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Support
-              </a>
+            <div>
+              <h4 className="font-semibold mb-4">Product</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Features
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Pricing
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    API
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Resources</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Documentation
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Support
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-4">Company</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    About
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Careers
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="hover:text-white transition-colors">
+                    Contact
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-white/10 text-center text-gray-400">
+          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
             <p>&copy; 2024 PerfAnalyzer. All rights reserved.</p>
           </div>
         </div>
