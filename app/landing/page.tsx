@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Text3D, Environment, Float } from "@react-three/drei"
-import { Suspense, useRef, useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ArrowRight, Zap, BarChart3, Cpu, Globe, ChevronDown } from "lucide-react"
-import Link from "next/link"
-import type * as THREE from "three"
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Text3D, Environment, Float } from "@react-three/drei";
+import { Suspense, useRef, useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ArrowRight, Zap, BarChart3, Cpu, Globe, ChevronDown } from "lucide-react";
+import Link from "next/link";
+import type * as THREE from "three";
 
 function Scene() {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const groupRef = useRef<THREE.Group>(null)
+  const meshRef = useRef<THREE.Mesh>(null);
+  const groupRef = useRef<THREE.Group>(null);
 
   return (
     <>
@@ -86,23 +86,23 @@ function Scene() {
         autoRotateSpeed={0.5}
       />
     </>
-  )
+  );
 }
 
 function AnimatedBackground() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
         y: (e.clientY / window.innerHeight) * 100,
-      })
-    }
+      });
+    };
 
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none">
@@ -152,7 +152,7 @@ function AnimatedBackground() {
         />
       ))}
     </div>
-  )
+  );
 }
 
 export default function LandingPage() {
@@ -429,5 +429,5 @@ export default function LandingPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

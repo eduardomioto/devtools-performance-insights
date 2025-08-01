@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from "recharts"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react"
+import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Line, LineChart, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Legend } from "recharts";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 interface PerformanceTimelineChartProps {
-  data: any[]
+  data: any[];
 }
 
 export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps) {
-  const [timelineZoom, setTimelineZoom] = useState(1)
+  const [timelineZoom, setTimelineZoom] = useState(1);
 
-  const resetTimelineZoom = () => setTimelineZoom(1)
+  const resetTimelineZoom = () => setTimelineZoom(1);
 
   // Calculate timeline statistics
-  const totalDuration = data.length > 0 ? Math.max(...data.map((d) => d.time)) : 0
-  const maxCpu = data.length > 0 ? Math.max(...data.map((d) => d.cpu || 0)) : 0
-  const maxMemory = data.length > 0 ? Math.max(...data.map((d) => d.memory || 0)) : 0
-  const maxNetwork = data.length > 0 ? Math.max(...data.map((d) => d.network || 0)) : 0
+  const totalDuration = data.length > 0 ? Math.max(...data.map((d) => d.time)) : 0;
+  const maxCpu = data.length > 0 ? Math.max(...data.map((d) => d.cpu || 0)) : 0;
+  const maxMemory = data.length > 0 ? Math.max(...data.map((d) => d.memory || 0)) : 0;
+  const maxNetwork = data.length > 0 ? Math.max(...data.map((d) => d.network || 0)) : 0;
 
   return (
     <Card className="bg-slate-800/50 border-slate-700">
@@ -151,5 +151,5 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

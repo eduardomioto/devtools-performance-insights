@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
-import { Line, LineChart, Bar, BarChart, Area, AreaChart, XAxis, YAxis, CartesianGrid } from "recharts"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Line, LineChart, Bar, BarChart, Area, AreaChart, XAxis, YAxis, CartesianGrid } from "recharts";
 
 interface PerformanceChartsProps {
-  data: any
+  data: any;
 }
 
 export default function PerformanceCharts({ data }: PerformanceChartsProps) {
@@ -22,7 +22,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
     { time: 1600, cpu: 15, memory: 46, network: 0 },
     { time: 1800, cpu: 10, memory: 45, network: 0 },
     { time: 2000, cpu: 8, memory: 44, network: 0 },
-  ]
+  ];
 
   const metricsData = [
     { metric: "FCP", value: 800, threshold: 1800, status: "good" },
@@ -35,7 +35,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
     { metric: "FID", value: 50, threshold: 100, status: "good" },
     { metric: "CLS", value: 0.15, threshold: 0.1, status: "poor" },
     { metric: "TTFB", value: 200, threshold: 800, status: "good" },
-  ]
+  ];
 
   const networkData = [
     { resource: "HTML", size: 15, time: 200 },
@@ -44,7 +44,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
     { resource: "Images", size: 520, time: 600 },
     { resource: "Fonts", size: 85, time: 300 },
     { resource: "API", size: 12, time: 180 },
-  ]
+  ];
 
   return (
     <div className="grid gap-6">
@@ -178,5 +178,5 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

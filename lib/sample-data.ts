@@ -5,7 +5,7 @@ import type {
   GLBFile,
   DomainInfo,
   ProtocolInfo,
-} from "@/types/profiling-type"
+} from "@/types/profiling-type";
 
 // Sample trace events that match Chrome DevTools format - Extended to 45+ seconds
 function generateSampleTraceEvents() {
@@ -15,7 +15,7 @@ function generateSampleTraceEvents() {
     { name: "loadEventEnd", ts: 12500000, dur: 0, cat: "loading" },
     { name: "firstContentfulPaint", ts: 2100000, dur: 0, cat: "loading" },
     { name: "largestContentfulPaint", ts: 5800000, dur: 0, cat: "loading" },
-  ]
+  ];
 
   // Add multiple large WASM compilation events throughout the timeline
   const wasmModules = [
@@ -29,11 +29,11 @@ function generateSampleTraceEvents() {
     { name: "video-decoder.wasm", size: 18200000, startTime: 28400000 },
     { name: "ml-models.wasm", size: 22800000, startTime: 33200000 },
     { name: "simulation-core.wasm", size: 11400000, startTime: 38800000 },
-  ]
+  ];
 
   wasmModules.forEach((module, index) => {
-    const compileTime = Math.floor(module.size / 15000) // Realistic compile time based on size
-    const instantiateTime = Math.floor(compileTime * 0.3)
+    const compileTime = Math.floor(module.size / 15000); // Realistic compile time based on size
+    const instantiateTime = Math.floor(compileTime * 0.3);
 
     events.push({
       name: "v8.wasm.compiledModule",
@@ -46,7 +46,7 @@ function generateSampleTraceEvents() {
           size: module.size,
         },
       },
-    })
+    });
 
     events.push({
       name: "v8.wasm.instantiateModule",
@@ -59,13 +59,13 @@ function generateSampleTraceEvents() {
           memoryUsage: module.size * 2, // Memory usage typically 2x file size
         },
       },
-    })
-  })
+    });
+  });
 
   // Add GLB loading events throughout the timeline
-  const glbFiles = generateSampleGLBFiles()
+  const glbFiles = generateSampleGLBFiles();
   glbFiles.forEach((glb, index) => {
-    const startTime = 2000000 + index * 1800000 // Spread GLB loads across timeline
+    const startTime = 2000000 + index * 1800000; // Spread GLB loads across timeline
     events.push({
       name: "ResourceSendRequest",
       ts: startTime,
@@ -79,43 +79,43 @@ function generateSampleTraceEvents() {
           mimeType: "model/gltf-binary",
         },
       },
-    })
-  })
+    });
+  });
 
   // Add CPU intensive tasks throughout the timeline
   for (let i = 0; i < 25; i++) {
-    const startTime = i * 1800000 + Math.random() * 1000000
+    const startTime = i * 1800000 + Math.random() * 1000000;
     events.push({
       name: "EvaluateScript",
       ts: startTime,
       dur: Math.floor(Math.random() * 500000) + 100000,
       cat: "devtools.timeline",
-    })
+    });
   }
 
   // Add memory pressure events
   for (let i = 0; i < 15; i++) {
-    const startTime = i * 3000000 + Math.random() * 1000000
+    const startTime = i * 3000000 + Math.random() * 1000000;
     events.push({
       name: "MinorGC",
       ts: startTime,
       dur: Math.floor(Math.random() * 50000) + 10000,
       cat: "v8",
-    })
+    });
   }
 
   // Add WebGL context creation and operations
   for (let i = 0; i < 8; i++) {
-    const startTime = 5000000 + i * 5000000
+    const startTime = 5000000 + i * 5000000;
     events.push({
       name: "WebGLRenderingContext.drawArrays",
       ts: startTime,
       dur: Math.floor(Math.random() * 20000) + 5000,
       cat: "gpu",
-    })
+    });
   }
 
-  return events.sort((a, b) => a.ts - b.ts)
+  return events.sort((a, b) => a.ts - b.ts);
 }
 
 // Generate realistic network requests with proper sizes - Increased to 500+ requests
@@ -131,47 +131,47 @@ function generateSampleNetworkRequests(): NetworkRequest[] {
     "fonts.example.com",
     "analytics.example.com",
     "static.example.com",
-  ]
-  const protocols = ["http/1.1", "http/2", "http/3"]
-  const types = ["document", "script", "stylesheet", "image", "font", "xhr", "fetch", "wasm", "other", "media"]
+  ];
+  const protocols = ["http/1.1", "http/2", "http/3"];
+  const types = ["document", "script", "stylesheet", "image", "font", "xhr", "fetch", "wasm", "other", "media"];
 
   return Array.from({ length: 547 }, (_, i) => {
-    const domain = domains[i % domains.length]
-    const type = types[Math.floor(Math.random() * types.length)]
+    const domain = domains[i % domains.length];
+    const type = types[Math.floor(Math.random() * types.length)];
 
     // Generate realistic file sizes based on type
-    let size = 1000
+    let size = 1000;
     switch (type) {
       case "wasm":
-        size = Math.floor(Math.random() * 20000000) + 2000000 // 2MB-22MB
-        break
+        size = Math.floor(Math.random() * 20000000) + 2000000; // 2MB-22MB
+        break;
       case "script":
-        size = Math.floor(Math.random() * 2000000) + 50000 // 50KB-2MB
-        break
+        size = Math.floor(Math.random() * 2000000) + 50000; // 50KB-2MB
+        break;
       case "stylesheet":
-        size = Math.floor(Math.random() * 500000) + 10000 // 10KB-500KB
-        break
+        size = Math.floor(Math.random() * 500000) + 10000; // 10KB-500KB
+        break;
       case "image":
-        size = Math.floor(Math.random() * 5000000) + 100000 // 100KB-5MB
-        break
+        size = Math.floor(Math.random() * 5000000) + 100000; // 100KB-5MB
+        break;
       case "media":
-        size = Math.floor(Math.random() * 50000000) + 5000000 // 5MB-55MB
-        break
+        size = Math.floor(Math.random() * 50000000) + 5000000; // 5MB-55MB
+        break;
       case "document":
-        size = Math.floor(Math.random() * 200000) + 10000 // 10KB-200KB
-        break
+        size = Math.floor(Math.random() * 200000) + 10000; // 10KB-200KB
+        break;
       case "font":
-        size = Math.floor(Math.random() * 500000) + 50000 // 50KB-500KB
-        break
+        size = Math.floor(Math.random() * 500000) + 50000; // 50KB-500KB
+        break;
       default:
-        size = Math.floor(Math.random() * 1000000) + 5000 // 5KB-1MB
+        size = Math.floor(Math.random() * 1000000) + 5000; // 5KB-1MB
     }
 
     const duration =
       type === "wasm" || type === "media"
         ? Math.floor(Math.random() * 8000) + 1000
         : // 1-9 seconds for large files
-          Math.floor(Math.random() * 2000) + 50 // 50ms-2s for others
+          Math.floor(Math.random() * 2000) + 50; // 50ms-2s for others
 
     return {
       url: `https://${domain}/resource-${i}.${getFileExtension(type)}`,
@@ -183,28 +183,28 @@ function generateSampleNetworkRequests(): NetworkRequest[] {
       duration,
       type,
       priority: type === "wasm" || type === "document" ? "high" : Math.random() > 0.6 ? "medium" : "low",
-    }
-  })
+    };
+  });
 }
 
 function getFileExtension(type: string): string {
   switch (type) {
     case "wasm":
-      return "wasm"
+      return "wasm";
     case "script":
-      return "js"
+      return "js";
     case "stylesheet":
-      return "css"
+      return "css";
     case "image":
-      return Math.random() > 0.5 ? "jpg" : "png"
+      return Math.random() > 0.5 ? "jpg" : "png";
     case "font":
-      return Math.random() > 0.5 ? "woff2" : "ttf"
+      return Math.random() > 0.5 ? "woff2" : "ttf";
     case "media":
-      return Math.random() > 0.5 ? "mp4" : "webm"
+      return Math.random() > 0.5 ? "mp4" : "webm";
     case "document":
-      return "html"
+      return "html";
     default:
-      return "bin"
+      return "bin";
   }
 }
 
@@ -291,12 +291,12 @@ function generateSampleWasmModules(): WasmModule[] {
       instantiateTime: 240,
       memoryUsage: 54525952, // 52MB
     },
-  ]
+  ];
 }
 
 // Generate dozens of GLB files with varying complexities
 function generateSampleGLBFiles(): GLBFile[] {
-  const glbFiles: GLBFile[] = []
+  const glbFiles: GLBFile[] = [];
 
   // Large environment GLBs
   const environments = [
@@ -308,7 +308,7 @@ function generateSampleGLBFiles(): GLBFile[] {
     "space-station",
     "underground-cave",
     "mountain-range",
-  ]
+  ];
 
   environments.forEach((name, index) => {
     glbFiles.push({
@@ -318,8 +318,8 @@ function generateSampleGLBFiles(): GLBFile[] {
       vertices: Math.floor(Math.random() * 300000) + 100000, // 100k-400k vertices
       textures: Math.floor(Math.random() * 40) + 20, // 20-60 textures
       materials: Math.floor(Math.random() * 35) + 15, // 15-50 materials
-    })
-  })
+    });
+  });
 
   // Character models
   const characters = [
@@ -335,7 +335,7 @@ function generateSampleGLBFiles(): GLBFile[] {
     "cyberpunk-hacker",
     "zombie-variant",
     "dragon-beast",
-  ]
+  ];
 
   characters.forEach((name, index) => {
     glbFiles.push({
@@ -345,8 +345,8 @@ function generateSampleGLBFiles(): GLBFile[] {
       vertices: Math.floor(Math.random() * 150000) + 50000, // 50k-200k vertices
       textures: Math.floor(Math.random() * 25) + 10, // 10-35 textures
       materials: Math.floor(Math.random() * 20) + 8, // 8-28 materials
-    })
-  })
+    });
+  });
 
   // Vehicles and props
   const vehicles = [
@@ -360,7 +360,7 @@ function generateSampleGLBFiles(): GLBFile[] {
     "fighter-jet",
     "mech-suit",
     "hover-bike",
-  ]
+  ];
 
   vehicles.forEach((name, index) => {
     glbFiles.push({
@@ -370,8 +370,8 @@ function generateSampleGLBFiles(): GLBFile[] {
       vertices: Math.floor(Math.random() * 100000) + 30000, // 30k-130k vertices
       textures: Math.floor(Math.random() * 20) + 8, // 8-28 textures
       materials: Math.floor(Math.random() * 15) + 6, // 6-21 materials
-    })
-  })
+    });
+  });
 
   // Weapons and items
   const items = [
@@ -390,7 +390,7 @@ function generateSampleGLBFiles(): GLBFile[] {
     "tool-kit",
     "ammo-box",
     "armor-piece",
-  ]
+  ];
 
   items.forEach((name, index) => {
     glbFiles.push({
@@ -400,8 +400,8 @@ function generateSampleGLBFiles(): GLBFile[] {
       vertices: Math.floor(Math.random() * 25000) + 5000, // 5k-30k vertices
       textures: Math.floor(Math.random() * 10) + 3, // 3-13 textures
       materials: Math.floor(Math.random() * 8) + 2, // 2-10 materials
-    })
-  })
+    });
+  });
 
   // UI and interface elements
   const uiElements = [
@@ -412,7 +412,7 @@ function generateSampleGLBFiles(): GLBFile[] {
     "loading-spinner",
     "progress-bar",
     "notification-panel",
-  ]
+  ];
 
   uiElements.forEach((name, index) => {
     glbFiles.push({
@@ -422,10 +422,10 @@ function generateSampleGLBFiles(): GLBFile[] {
       vertices: Math.floor(Math.random() * 10000) + 1000, // 1k-11k vertices
       textures: Math.floor(Math.random() * 8) + 2, // 2-10 textures
       materials: Math.floor(Math.random() * 6) + 1, // 1-7 materials
-    })
-  })
+    });
+  });
 
-  return glbFiles
+  return glbFiles;
 }
 
 function generateSampleDomainInfo(): DomainInfo[] {
@@ -500,7 +500,7 @@ function generateSampleDomainInfo(): DomainInfo[] {
       avgResponseTime: 120,
       protocols: ["http/2"],
     },
-  ]
+  ];
 }
 
 function generateSampleProtocolInfo(): ProtocolInfo[] {
@@ -540,7 +540,7 @@ function generateSampleProtocolInfo(): ProtocolInfo[] {
       avgLatency: 280,
       domains: ["legacy.example.com"],
     },
-  ]
+  ];
 }
 
 export function generateComplexSampleData(): ComplexPerformanceData {
@@ -561,8 +561,8 @@ export function generateComplexSampleData(): ComplexPerformanceData {
     glbFiles: generateSampleGLBFiles(),
     domains: generateSampleDomainInfo(),
     protocols: generateSampleProtocolInfo(),
-  }
+  };
 }
 
 // Export types for use in other files
-export type { ComplexPerformanceData, NetworkRequest, WasmModule, GLBFile, DomainInfo, ProtocolInfo }
+export type { ComplexPerformanceData, NetworkRequest, WasmModule, GLBFile, DomainInfo, ProtocolInfo };

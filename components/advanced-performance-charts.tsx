@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { PerformanceTimelineChart } from "@/components/charts/performance-timeline-chart"
-import { ProtocolPerformanceChart } from "@/components/charts/protocol-performance-chart"
-import { WasmPerformanceChart } from "@/components/charts/wasm-performance-chart"
-import { GlbComplexityChart } from "@/components/charts/glb-complexity-chart"
-import { DomainDistributionChart } from "@/components/charts/domain-distribution-chart"
-import { NetworkWaterfallChart } from "@/components/charts/network-waterfall-chart"
+import { PerformanceTimelineChart } from "@/components/charts/performance-timeline-chart";
+import { ProtocolPerformanceChart } from "@/components/charts/protocol-performance-chart";
+import { WasmPerformanceChart } from "@/components/charts/wasm-performance-chart";
+import { GlbComplexityChart } from "@/components/charts/glb-complexity-chart";
+import { DomainDistributionChart } from "@/components/charts/domain-distribution-chart";
+import { NetworkWaterfallChart } from "@/components/charts/network-waterfall-chart";
 
 interface AdvancedPerformanceChartsProps {
-  data: any
+  data: any;
 }
 
 export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceChartsProps) {
@@ -16,7 +16,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
   const generateTimelineData = () => {
     if (!data.traceEvents || data.traceEvents.length === 0) {
       // Fallback to sample data if no real data
-      const timelinePoints = []
+      const timelinePoints = [];
       for (let time = 0; time <= 3000; time += 200) {
         const point = {
           time,
@@ -26,33 +26,33 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
           wasm: time > 1000 && time < 1800 ? Math.max(0, 60 + Math.random() * 30) : Math.random() * 5,
           webgl: time > 1600 && time < 2400 ? Math.max(0, 40 + Math.random() * 35) : Math.random() * 5,
           gpu: time > 1600 ? Math.max(0, 30 + ((time - 1600) / 1400) * 50 + Math.random() * 20) : Math.random() * 10,
-        }
-        timelinePoints.push(point)
+        };
+        timelinePoints.push(point);
       }
-      return timelinePoints
+      return timelinePoints;
     }
 
     // Process REAL trace events to create comprehensive timeline
-    const events = data.traceEvents
-    const startTime = Math.min(...events.map((e) => e.ts || 0))
-    const endTime = Math.max(...events.map((e) => (e.ts || 0) + (e.dur || 0)))
-    const totalDuration = endTime - startTime
+    const events = data.traceEvents;
+    const startTime = Math.min(...events.map((e) => e.ts || 0));
+    const endTime = Math.max(...events.map((e) => (e.ts || 0) + (e.dur || 0)));
+    const totalDuration = endTime - startTime;
 
-    console.log(`Processing complete timeline: ${startTime} to ${endTime} (${totalDuration / 1000}ms total)`)
+    console.log(`Processing complete timeline: ${startTime} to ${endTime} (${totalDuration / 1000}ms total)`);
 
     // Create timeline buckets to ensure we capture ALL time periods
-    const bucketSize = Math.max(100, totalDuration / 300) // Ensure good resolution
-    const timelinePoints = []
+    const bucketSize = Math.max(100, totalDuration / 300); // Ensure good resolution
+    const timelinePoints = [];
 
     for (let time = startTime; time <= endTime; time += bucketSize) {
-      const bucketEnd = Math.min(time + bucketSize, endTime)
+      const bucketEnd = Math.min(time + bucketSize, endTime);
 
       // Find ALL events that overlap with this time bucket
       const bucketEvents = events.filter((e) => {
-        const eventStart = e.ts || 0
-        const eventEnd = eventStart + (e.dur || 0)
-        return eventStart < bucketEnd && eventEnd > time
-      })
+        const eventStart = e.ts || 0;
+        const eventEnd = eventStart + (e.dur || 0);
+        return eventStart < bucketEnd && eventEnd > time;
+      });
 
       // Calculate comprehensive metrics for this time bucket
       let cpu = 0,
@@ -60,13 +60,13 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
         network = 0,
         wasm = 0,
         webgl = 0,
-        gpu = 0
+        gpu = 0;
 
       bucketEvents.forEach((event) => {
-        const category = event.cat || ""
-        const name = event.name || ""
-        const duration = event.dur || 0
-        const intensity = Math.min(100, (duration / bucketSize) * 100)
+        const category = event.cat || "";
+        const name = event.name || "";
+        const duration = event.dur || 0;
+        const intensity = Math.min(100, (duration / bucketSize) * 100);
 
         // Enhanced CPU detection
         if (
@@ -79,7 +79,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
           name.includes("Function") ||
           name.includes("Task")
         ) {
-          cpu = Math.max(cpu, intensity)
+          cpu = Math.max(cpu, intensity);
         }
 
         // Enhanced Memory detection
@@ -90,7 +90,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
           name.includes("Heap") ||
           name.includes("Allocation")
         ) {
-          memory = Math.max(memory, intensity)
+          memory = Math.max(memory, intensity);
         }
 
         // Enhanced Network detection - ensure ALL network requests are captured
@@ -104,7 +104,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
           name.includes("Receive") ||
           name.includes("Download")
         ) {
-          network = Math.max(network, intensity)
+          network = Math.max(network, intensity);
         }
 
         // Enhanced WASM detection
@@ -114,7 +114,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
           name.includes("WebAssembly") ||
           category.includes("v8.wasm")
         ) {
-          wasm = Math.max(wasm, intensity)
+          wasm = Math.max(wasm, intensity);
         }
 
         // Enhanced WebGL/GPU detection
@@ -129,12 +129,12 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
           name.includes("Render")
         ) {
           if (name.includes("WebGL") || name.includes("GL")) {
-            webgl = Math.max(webgl, intensity)
+            webgl = Math.max(webgl, intensity);
           } else {
-            gpu = Math.max(gpu, intensity)
+            gpu = Math.max(gpu, intensity);
           }
         }
-      })
+      });
 
       timelinePoints.push({
         time: Math.round((time - startTime) / 1000), // Convert to milliseconds from start
@@ -144,14 +144,14 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
         wasm: Math.round(wasm * 10) / 10,
         webgl: Math.round(webgl * 10) / 10,
         gpu: Math.round(gpu * 10) / 10,
-      })
+      });
     }
 
-    console.log(`Generated ${timelinePoints.length} timeline points covering complete profiling duration`)
-    return timelinePoints
-  }
+    console.log(`Generated ${timelinePoints.length} timeline points covering complete profiling duration`);
+    return timelinePoints;
+  };
 
-  const timelineData = generateTimelineData()
+  const timelineData = generateTimelineData();
 
   // Protocol performance comparison
   const protocolData = data.protocols.map((protocol: any) => ({
@@ -160,7 +160,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     avgLatency: protocol.avgLatency,
     totalSize: protocol.totalSize / 1024, // Convert to KB
     efficiency: protocol.totalSize / protocol.avgLatency / 1000, // KB per ms
-  }))
+  }));
 
   // WASM performance metrics
   const wasmData = data.wasmModules.map((module: any) => ({
@@ -171,7 +171,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     instantiateTime: module.instantiateTime,
     totalTime: module.loadTime + module.compileTime + module.instantiateTime,
     memoryMB: module.memoryUsage / 1024 / 1024,
-  }))
+  }));
 
   // GLB file analysis
   const glbData = data.glbFiles.map((file: any) => ({
@@ -182,7 +182,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     textures: file.textures,
     materials: file.materials,
     complexity: file.vertices / 1000 + file.textures * 2 + file.materials * 3,
-  }))
+  }));
 
   // Request distribution by domain
   const domainRequestData = data.domains.map((domain: any) => ({
@@ -190,7 +190,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     requests: domain.requests,
     sizeMB: domain.totalSize / 1024 / 1024,
     avgResponse: domain.avgResponseTime,
-  }))
+  }));
 
   // Network waterfall simulation
   const networkWaterfallData = data.networkRequests.map((req: any, index: number) => ({
@@ -201,7 +201,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
     size: req.size / 1024,
     protocol: req.protocol,
     type: req.type,
-  }))
+  }));
 
   return (
     <div className="grid gap-4 sm:gap-6">
@@ -227,5 +227,5 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
       {/* Network Waterfall Visualization */}
       <NetworkWaterfallChart data={networkWaterfallData} />
     </div>
-  )
+  );
 }

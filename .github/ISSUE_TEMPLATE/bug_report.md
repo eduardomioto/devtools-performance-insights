@@ -41,9 +41,9 @@ assignees: ''
 
 ## Console Errors
 <!-- If applicable, paste any console errors -->
-\`\`\`
+\\\
 Paste console errors here
-\`\`\`
+\\\
 
 ## Additional Context
 <!-- Add any other context about the problem here -->
