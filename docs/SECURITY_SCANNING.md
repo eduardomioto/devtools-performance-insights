@@ -28,11 +28,11 @@ We use **Snyk** for comprehensive security scanning across multiple dimensions:
 ## 🎯 Scanning Types & Thresholds
 
 ### **Dependency Scanning**
-\\\yaml
+```yaml
 Severity Threshold: HIGH
 Fail Condition: Upgradable vulnerabilities
 Scope: Production dependencies only
-\\\
+```
 
 **What it checks:**
 - Known vulnerabilities in npm packages
@@ -41,11 +41,11 @@ Scope: Production dependencies only
 - License compliance issues
 
 ### **Code Analysis (SAST)**
-\\\yaml
+```yaml
 Severity Threshold: MEDIUM
 Scope: All TypeScript/JavaScript files
 Exclusions: Test files, node_modules
-\\\
+```
 
 **What it checks:**
 - SQL injection vulnerabilities
@@ -55,11 +55,11 @@ Exclusions: Test files, node_modules
 - Hard-coded secrets
 
 ### **Container Scanning**
-\\\yaml
+```yaml
 Severity Threshold: HIGH
 Target: Production Docker images
 Frequency: On main branch pushes
-\\\
+```
 
 **What it checks:**
 - Base image vulnerabilities
@@ -68,10 +68,10 @@ Frequency: On main branch pushes
 - Dockerfile best practices
 
 ### **Infrastructure as Code**
-\\\yaml
+```yaml
 Severity Threshold: MEDIUM
 Scope: Docker, Kubernetes, Terraform files
-\\\
+```
 
 **What it checks:**
 - Insecure container configurations
@@ -117,13 +117,13 @@ Access detailed security insights at [snyk.io](https://snyk.io):
 ## 🔧 Configuration Files
 
 ### **`.snyk` File**
-\\\yaml
+```yaml
 # Main Snyk configuration
 language-settings:
   javascript:
     ignore-dev-deps: true
 version: v1.0.0
-\\\
+```
 
 ### **Snyk Policy**
 - **Ignore Rules**: Documented exceptions with expiration dates
@@ -166,13 +166,13 @@ version: v1.0.0
 ## 🔐 Environment Variables
 
 ### **Required Secrets**
-\\\bash
+```bash
 # Snyk API token for authentication
 SNYK_TOKEN=your-snyk-api-token
 
 # Snyk organization ID for monitoring
 SNYK_ORG_ID=your-organization-id
-\\\
+```
 
 ### **Setup Instructions**
 1. **Create Snyk Account**: Sign up at [snyk.io](https://snyk.io)

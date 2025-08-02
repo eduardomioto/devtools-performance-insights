@@ -23,35 +23,35 @@ Thank you for your interest in contributing to the Devtools Performance Insights
 ### Development Setup
 
 1. **Fork the repository**
-   \\\bash
+   ```bash
    # Click the "Fork" button on GitHub, then clone your fork
    git clone https://github.com/YOUR_USERNAME/chrome-performance-analyzer.git
    cd chrome-performance-analyzer
-   \\\
+   ```
 
 2. **Add upstream remote**
 
-   \\\bash
+   ```bash
    git remote add upstream https://github.com/ORIGINAL_OWNER/chrome-performance-analyzer.git
-   \\\
+   ```
 
 3. **Install dependencies**
 
-   \\\bash
+   ```bash
    npm install
-   \\\
+   ```
 
 4. **Set up environment**
 
-   \\\bash
+   ```bash
    cp .env.example .env.local
    # Edit .env.local with your configuration
-   \\\
+   ```
 
 5. **Start development server**
-   \\\bash
+   ```bash
    yarn dev
-   \\\
+   ```
 
 6. **Verify setup**
    - Open http://localhost:3000
@@ -74,11 +74,11 @@ We use a **feature branch workflow**:
 
 1. **Create a feature branch**
 
-   \\\bash
+   ```bash
    git checkout develop
    git pull upstream develop
    git checkout -b feature/your-feature-name
-   \\\
+   ```
 
 2. **Make your changes**
    - Follow our coding standards (see below)
@@ -87,37 +87,37 @@ We use a **feature branch workflow**:
 
 3. **Test your changes**
 
-   \\\bash
+   ```bash
    yarn test
    yarn lint
    yarn type-check
    yarn build
-   \\\
+   ```
 
 4. **Commit your changes**
 
-   \\\bash
+   ```bash
    git add .
    git commit -m "feat: add new performance metric analysis"
-   \\\
+   ```
 
 5. **Push and create PR**
-   \\\bash
+   ```bash
    git push origin feature/your-feature-name
    # Create PR on GitHub
-   \\\
+   ```
 
 ### Commit Message Convention
 
 We follow [Conventional Commits](https://www.conventionalcommits.org/):
 
-\\\
+```
 <type>[optional scope]: <description>
 
 [optional body]
 
 [optional footer(s)]
-\\\
+```
 
 **Types:**
 - `feat`: New feature
@@ -131,12 +131,12 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 - `ci`: CI/CD changes
 
 **Examples:**
-\\\bash
+```bash
 feat(wasm): add streaming compilation analysis
 fix(charts): resolve mobile responsiveness issue
 docs(readme): update installation instructions
 test(protocol): add HTTP/3 analysis tests
-\\\
+```
 
 ## 📝 Coding Standards
 
@@ -147,7 +147,7 @@ test(protocol): add HTTP/3 analysis tests
 - **Interfaces**: Use interfaces for object shapes
 - **Enums**: Use const assertions or union types instead of enums
 
-\\\typescript
+```typescript
 // ✅ Good
 interface PerformanceMetric {
   name: string
@@ -161,7 +161,7 @@ type MetricType = typeof METRIC_TYPES[number]
 // ❌ Avoid
 const data: any = {}
 enum MetricTypes { FCP, LCP, FID, CLS }
-\\\
+```
 
 ### React Guidelines
 
@@ -170,7 +170,7 @@ enum MetricTypes { FCP, LCP, FID, CLS }
 - **Event Handlers**: Use proper event types
 - **Performance**: Use `useMemo` and `useCallback` appropriately
 
-\\\typescript
+```typescript
 // ✅ Good
 interface ChartProps {
   data: PerformanceData
@@ -186,7 +186,7 @@ export function PerformanceChart({ data, onMetricSelect }: ChartProps) {
 
   return <div>{/* component JSX */}</div>
 }
-\\\
+```
 
 ### CSS/Styling Guidelines
 
@@ -195,7 +195,7 @@ export function PerformanceChart({ data, onMetricSelect }: ChartProps) {
 - **Dark Theme**: Ensure all components support dark theme
 - **Accessibility**: Include proper ARIA attributes
 
-\\\tsx
+```tsx
 // ✅ Good
 <button
   className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg 
@@ -207,11 +207,11 @@ export function PerformanceChart({ data, onMetricSelect }: ChartProps) {
 >
   {isLoading ? 'Analyzing...' : 'Analyze'}
 </button>
-\\\
+```
 
 ### File Organization
 
-\\\
+```
 src/
 ├── app/                    # Next.js app directory
 │   ├── globals.css        # Global styles
@@ -231,7 +231,7 @@ src/
 └── hooks/                # Custom React hooks
     ├── usePerformance.ts # Performance analysis hook
     └── useCharts.ts      # Chart-related hook
-\\\
+```
 
 ## 🧪 Testing Guidelines
 
@@ -243,7 +243,7 @@ src/
 
 ### Writing Tests
 
-\\\typescript
+```typescript
 // Component test example
 import { render, screen, fireEvent } from '@testing-library/react'
 import { PerformanceChart } from '../PerformanceChart'
@@ -270,11 +270,11 @@ describe('PerformanceChart', () => {
     expect(onMetricSelect).toHaveBeenCalledWith('FCP')
   })
 })
-\\\
+```
 
 ### Test Commands
 
-\\\bash
+```bash
 # Run all tests
 yarn test
 
@@ -286,7 +286,7 @@ yarn test:coverage
 
 # Run E2E tests
 yarn test:e2e
-\\\
+```
 
 ## 📚 Documentation Guidelines
 
@@ -297,7 +297,7 @@ yarn test:e2e
 - **Type Documentation**: Document complex types
 - **Examples**: Provide usage examples
 
-\\\typescript
+```typescript
 /**
  * Analyzes WebAssembly module performance metrics
  * @param wasmData - Raw WASM performance data from Chrome profile
@@ -317,7 +317,7 @@ export function analyzeWasmPerformance(
 ): WasmMetrics {
   // Implementation
 }
-\\\
+```
 
 ### Documentation Updates
 
@@ -339,7 +339,7 @@ When making changes, update relevant documentation:
 
 ### Bug Report Template
 
-\\\markdown
+```markdown
 **Bug Description**
 A clear description of the bug.
 
@@ -369,7 +369,7 @@ Add screenshots to help explain the problem.
 
 **Additional Context**
 Any other context about the problem.
-\\\
+```
 
 ## 💡 Feature Requests
 
@@ -381,7 +381,7 @@ Any other context about the problem.
 
 ### Feature Request Template
 
-\\\markdown
+```markdown
 **Feature Description**
 A clear description of the feature you'd like to see.
 
@@ -402,7 +402,7 @@ Any thoughts on how this could be implemented?
 
 **Additional Context**
 Screenshots, mockups, or examples that help explain the feature.
-\\\
+```
 
 ## 🔍 Code Review Process
 
