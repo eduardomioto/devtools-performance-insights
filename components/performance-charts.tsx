@@ -10,19 +10,19 @@ interface PerformanceChartsProps {
 
 export default function PerformanceCharts({ data }: PerformanceChartsProps) {
   // Generate sample chart data based on the performance profile
-  // const timelineData = [
-  //   { time: 0, cpu: 0, memory: 45, network: 0 },
-  //   { time: 200, cpu: 15, memory: 48, network: 25 },
-  //   { time: 400, cpu: 45, memory: 52, network: 60 },
-  //   { time: 600, cpu: 78, memory: 58, network: 40 },
-  //   { time: 800, cpu: 65, memory: 62, network: 20 },
-  //   { time: 1000, cpu: 35, memory: 55, network: 15 },
-  //   { time: 1200, cpu: 25, memory: 50, network: 10 },
-  //   { time: 1400, cpu: 20, memory: 48, network: 5 },
-  //   { time: 1600, cpu: 15, memory: 46, network: 0 },
-  //   { time: 1800, cpu: 10, memory: 45, network: 0 },
-  //   { time: 2000, cpu: 8, memory: 44, network: 0 },
-  // ];
+  const timelineData = [
+    { time: 0, cpu: 0, memory: 45, network: 0 },
+    { time: 200, cpu: 15, memory: 48, network: 25 },
+    { time: 400, cpu: 45, memory: 52, network: 60 },
+    { time: 600, cpu: 78, memory: 58, network: 40 },
+    { time: 800, cpu: 65, memory: 62, network: 20 },
+    { time: 1000, cpu: 35, memory: 55, network: 15 },
+    { time: 1200, cpu: 25, memory: 50, network: 10 },
+    { time: 1400, cpu: 20, memory: 48, network: 5 },
+    { time: 1600, cpu: 15, memory: 46, network: 0 },
+    { time: 1800, cpu: 10, memory: 45, network: 0 },
+    { time: 2000, cpu: 8, memory: 44, network: 0 },
+  ];
 
   const metricsData = [
     { metric: "FCP", value: 800, threshold: 1800, status: "good" },
@@ -72,7 +72,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
             }}
             className="h-[400px]"
           >
-            <LineChart data={data}>
+            <LineChart data={timelineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} />
               <YAxis />
@@ -167,7 +167,7 @@ export default function PerformanceCharts({ data }: PerformanceChartsProps) {
             }}
             className="h-[250px]"
           >
-            <AreaChart data={data}>
+            <AreaChart data={timelineData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" tickFormatter={(value) => `${value}ms`} />
               <YAxis />
