@@ -77,7 +77,7 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
               webgl: { label: "WebGL Activity", color: "#8b5cf6" },
               gpu: { label: "GPU Usage", color: "#06b6d4" },
             }}
-            className="h-[300px] sm:h-[400px]"
+            className="h-full"
             style={{ transform: `scale(${timelineZoom})`, transformOrigin: "top left" }}
           >
             <ResponsiveContainer width="100%" height="100%">
