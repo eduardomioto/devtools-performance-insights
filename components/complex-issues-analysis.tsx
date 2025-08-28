@@ -35,7 +35,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "Large WASM modules causing significant compilation delays on main thread",
       impact: "Blocks main thread for 180ms+ during compilation phase",
       metric: `${data.wasmModules.filter((m: any) => m.compileTime > 100).length} modules affected`,
-      icon: <Cpu className="w-4 h-4" />,
+      icon: <Cpu className="h-4 w-4" />,
       affectedResources: data.wasmModules.length,
       estimatedSavings: "~400ms FCP improvement",
     },
@@ -47,7 +47,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "GLB files exceeding 20MB causing memory pressure and long load times",
       impact: "Increases LCP by 2.8s and causes memory spikes up to 95MB",
       metric: `${data.glbFiles.filter((f: any) => f.size > 20000000).length} large models`,
-      icon: <ImageIcon className="w-4 h-4" />,
+      icon: <ImageIcon className="h-4 w-4" />,
       affectedResources: data.glbFiles.length,
       estimatedSavings: "~2.2s LCP improvement",
     },
@@ -59,7 +59,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "Critical resources still using HTTP/1.1 with connection limits",
       impact: "Head-of-line blocking and connection queue delays",
       metric: `${data.networkRequests.filter((r: any) => r.protocol === "http/1.1").length} legacy requests`,
-      icon: <Wifi className="w-4 h-4" />,
+      icon: <Wifi className="h-4 w-4" />,
       affectedResources: data.networkRequests.filter((r: any) => r.protocol === "http/1.1").length,
       estimatedSavings: "~300ms network improvement",
     },
@@ -71,7 +71,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "247 requests creating complex dependency chains and network congestion",
       impact: "Network queue saturation and increased connection overhead",
       metric: `${data.networkRequests.length} total requests`,
-      icon: <Globe className="w-4 h-4" />,
+      icon: <Globe className="h-4 w-4" />,
       affectedResources: data.networkRequests.length,
       estimatedSavings: "~500ms total load time",
     },
@@ -83,7 +83,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "Resources spread across 5+ domains causing DNS lookup and connection overhead",
       impact: "Additional DNS resolution time and connection establishment delays",
       metric: `${data.domains.length} domains`,
-      icon: <Database className="w-4 h-4" />,
+      icon: <Database className="h-4 w-4" />,
       affectedResources: data.domains.length,
       estimatedSavings: "~200ms DNS/connection time",
     },
@@ -95,7 +95,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "WASM modules consuming excessive memory (29MB total)",
       impact: "Potential memory pressure on low-end devices",
       metric: `${(data.wasmModules.reduce((acc: number, m: any) => acc + m.memoryUsage, 0) / 1024 / 1024).toFixed(0)}MB memory`,
-      icon: <Zap className="w-4 h-4" />,
+      icon: <Zap className="h-4 w-4" />,
       affectedResources: data.wasmModules.length,
       estimatedSavings: "~15MB memory reduction",
     },
@@ -107,7 +107,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "Critical resources not properly prioritized in loading sequence",
       impact: "Suboptimal loading order affecting perceived performance",
       metric: `${data.networkRequests.filter((r: any) => r.priority === "low").length} low-priority critical resources`,
-      icon: <Clock className="w-4 h-4" />,
+      icon: <Clock className="h-4 w-4" />,
       affectedResources: data.networkRequests.filter((r: any) => r.priority === "low").length,
       estimatedSavings: "~150ms perceived improvement",
     },
@@ -119,7 +119,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "High-polygon models causing GPU bottlenecks and rendering delays",
       impact: "Frame drops and rendering performance issues",
       metric: `${data.glbFiles.reduce((acc: number, f: any) => acc + f.vertices, 0).toLocaleString()} total vertices`,
-      icon: <ImageIcon className="w-4 h-4" />,
+      icon: <ImageIcon className="h-4 w-4" />,
       affectedResources: data.glbFiles.length,
       estimatedSavings: "~30% rendering performance",
     },
@@ -131,7 +131,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       description: "Mixed protocol usage preventing optimal connection reuse",
       impact: "Suboptimal connection pooling and multiplexing",
       metric: `${data.protocols.length} different protocols`,
-      icon: <Code className="w-4 h-4" />,
+      icon: <Code className="h-4 w-4" />,
       affectedResources: data.protocols.length,
       estimatedSavings: "~100ms connection optimization",
     },
@@ -207,10 +207,10 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
     <div className="space-y-4 sm:space-y-6">
       {/* Critical Issues Alert */}
       {criticalIssues.length > 0 && (
-        <Card className="bg-red-900/20 border-red-800">
+        <Card className="border-red-800 bg-red-900/20">
           <CardHeader className="pb-3">
-            <CardTitle className="text-red-400 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-red-400">
+              <AlertTriangle className="h-5 w-5" />
               Critical Performance Issues Detected
             </CardTitle>
             <CardDescription className="text-red-300">
@@ -218,14 +218,14 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               {criticalIssues.map((issue) => (
-                <div key={issue.id} className="bg-red-800/20 rounded-lg p-3">
-                  <div className="flex items-center space-x-2 mb-2">
+                <div key={issue.id} className="rounded-lg bg-red-800/20 p-3">
+                  <div className="mb-2 flex items-center space-x-2">
                     {issue.icon}
                     <h4 className="font-medium text-red-200">{issue.title}</h4>
                   </div>
-                  <p className="text-red-300 text-sm">{issue.estimatedSavings}</p>
+                  <p className="text-sm text-red-300">{issue.estimatedSavings}</p>
                 </div>
               ))}
             </div>
@@ -234,46 +234,46 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       )}
 
       {/* Summary Statistics */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
-        <Card className="bg-slate-800/50 border-slate-700">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-red-400">{severityStats.critical || 0}</div>
-              <div className="text-xs sm:text-sm text-slate-400">Critical Issues</div>
+              <div className="text-xl font-bold text-red-400 sm:text-2xl">{severityStats.critical || 0}</div>
+              <div className="text-xs text-slate-400 sm:text-sm">Critical Issues</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-orange-400">{severityStats.high || 0}</div>
-              <div className="text-xs sm:text-sm text-slate-400">High Priority</div>
+              <div className="text-xl font-bold text-orange-400 sm:text-2xl">{severityStats.high || 0}</div>
+              <div className="text-xs text-slate-400 sm:text-sm">High Priority</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-yellow-400">{severityStats.medium || 0}</div>
-              <div className="text-xs sm:text-sm text-slate-400">Medium Priority</div>
+              <div className="text-xl font-bold text-yellow-400 sm:text-2xl">{severityStats.medium || 0}</div>
+              <div className="text-xs text-slate-400 sm:text-sm">Medium Priority</div>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardContent className="p-3 sm:p-4">
             <div className="text-center">
-              <div className="text-xl sm:text-2xl font-bold text-blue-400">{severityStats.low || 0}</div>
-              <div className="text-xs sm:text-sm text-slate-400">Low Priority</div>
+              <div className="text-xl font-bold text-blue-400 sm:text-2xl">{severityStats.low || 0}</div>
+              <div className="text-xs text-slate-400 sm:text-sm">Low Priority</div>
             </div>
           </CardContent>
         </Card>
       </div>
 
       {/* Issues by Category */}
-      <Card className="bg-slate-800/50 border-slate-700">
+      <Card className="border-slate-700 bg-slate-800/50">
         <CardHeader>
           <CardTitle className="text-slate-100">Issues by Category</CardTitle>
           <CardDescription className="text-slate-400">
@@ -281,9 +281,9 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Object.entries(categoryStats).map(([category, count]) => (
-              <div key={category} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+              <div key={category} className="flex items-center justify-between rounded-lg bg-slate-700/30 p-3">
                 <div className="flex items-center space-x-2">
                   <span className="font-medium text-slate-100">{category}</span>
                   <Badge variant="outline" className="border-slate-600 text-slate-300">
@@ -300,20 +300,20 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       {/* Detailed Issues Analysis */}
       <Tabs defaultValue="all" className="space-y-4">
         <div className="mobile-scroll">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
-            <TabsTrigger value="all" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsList className="grid w-full min-w-max grid-cols-2 border-slate-700 bg-slate-800/50 lg:min-w-0 lg:grid-cols-5">
+            <TabsTrigger value="all" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               All Issues
             </TabsTrigger>
-            <TabsTrigger value="critical" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="critical" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Critical
             </TabsTrigger>
-            <TabsTrigger value="high" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="high" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               High
             </TabsTrigger>
-            <TabsTrigger value="medium" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="medium" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Medium
             </TabsTrigger>
-            <TabsTrigger value="low" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="low" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Low
             </TabsTrigger>
           </TabsList>
@@ -390,7 +390,7 @@ function IssuesList({ issues }: { issues: ComplexIssue[] }) {
   };
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="border-slate-700 bg-slate-800/50">
       <CardHeader>
         <CardTitle className="text-slate-100">Detailed Issues Analysis</CardTitle>
         <CardDescription className="text-slate-400">
@@ -400,50 +400,50 @@ function IssuesList({ issues }: { issues: ComplexIssue[] }) {
       <CardContent>
         <div className="space-y-4">
           {issues.map((issue) => (
-            <div key={issue.id} className={`border rounded-lg p-4 space-y-3 ${getSeverityBgColor(issue.severity)}`}>
+            <div key={issue.id} className={`space-y-3 rounded-lg border p-4 ${getSeverityBgColor(issue.severity)}`}>
               <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-2 flex-1">
+                <div className="flex flex-1 items-center space-x-2">
                   {issue.icon}
                   <div className="flex-1">
                     <h3 className="font-semibold text-slate-100">{issue.title}</h3>
-                    <div className="flex flex-wrap items-center gap-2 mt-1">
+                    <div className="mt-1 flex flex-wrap items-center gap-2">
                       <Badge variant={getSeverityColor(issue.severity) as any} className="text-xs">
                         {issue.severity.toUpperCase()}
                       </Badge>
-                      <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
+                      <Badge variant="outline" className="border-slate-600 text-xs text-slate-300">
                         {issue.category}
                       </Badge>
                       <span className="text-xs text-slate-400">{issue.metric}</span>
                     </div>
                   </div>
                 </div>
-                <div className="text-right ml-4">
+                <div className="ml-4 text-right">
                   <div className="text-sm font-medium text-slate-100">{issue.estimatedSavings}</div>
-                  <Progress value={getSeverityScore(issue.severity)} className="w-20 mt-1" />
+                  <Progress value={getSeverityScore(issue.severity)} className="mt-1 w-20" />
                 </div>
               </div>
 
               <div className="space-y-2">
                 <p className="text-sm text-slate-300">{issue.description}</p>
                 <div
-                  className={`rounded p-3 border ${
+                  className={`rounded border p-3 ${
                     issue.severity === "critical"
-                      ? "bg-red-800/20 border-red-700"
+                      ? "border-red-700 bg-red-800/20"
                       : issue.severity === "high"
-                        ? "bg-orange-800/20 border-orange-700"
+                        ? "border-orange-700 bg-orange-800/20"
                         : issue.severity === "medium"
-                          ? "bg-yellow-800/20 border-yellow-700"
-                          : "bg-blue-800/20 border-blue-700"
+                          ? "border-yellow-700 bg-yellow-800/20"
+                          : "border-blue-700 bg-blue-800/20"
                   }`}
                 >
-                  <p className="text-sm font-medium mb-1">
+                  <p className="mb-1 text-sm font-medium">
                     <strong>Performance Impact:</strong>
                   </p>
                   <p className="text-sm">{issue.impact}</p>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between text-xs text-slate-400 pt-2 border-t border-slate-600">
+              <div className="flex items-center justify-between border-t border-slate-600 pt-2 text-xs text-slate-400">
                 <span>Affected Resources: {issue.affectedResources}</span>
                 <span>Optimization Potential: {issue.estimatedSavings}</span>
               </div>

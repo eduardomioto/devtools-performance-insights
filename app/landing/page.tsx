@@ -105,10 +105,10 @@ function AnimatedBackground() {
   }, []);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+    <div className="pointer-events-none fixed inset-0 overflow-hidden">
       {/* Gradient orbs */}
       <div
-        className="absolute w-96 h-96 rounded-full opacity-20 blur-3xl animate-pulse"
+        className="absolute h-96 w-96 animate-pulse rounded-full opacity-20 blur-3xl"
         style={{
           background: "radial-gradient(circle, #00ff88 0%, transparent 70%)",
           left: `${mousePosition.x * 0.1}%`,
@@ -118,7 +118,7 @@ function AnimatedBackground() {
         }}
       />
       <div
-        className="absolute w-80 h-80 rounded-full opacity-15 blur-3xl animate-bounce"
+        className="absolute h-80 w-80 animate-bounce rounded-full opacity-15 blur-3xl"
         style={{
           background: "radial-gradient(circle, #0088ff 0%, transparent 70%)",
           right: `${mousePosition.x * 0.05}%`,
@@ -128,7 +128,7 @@ function AnimatedBackground() {
         }}
       />
       <div
-        className="absolute w-64 h-64 rounded-full opacity-10 blur-2xl animate-pulse"
+        className="absolute h-64 w-64 animate-pulse rounded-full opacity-10 blur-2xl"
         style={{
           background: "radial-gradient(circle, #ff0088 0%, transparent 70%)",
           left: `${50 + mousePosition.x * 0.02}%`,
@@ -142,7 +142,7 @@ function AnimatedBackground() {
       {Array.from({ length: 20 }).map((_, i) => (
         <div
           key={i}
-          className="absolute w-2 h-2 bg-green-400 rounded-full opacity-30 animate-bounce"
+          className="absolute h-2 w-2 animate-bounce rounded-full bg-green-400 opacity-30"
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
@@ -157,28 +157,28 @@ function AnimatedBackground() {
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden">
+    <div className="min-h-screen overflow-hidden bg-black text-white">
       <AnimatedBackground />
 
       {/* Navigation */}
-      <nav className="relative z-50 flex items-center justify-between p-6 backdrop-blur-sm bg-black/20">
+      <nav className="relative z-50 flex items-center justify-between bg-black/20 p-6 backdrop-blur-sm">
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg" />
+          <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-green-400 to-blue-500" />
           <span className="text-xl font-bold">PerfAnalyzer</span>
         </div>
-        <div className="hidden md:flex items-center space-x-8">
-          <Link href="#features" className="hover:text-green-400 transition-colors">
+        <div className="hidden items-center space-x-8 md:flex">
+          <Link href="#features" className="transition-colors hover:text-green-400">
             Features
           </Link>
-          <Link href="#pricing" className="hover:text-green-400 transition-colors">
+          <Link href="#pricing" className="transition-colors hover:text-green-400">
             Pricing
           </Link>
-          <Link href="#docs" className="hover:text-green-400 transition-colors">
+          <Link href="#docs" className="transition-colors hover:text-green-400">
             Docs
           </Link>
           <Button
             variant="outline"
-            className="border-green-400 text-green-400 hover:bg-green-400 hover:text-black bg-transparent"
+            className="border-green-400 bg-transparent text-green-400 hover:bg-green-400 hover:text-black"
           >
             <Link href="/">Try Demo</Link>
           </Button>
@@ -186,36 +186,36 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative z-10 min-h-screen flex items-center">
-        <div className="container mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative z-10 flex min-h-screen items-center">
+        <div className="container mx-auto grid items-center gap-12 px-6 lg:grid-cols-2">
           <div className="space-y-8">
             <div className="space-y-4">
-              <Badge className="bg-green-400/20 text-green-400 border-green-400/30">
+              <Badge className="border-green-400/30 bg-green-400/20 text-green-400">
                 🚀 Next-Gen Performance Analysis
               </Badge>
-              <h1 className="text-5xl lg:text-7xl font-bold leading-tight">
+              <h1 className="text-5xl font-bold leading-tight lg:text-7xl">
                 Unlock Your
                 <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
                   {" "}
                   Web Performance
                 </span>
               </h1>
-              <p className="text-xl text-gray-300 leading-relaxed">
+              <p className="text-xl leading-relaxed text-gray-300">
                 Advanced Chrome DevTools performance analysis with WASM optimization, GLB complexity insights, and
                 multi-protocol support. Built for the future of web development.
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-semibold"
+                className="bg-gradient-to-r from-green-400 to-blue-500 font-semibold text-black hover:from-green-500 hover:to-blue-600"
               >
                 <Link href="/" className="flex items-center">
                   Start Analyzing <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-gray-600 hover:bg-gray-800 bg-transparent">
+              <Button size="lg" variant="outline" className="border-gray-600 bg-transparent hover:bg-gray-800">
                 Watch Demo
               </Button>
             </div>
@@ -245,71 +245,71 @@ export default function LandingPage() {
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 transform animate-bounce">
           <ChevronDown className="h-8 w-8 text-gray-400" />
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="relative z-10 py-24 bg-gradient-to-b from-transparent to-gray-900/50">
+      <section id="features" className="relative z-10 bg-gradient-to-b from-transparent to-gray-900/50 py-24">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+          <div className="mb-16 text-center">
+            <h2 className="mb-6 text-4xl font-bold lg:text-5xl">
               Cutting-Edge
               <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
                 {" "}
                 Features
               </span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="mx-auto max-w-3xl text-xl text-gray-300">
               Powered by advanced algorithms and machine learning to provide unprecedented insights into your web
               application performance.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="group border-gray-800 bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50">
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-green-400 to-blue-500 transition-transform group-hover:scale-110">
                   <Zap className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">WASM Analysis</h3>
+                <h3 className="mb-3 text-xl font-semibold">WASM Analysis</h3>
                 <p className="text-gray-400">
                   Deep insights into WebAssembly performance, compilation times, and optimization opportunities.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+            <Card className="group border-gray-800 bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50">
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-purple-400 to-pink-500 transition-transform group-hover:scale-110">
                   <BarChart3 className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">GLB Optimization</h3>
+                <h3 className="mb-3 text-xl font-semibold">GLB Optimization</h3>
                 <p className="text-gray-400">
                   Analyze 3D model complexity, loading patterns, and rendering performance for GLB files.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+            <Card className="group border-gray-800 bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50">
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-orange-400 to-red-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-orange-400 to-red-500 transition-transform group-hover:scale-110">
                   <Cpu className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Real-time Monitoring</h3>
+                <h3 className="mb-3 text-xl font-semibold">Real-time Monitoring</h3>
                 <p className="text-gray-400">
                   Live performance metrics with advanced timeline visualization and bottleneck detection.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm hover:bg-gray-800/50 transition-all duration-300 group">
+            <Card className="group border-gray-800 bg-gray-900/50 backdrop-blur-sm transition-all duration-300 hover:bg-gray-800/50">
               <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-r from-blue-400 to-cyan-500 transition-transform group-hover:scale-110">
                   <Globe className="h-8 w-8 text-black" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Multi-Protocol</h3>
+                <h3 className="mb-3 text-xl font-semibold">Multi-Protocol</h3>
                 <p className="text-gray-400">
                   Support for HTTP/1.1, HTTP/2, HTTP/3, and WebSocket performance analysis.
                 </p>
@@ -322,8 +322,8 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="relative z-10 py-24">
         <div className="container mx-auto px-6 text-center">
-          <div className="max-w-4xl mx-auto">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="mb-6 text-4xl font-bold lg:text-5xl">
               Ready to
               <span className="bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text text-transparent">
                 {" "}
@@ -331,19 +331,19 @@ export default function LandingPage() {
               </span>
               ?
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="mb-8 text-xl text-gray-300">
               Join thousands of developers who trust PerfAnalyzer for their performance optimization needs.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-500 hover:to-blue-600 text-black font-semibold"
+                className="bg-gradient-to-r from-green-400 to-blue-500 font-semibold text-black hover:from-green-500 hover:to-blue-600"
               >
                 <Link href="/" className="flex items-center">
                   Get Started Free <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="border-gray-600 hover:bg-gray-800 bg-transparent">
+              <Button size="lg" variant="outline" className="border-gray-600 bg-transparent hover:bg-gray-800">
                 Contact Sales
               </Button>
             </div>
@@ -352,78 +352,78 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-gray-800 py-12 bg-gray-900/50 backdrop-blur-sm">
+      <footer className="relative z-10 border-t border-gray-800 bg-gray-900/50 py-12 backdrop-blur-sm">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid gap-8 md:grid-cols-4">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg" />
+              <div className="mb-4 flex items-center space-x-2">
+                <div className="h-8 w-8 rounded-lg bg-gradient-to-r from-green-400 to-blue-500" />
                 <span className="text-xl font-bold">PerfAnalyzer</span>
               </div>
               <p className="text-gray-400">Next-generation performance analysis for modern web applications.</p>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Product</h4>
+              <h4 className="mb-4 font-semibold">Product</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Features
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Pricing
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     API
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
+              <h4 className="mb-4 font-semibold">Resources</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Documentation
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Support
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold mb-4">Company</h4>
+              <h4 className="mb-4 font-semibold">Company</h4>
               <ul className="space-y-2 text-gray-400">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Careers
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="#" className="transition-colors hover:text-white">
                     Contact
                   </Link>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+          <div className="mt-8 border-t border-gray-800 pt-8 text-center text-gray-400">
             <p>&copy; 2024 PerfAnalyzer. All rights reserved.</p>
           </div>
         </div>

@@ -59,12 +59,12 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Protocol Overview Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         {data.protocols.map((protocol: any, index: number) => (
-          <Card key={protocol.protocol} className="bg-slate-800/50 border-slate-700">
+          <Card key={protocol.protocol} className="border-slate-700 bg-slate-800/50">
             <CardHeader className="pb-3">
-              <CardTitle className="text-slate-100 flex items-center gap-2 text-sm sm:text-base">
-                <Wifi className="w-4 h-4 sm:w-5 sm:h-5" />
+              <CardTitle className="flex items-center gap-2 text-sm text-slate-100 sm:text-base">
+                <Wifi className="h-4 w-4 sm:h-5 sm:w-5" />
                 {protocol.protocol.toUpperCase()}
               </CardTitle>
             </CardHeader>
@@ -72,17 +72,17 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div>
                   <p className="text-slate-400">Requests</p>
-                  <p className="text-slate-100 font-bold text-lg">{protocol.requests}</p>
+                  <p className="text-lg font-bold text-slate-100">{protocol.requests}</p>
                 </div>
                 <div>
                   <p className="text-slate-400">Avg Latency</p>
-                  <p className="text-slate-100 font-bold text-lg">{protocol.avgLatency}ms</p>
+                  <p className="text-lg font-bold text-slate-100">{protocol.avgLatency}ms</p>
                 </div>
               </div>
 
               <div>
-                <p className="text-slate-400 text-sm mb-1">Total Size</p>
-                <p className="text-slate-100 font-medium">{(protocol.totalSize / 1024 / 1024).toFixed(1)}MB</p>
+                <p className="mb-1 text-sm text-slate-400">Total Size</p>
+                <p className="font-medium text-slate-100">{(protocol.totalSize / 1024 / 1024).toFixed(1)}MB</p>
                 <Progress
                   value={(protocol.totalSize / Math.max(...data.protocols.map((p: any) => p.totalSize))) * 100}
                   className="mt-1"
@@ -91,12 +91,12 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
 
               <div className="flex flex-wrap gap-1">
                 {protocol.domains.slice(0, 3).map((domain: string) => (
-                  <Badge key={domain} variant="outline" className="text-xs border-slate-600 text-slate-300">
+                  <Badge key={domain} variant="outline" className="border-slate-600 text-xs text-slate-300">
                     {domain.replace(".example.com", "")}
                   </Badge>
                 ))}
                 {protocol.domains.length > 3 && (
-                  <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
+                  <Badge variant="outline" className="border-slate-600 text-xs text-slate-300">
                     +{protocol.domains.length - 3}
                   </Badge>
                 )}
@@ -106,12 +106,12 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Protocol Efficiency Comparison */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardHeader>
-            <CardTitle className="text-slate-100 flex items-center gap-2">
-              <TrendingUp className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-slate-100">
+              <TrendingUp className="h-5 w-5" />
               Protocol Efficiency
             </CardTitle>
             <CardDescription className="text-slate-400">Data throughput per latency unit (KB/ms)</CardDescription>
@@ -145,10 +145,10 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
         </Card>
 
         {/* Connection Multiplexing */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardHeader>
-            <CardTitle className="text-slate-100 flex items-center gap-2">
-              <Zap className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-slate-100">
+              <Zap className="h-5 w-5" />
               Connection Multiplexing
             </CardTitle>
             <CardDescription className="text-slate-400">Protocol efficiency and connection limits</CardDescription>
@@ -159,7 +159,7 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
                 <div key={item.protocol} className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: item.color }} />
+                      <div className="h-3 w-3 rounded-full" style={{ backgroundColor: item.color }} />
                       <span className="text-sm font-medium text-slate-100">{item.protocol}</span>
                     </div>
                     <div className="text-right text-sm">
@@ -179,10 +179,10 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
       </div>
 
       {/* Domain Protocol Distribution */}
-      <Card className="bg-slate-800/50 border-slate-700">
+      <Card className="border-slate-700 bg-slate-800/50">
         <CardHeader>
-          <CardTitle className="text-slate-100 flex items-center gap-2">
-            <Globe className="w-5 h-5" />
+          <CardTitle className="flex items-center gap-2 text-slate-100">
+            <Globe className="h-5 w-5" />
             Domain Protocol Distribution
           </CardTitle>
           <CardDescription className="text-slate-400">Protocol usage across different domains</CardDescription>
@@ -218,12 +218,12 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Request Priority Analysis */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardHeader>
-            <CardTitle className="text-slate-100 flex items-center gap-2">
-              <Clock className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-slate-100">
+              <Clock className="h-5 w-5" />
               Request Priority Distribution
             </CardTitle>
             <CardDescription className="text-slate-400">Priority levels across protocols</CardDescription>
@@ -263,10 +263,10 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
         </Card>
 
         {/* Protocol Performance Issues */}
-        <Card className="bg-slate-800/50 border-slate-700">
+        <Card className="border-slate-700 bg-slate-800/50">
           <CardHeader>
-            <CardTitle className="text-slate-100 flex items-center gap-2">
-              <AlertTriangle className="w-5 h-5" />
+            <CardTitle className="flex items-center gap-2 text-slate-100">
+              <AlertTriangle className="h-5 w-5" />
               Protocol Issues
             </CardTitle>
             <CardDescription className="text-slate-400">Identified protocol-related performance issues</CardDescription>
@@ -274,52 +274,52 @@ export default function ProtocolAnalysis({ data }: ProtocolAnalysisProps) {
           <CardContent>
             <div className="space-y-3">
               {data.protocols.some((p: any) => p.protocol === "http/1.1") && (
-                <div className="bg-red-900/20 border border-red-800 rounded-lg p-3">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <AlertTriangle className="w-4 h-4 text-red-400" />
-                    <h4 className="text-red-400 font-medium">HTTP/1.1 Usage Detected</h4>
+                <div className="rounded-lg border border-red-800 bg-red-900/20 p-3">
+                  <div className="mb-2 flex items-center space-x-2">
+                    <AlertTriangle className="h-4 w-4 text-red-400" />
+                    <h4 className="font-medium text-red-400">HTTP/1.1 Usage Detected</h4>
                   </div>
-                  <p className="text-red-200 text-sm">
+                  <p className="text-sm text-red-200">
                     {data.protocols.find((p: any) => p.protocol === "http/1.1")?.requests} requests still using HTTP/1.1
                   </p>
-                  <p className="text-red-300 text-xs mt-1">
+                  <p className="mt-1 text-xs text-red-300">
                     Consider upgrading to HTTP/2 or HTTP/3 for better performance
                   </p>
                 </div>
               )}
 
               {data.domains.some((d: any) => d.avgResponseTime > 1000) && (
-                <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-3">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Clock className="w-4 h-4 text-yellow-400" />
-                    <h4 className="text-yellow-400 font-medium">High Latency Domains</h4>
+                <div className="rounded-lg border border-yellow-800 bg-yellow-900/20 p-3">
+                  <div className="mb-2 flex items-center space-x-2">
+                    <Clock className="h-4 w-4 text-yellow-400" />
+                    <h4 className="font-medium text-yellow-400">High Latency Domains</h4>
                   </div>
-                  <p className="text-yellow-200 text-sm">
+                  <p className="text-sm text-yellow-200">
                     {data.domains.filter((d: any) => d.avgResponseTime > 1000).length} domains with &gt;1s response time
                   </p>
-                  <p className="text-yellow-300 text-xs mt-1">
+                  <p className="mt-1 text-xs text-yellow-300">
                     Consider CDN optimization or server location improvements
                   </p>
                 </div>
               )}
 
               {data.networkRequests.length > 100 && (
-                <div className="bg-orange-900/20 border border-orange-800 rounded-lg p-3">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <Wifi className="w-4 h-4 text-orange-400" />
-                    <h4 className="text-orange-400 font-medium">High Request Count</h4>
+                <div className="rounded-lg border border-orange-800 bg-orange-900/20 p-3">
+                  <div className="mb-2 flex items-center space-x-2">
+                    <Wifi className="h-4 w-4 text-orange-400" />
+                    <h4 className="font-medium text-orange-400">High Request Count</h4>
                   </div>
-                  <p className="text-orange-200 text-sm">{data.networkRequests.length} total requests detected</p>
-                  <p className="text-orange-300 text-xs mt-1">Consider request bundling and resource optimization</p>
+                  <p className="text-sm text-orange-200">{data.networkRequests.length} total requests detected</p>
+                  <p className="mt-1 text-xs text-orange-300">Consider request bundling and resource optimization</p>
                 </div>
               )}
 
-              <div className="bg-blue-900/20 border border-blue-800 rounded-lg p-3">
-                <div className="flex items-center space-x-2 mb-2">
-                  <TrendingUp className="w-4 h-4 text-blue-400" />
-                  <h4 className="text-blue-400 font-medium">Protocol Recommendations</h4>
+              <div className="rounded-lg border border-blue-800 bg-blue-900/20 p-3">
+                <div className="mb-2 flex items-center space-x-2">
+                  <TrendingUp className="h-4 w-4 text-blue-400" />
+                  <h4 className="font-medium text-blue-400">Protocol Recommendations</h4>
                 </div>
-                <ul className="text-blue-200 text-sm space-y-1">
+                <ul className="space-y-1 text-sm text-blue-200">
                   <li>• Migrate remaining HTTP/1.1 requests to HTTP/2+</li>
                   <li>• Implement HTTP/3 for improved performance</li>
                   <li>• Use connection coalescing where possible</li>

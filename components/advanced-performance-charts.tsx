@@ -208,7 +208,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
       {/* Advanced Performance Timeline */}
       <PerformanceTimelineChart data={timelineData} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
         {/* Protocol Performance Comparison */}
         <ProtocolPerformanceChart data={protocolData} />
 
@@ -216,7 +216,7 @@ export default function AdvancedPerformanceCharts({ data }: AdvancedPerformanceC
         <WasmPerformanceChart data={wasmData} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
         {/* GLB File Analysis */}
         <GlbComplexityChart data={glbData} />
 

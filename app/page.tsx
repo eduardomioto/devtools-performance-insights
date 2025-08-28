@@ -19,7 +19,7 @@ export default function HomePage() {
   return (
     <TooltipProvider>
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-2 sm:p-4">
-        <div className="max-w-7xl mx-auto space-y-4 sm:space-y-6">
+        <div className="mx-auto max-w-7xl space-y-4 sm:space-y-6">
           <DashboardHeader performanceData={performanceData} />
 
           {!performanceData && (

@@ -8,17 +8,16 @@ import { Toaster } from "@/components/ui/toaster";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PerfAnalyzer - Next-Gen Performance Analysis",
+  title: "Advanced Performance Analytics",
   description:
     "Revolutionary Chrome DevTools profiling analysis with AI-powered insights, real-time monitoring, and advanced visualization for modern web applications.",
   keywords: ["performance", "analysis", "chrome", "devtools", "profiling", "optimization", "web", "development"],
   authors: [{ name: "PerfAnalyzer Team" }],
   openGraph: {
-    title: "PerfAnalyzer - Next-Gen Performance Analysis",
+    title: "Advanced Performance Analytics",
     description: "Revolutionary Chrome DevTools profiling analysis with AI-powered insights",
     type: "website",
   },
-  generator: "v0.dev",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

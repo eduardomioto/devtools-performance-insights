@@ -21,18 +21,18 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
   const getTypeIcon = (type: string) => {
     switch (type) {
       case "script":
-        return <Code className="w-4 h-4" />;
+        return <Code className="h-4 w-4" />;
       case "stylesheet":
-        return <FileText className="w-4 h-4" />;
+        return <FileText className="h-4 w-4" />;
       case "image":
-        return <ImageIcon className="w-4 h-4" />;
+        return <ImageIcon className="h-4 w-4" />;
       case "wasm":
-        return <Cpu className="w-4 h-4" />;
+        return <Cpu className="h-4 w-4" />;
       case "xhr":
       case "fetch":
-        return <Database className="w-4 h-4" />;
+        return <Database className="h-4 w-4" />;
       default:
-        return <Zap className="w-4 h-4" />;
+        return <Zap className="h-4 w-4" />;
     }
   };
 
@@ -65,15 +65,15 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Resource Overview */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-4 lg:grid-cols-4">
         {Object.entries(requestsByType).map(([type, requests]: [string, any]) => (
-          <Card key={type} className="bg-slate-800/50 border-slate-700">
+          <Card key={type} className="border-slate-700 bg-slate-800/50">
             <CardContent className="p-3 sm:p-4">
               <div className="flex items-center space-x-2">
                 {getTypeIcon(type)}
                 <div>
-                  <p className="text-xs sm:text-sm font-medium text-slate-400 capitalize">{type}</p>
-                  <p className="text-lg sm:text-2xl font-bold text-slate-100">{requests.length}</p>
+                  <p className="text-xs font-medium capitalize text-slate-400 sm:text-sm">{type}</p>
+                  <p className="text-lg font-bold text-slate-100 sm:text-2xl">{requests.length}</p>
                   <p className="text-xs text-slate-500">
                     {(requests.reduce((acc: number, req: any) => acc + req.size, 0) / 1024 / 1024).toFixed(1)}
                     MB
@@ -87,30 +87,30 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
 
       <Tabs defaultValue="wasm" className="space-y-4">
         <div className="mobile-scroll">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
-            <TabsTrigger value="wasm" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsList className="grid w-full min-w-max grid-cols-2 border-slate-700 bg-slate-800/50 lg:min-w-0 lg:grid-cols-5">
+            <TabsTrigger value="wasm" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               WASM
             </TabsTrigger>
-            <TabsTrigger value="glb" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="glb" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               3D Models
             </TabsTrigger>
-            <TabsTrigger value="largest" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="largest" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Largest
             </TabsTrigger>
-            <TabsTrigger value="slowest" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="slowest" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Slowest
             </TabsTrigger>
-            <TabsTrigger value="breakdown" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="breakdown" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Breakdown
             </TabsTrigger>
           </TabsList>
         </div>
 
         <TabsContent value="wasm">
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle className="text-slate-100 flex items-center gap-2">
-                <Cpu className="w-5 h-5" />
+              <CardTitle className="flex items-center gap-2 text-slate-100">
+                <Cpu className="h-5 w-5" />
                 WebAssembly Modules
               </CardTitle>
               <CardDescription className="text-slate-400">WASM compilation and execution performance</CardDescription>
@@ -118,7 +118,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
             <CardContent>
               <div className="space-y-4">
                 {data.wasmModules.map((module: any, index: number) => (
-                  <div key={index} className="border border-slate-600 rounded-lg p-4 space-y-3">
+                  <div key={index} className="space-y-3 rounded-lg border border-slate-600 p-4">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-slate-100">{module.name}</h3>
                       <Badge variant="outline" className="border-orange-500 text-orange-400">
@@ -126,26 +126,26 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                       </Badge>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
+                    <div className="grid grid-cols-1 gap-4 text-sm sm:grid-cols-3">
                       <div>
                         <p className="text-slate-400">Load Time</p>
-                        <p className="text-slate-100 font-medium">{module.loadTime}ms</p>
+                        <p className="font-medium text-slate-100">{module.loadTime}ms</p>
                         <Progress value={(module.loadTime / 500) * 100} className="mt-1" />
                       </div>
                       <div>
                         <p className="text-slate-400">Compile Time</p>
-                        <p className="text-slate-100 font-medium">{module.compileTime}ms</p>
+                        <p className="font-medium text-slate-100">{module.compileTime}ms</p>
                         <Progress value={(module.compileTime / 200) * 100} className="mt-1" />
                       </div>
                       <div>
                         <p className="text-slate-400">Instantiate Time</p>
-                        <p className="text-slate-100 font-medium">{module.instantiateTime}ms</p>
+                        <p className="font-medium text-slate-100">{module.instantiateTime}ms</p>
                         <Progress value={(module.instantiateTime / 100) * 100} className="mt-1" />
                       </div>
                     </div>
 
-                    <div className="bg-slate-700/50 rounded p-3">
-                      <p className="text-xs text-slate-400 mb-1">Memory Usage</p>
+                    <div className="rounded bg-slate-700/50 p-3">
+                      <p className="mb-1 text-xs text-slate-400">Memory Usage</p>
                       <p className="text-slate-100">{(module.memoryUsage / 1024 / 1024).toFixed(1)}MB</p>
                     </div>
                   </div>
@@ -156,10 +156,10 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
         </TabsContent>
 
         <TabsContent value="glb">
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle className="text-slate-100 flex items-center gap-2">
-                <ImageIcon className="w-5 h-5" />
+              <CardTitle className="flex items-center gap-2 text-slate-100">
+                <ImageIcon className="h-5 w-5" />
                 3D Model Files (GLB)
               </CardTitle>
               <CardDescription className="text-slate-400">3D model complexity and loading performance</CardDescription>
@@ -167,7 +167,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
             <CardContent>
               <div className="space-y-4">
                 {data.glbFiles.map((file: any, index: number) => (
-                  <div key={index} className="border border-slate-600 rounded-lg p-4 space-y-3">
+                  <div key={index} className="space-y-3 rounded-lg border border-slate-600 p-4">
                     <div className="flex items-center justify-between">
                       <h3 className="font-semibold text-slate-100">{file.name}</h3>
                       <Badge variant="outline" className="border-purple-500 text-purple-400">
@@ -175,27 +175,27 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                       </Badge>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
+                    <div className="grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
                       <div>
                         <p className="text-slate-400">Load Time</p>
-                        <p className="text-slate-100 font-medium">{file.loadTime}ms</p>
+                        <p className="font-medium text-slate-100">{file.loadTime}ms</p>
                       </div>
                       <div>
                         <p className="text-slate-400">Vertices</p>
-                        <p className="text-slate-100 font-medium">{file.vertices.toLocaleString()}</p>
+                        <p className="font-medium text-slate-100">{file.vertices.toLocaleString()}</p>
                       </div>
                       <div>
                         <p className="text-slate-400">Textures</p>
-                        <p className="text-slate-100 font-medium">{file.textures}</p>
+                        <p className="font-medium text-slate-100">{file.textures}</p>
                       </div>
                       <div>
                         <p className="text-slate-400">Materials</p>
-                        <p className="text-slate-100 font-medium">{file.materials}</p>
+                        <p className="font-medium text-slate-100">{file.materials}</p>
                       </div>
                     </div>
 
-                    <div className="bg-slate-700/50 rounded p-3">
-                      <p className="text-xs text-slate-400 mb-1">Complexity Score</p>
+                    <div className="rounded bg-slate-700/50 p-3">
+                      <p className="mb-1 text-xs text-slate-400">Complexity Score</p>
                       <div className="flex items-center space-x-2">
                         <Progress
                           value={Math.min(
@@ -204,7 +204,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                           )}
                           className="flex-1"
                         />
-                        <span className="text-slate-100 text-sm">
+                        <span className="text-sm text-slate-100">
                           {Math.round(((file.vertices / 1000 + file.textures * 2 + file.materials * 3) / 10) * 100)}%
                         </span>
                       </div>
@@ -217,7 +217,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
         </TabsContent>
 
         <TabsContent value="largest">
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
               <CardTitle className="text-slate-100">Largest Resources</CardTitle>
               <CardDescription className="text-slate-400">Top 10 resources by file size</CardDescription>
@@ -225,11 +225,11 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
             <CardContent>
               <div className="space-y-3">
                 {getLargestResources().map((resource, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 bg-slate-700/30 rounded-lg">
-                    <div className="flex items-center space-x-2 flex-1 min-w-0">
+                  <div key={index} className="flex items-center space-x-3 rounded-lg bg-slate-700/30 p-3">
+                    <div className="flex min-w-0 flex-1 items-center space-x-2">
                       {getTypeIcon(resource.type)}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-slate-100 truncate">{resource.url.split("/").pop()}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm text-slate-100">{resource.url.split("/").pop()}</p>
                         <p className="text-xs text-slate-400">{resource.domain}</p>
                       </div>
                     </div>
@@ -248,7 +248,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
         </TabsContent>
 
         <TabsContent value="slowest">
-          <Card className="bg-slate-800/50 border-slate-700">
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
               <CardTitle className="text-slate-100">Slowest Resources</CardTitle>
               <CardDescription className="text-slate-400">Top 10 resources by load time</CardDescription>
@@ -256,11 +256,11 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
             <CardContent>
               <div className="space-y-3">
                 {getSlowestResources().map((resource, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 bg-slate-700/30 rounded-lg">
-                    <div className="flex items-center space-x-2 flex-1 min-w-0">
+                  <div key={index} className="flex items-center space-x-3 rounded-lg bg-slate-700/30 p-3">
+                    <div className="flex min-w-0 flex-1 items-center space-x-2">
                       {getTypeIcon(resource.type)}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm text-slate-100 truncate">{resource.url.split("/").pop()}</p>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm text-slate-100">{resource.url.split("/").pop()}</p>
                         <p className="text-xs text-slate-400">{resource.domain}</p>
                       </div>
                     </div>
@@ -279,8 +279,8 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
         </TabsContent>
 
         <TabsContent value="breakdown">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-            <Card className="bg-slate-800/50 border-slate-700">
+          <div className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2">
+            <Card className="border-slate-700 bg-slate-800/50">
               <CardHeader>
                 <CardTitle className="text-slate-100">Resource Type Breakdown</CardTitle>
                 <CardDescription className="text-slate-400">Distribution by resource type</CardDescription>
@@ -297,7 +297,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
                             {getTypeIcon(type)}
-                            <span className="text-sm font-medium text-slate-100 capitalize">{type}</span>
+                            <span className="text-sm font-medium capitalize text-slate-100">{type}</span>
                             <Badge variant="outline" className="border-slate-600 text-slate-300">
                               {requests.length}
                             </Badge>
@@ -307,7 +307,7 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                             <p className="text-slate-400">{avgDuration.toFixed(0)}ms avg</p>
                           </div>
                         </div>
-                        <div className="w-full bg-slate-700 rounded-full h-2">
+                        <div className="h-2 w-full rounded-full bg-slate-700">
                           <div
                             className={`h-2 rounded-full ${getTypeColor(type)}`}
                             style={{
@@ -322,15 +322,15 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
               </CardContent>
             </Card>
 
-            <Card className="bg-slate-800/50 border-slate-700">
+            <Card className="border-slate-700 bg-slate-800/50">
               <CardHeader>
                 <CardTitle className="text-slate-100">Performance Impact</CardTitle>
                 <CardDescription className="text-slate-400">Resource impact on page performance</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="bg-red-900/20 border border-red-800 rounded-lg p-3">
-                    <h4 className="text-red-400 font-medium mb-2">High Impact Resources</h4>
+                  <div className="rounded-lg border border-red-800 bg-red-900/20 p-3">
+                    <h4 className="mb-2 font-medium text-red-400">High Impact Resources</h4>
                     <div className="space-y-1 text-sm">
                       <p className="text-red-200">WASM modules: {data.wasmModules.length} files</p>
                       <p className="text-red-200">GLB files: {data.glbFiles.length} files</p>
@@ -340,8 +340,8 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                     </div>
                   </div>
 
-                  <div className="bg-yellow-900/20 border border-yellow-800 rounded-lg p-3">
-                    <h4 className="text-yellow-400 font-medium mb-2">Medium Impact Resources</h4>
+                  <div className="rounded-lg border border-yellow-800 bg-yellow-900/20 p-3">
+                    <h4 className="mb-2 font-medium text-yellow-400">Medium Impact Resources</h4>
                     <div className="space-y-1 text-sm">
                       <p className="text-yellow-200">Images: {requestsByType.image?.length || 0} files</p>
                       <p className="text-yellow-200">Stylesheets: {requestsByType.stylesheet?.length || 0} files</p>
@@ -351,8 +351,8 @@ export default function ResourceAnalysis({ data }: ResourceAnalysisProps) {
                     </div>
                   </div>
 
-                  <div className="bg-green-900/20 border border-green-800 rounded-lg p-3">
-                    <h4 className="text-green-400 font-medium mb-2">Low Impact Resources</h4>
+                  <div className="rounded-lg border border-green-800 bg-green-900/20 p-3">
+                    <h4 className="mb-2 font-medium text-green-400">Low Impact Resources</h4>
                     <div className="space-y-1 text-sm">
                       <p className="text-green-200">Fonts: {requestsByType.font?.length || 0} files</p>
                       <p className="text-green-200">Other: {requestsByType.other?.length || 0} files</p>

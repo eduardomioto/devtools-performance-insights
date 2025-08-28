@@ -32,7 +32,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "Main JavaScript bundle is 280KB, causing slow initial load times",
       impact: "Delays First Contentful Paint by ~400ms",
       metric: "Bundle Size: 280KB",
-      icon: <Code className="w-4 h-4" />,
+      icon: <Code className="h-4 w-4" />,
     },
     {
       id: "2",
@@ -42,7 +42,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "Large images without proper compression and modern formats",
       impact: "Increases Largest Contentful Paint by ~600ms",
       metric: "Total Image Size: 520KB",
-      icon: <ImageIcon className="w-4 h-4" />,
+      icon: <ImageIcon className="h-4 w-4" />,
     },
     {
       id: "3",
@@ -52,7 +52,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "Elements shifting during page load causing poor user experience",
       impact: "CLS score of 0.15 (above recommended 0.1)",
       metric: "CLS: 0.15",
-      icon: <AlertTriangle className="w-4 h-4" />,
+      icon: <AlertTriangle className="h-4 w-4" />,
     },
     {
       id: "4",
@@ -62,7 +62,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "CSS files blocking the rendering of above-the-fold content",
       impact: "Delays First Contentful Paint",
       metric: "3 blocking resources",
-      icon: <Clock className="w-4 h-4" />,
+      icon: <Clock className="h-4 w-4" />,
     },
     {
       id: "5",
@@ -72,7 +72,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "JavaScript execution blocking the main thread for extended periods",
       impact: "Potential input delay and poor responsiveness",
       metric: "2 tasks > 50ms",
-      icon: <Zap className="w-4 h-4" />,
+      icon: <Zap className="h-4 w-4" />,
     },
     {
       id: "6",
@@ -82,7 +82,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "Multiple small requests instead of bundled resources",
       impact: "Increased connection overhead",
       metric: "12 HTTP requests",
-      icon: <Wifi className="w-4 h-4" />,
+      icon: <Wifi className="h-4 w-4" />,
     },
     {
       id: "7",
@@ -92,7 +92,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
       description: "No preload or prefetch hints for critical resources",
       impact: "Missed optimization opportunities",
       metric: "0 resource hints",
-      icon: <Clock className="w-4 h-4" />,
+      icon: <Clock className="h-4 w-4" />,
     },
   ];
 
@@ -133,7 +133,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
   return (
     <div className="space-y-6">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <Card>
           <CardContent className="p-4">
             <div className="text-center">
@@ -198,7 +198,7 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
         <CardContent>
           <div className="space-y-4">
             {issues.map((issue) => (
-              <div key={issue.id} className="border rounded-lg p-4 space-y-3">
+              <div key={issue.id} className="space-y-3 rounded-lg border p-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-center space-x-2">
                     {issue.icon}
@@ -208,13 +208,13 @@ export default function IssuesAnalysis({ data }: IssuesAnalysisProps) {
                   </div>
                   <div className="text-right">
                     <div className="text-sm font-medium">{issue.metric}</div>
-                    <Progress value={getSeverityScore(issue.severity)} className="w-20 mt-1" />
+                    <Progress value={getSeverityScore(issue.severity)} className="mt-1 w-20" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <p className="text-sm text-gray-600">{issue.description}</p>
-                  <div className="bg-orange-50 border border-orange-200 rounded p-2">
+                  <div className="rounded border border-orange-200 bg-orange-50 p-2">
                     <p className="text-sm text-orange-800">
                       <strong>Impact:</strong> {issue.impact}
                     </p>

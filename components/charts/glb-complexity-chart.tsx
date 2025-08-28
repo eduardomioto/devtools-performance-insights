@@ -17,12 +17,12 @@ export function GlbComplexityChart({ data }: GlbComplexityChartProps) {
   const resetGlbZoom = () => setGlbZoom(1);
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="border-slate-700 bg-slate-800/50">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div>
-            <CardTitle className="text-slate-100 text-sm sm:text-base">3D Model Complexity</CardTitle>
-            <CardDescription className="text-slate-400 text-xs sm:text-sm">
+            <CardTitle className="text-sm text-slate-100 sm:text-base">3D Model Complexity</CardTitle>
+            <CardDescription className="text-xs text-slate-400 sm:text-sm">
               GLB file size vs load time and complexity
             </CardDescription>
           </div>
@@ -31,25 +31,25 @@ export function GlbComplexityChart({ data }: GlbComplexityChartProps) {
               variant="outline"
               size="sm"
               onClick={() => setGlbZoom(Math.min(3, glbZoom * 1.2))}
-              className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+              className="border-slate-600 bg-slate-700 text-slate-300 hover:bg-slate-600"
             >
-              <ZoomIn className="w-3 h-3" />
+              <ZoomIn className="h-3 w-3" />
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={() => setGlbZoom(Math.max(0.5, glbZoom / 1.2))}
-              className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+              className="border-slate-600 bg-slate-700 text-slate-300 hover:bg-slate-600"
             >
-              <ZoomOut className="w-3 h-3" />
+              <ZoomOut className="h-3 w-3" />
             </Button>
             <Button
               variant="outline"
               size="sm"
               onClick={resetGlbZoom}
-              className="bg-slate-700 border-slate-600 text-slate-300 hover:bg-slate-600"
+              className="border-slate-600 bg-slate-700 text-slate-300 hover:bg-slate-600"
             >
-              <RotateCcw className="w-3 h-3" />
+              <RotateCcw className="h-3 w-3" />
             </Button>
           </div>
         </div>
