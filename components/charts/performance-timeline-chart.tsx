@@ -17,11 +17,25 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
 
   const resetTimelineZoom = () => setTimelineZoom(1);
 
-  // Calculate timeline statistics
-  const totalDuration = data.length > 0 ? Math.max(...data.map((d) => d.time)) : 0;
-  const maxCpu = data.length > 0 ? Math.max(...data.map((d) => d.cpu || 0)) : 0;
-  const maxMemory = data.length > 0 ? Math.max(...data.map((d) => d.memory || 0)) : 0;
-  const maxNetwork = data.length > 0 ? Math.max(...data.map((d) => d.network || 0)) : 0;
+  // Simple validation
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <Card className="border-slate-700 bg-slate-800/50">
+        <CardHeader>
+          <CardTitle className="text-sm text-slate-100 sm:text-base">Advanced Performance Timeline</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[300px] items-center justify-center text-slate-400">No timeline data available</div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Safe calculations
+  const totalDuration = Math.max(...data.map((d) => d.time || 0));
+  const maxCpu = Math.max(...data.map((d) => d.cpu || 0));
+  const maxMemory = Math.max(...data.map((d) => d.memory || 0));
+  const maxNetwork = Math.max(...data.map((d) => d.network || 0));
 
   return (
     <Card className="border-slate-700 bg-slate-800/50">
@@ -68,60 +82,61 @@ export function PerformanceTimelineChart({ data }: PerformanceTimelineChartProps
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <ChartContainer
-            config={{
-              cpu: { label: "CPU Usage (%)", color: "#ef4444" },
-              memory: { label: "Memory (MB)", color: "#3b82f6" },
-              network: { label: "Network (KB/s)", color: "#10b981" },
-              wasm: { label: "WASM Activity", color: "#f59e0b" },
-              webgl: { label: "WebGL Activity", color: "#8b5cf6" },
-              gpu: { label: "GPU Usage", color: "#06b6d4" },
-            }}
-            className="h-full"
-            style={{ transform: `scale(${timelineZoom})`, transformOrigin: "top left" }}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis
-                  dataKey="time"
-                  stroke="#9ca3af"
-                  fontSize={12}
-                  tickFormatter={(value) => `${(value / 1000).toFixed(1)}s`}
-                />
-                <YAxis stroke="#9ca3af" fontSize={12} />
-                <ChartTooltip
-                  content={<ChartTooltipContent />}
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid #475569",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Legend />
-                <Line type="monotone" dataKey="cpu" stroke="#ef4444" strokeWidth={2} dot={false} name="CPU (%)" />
-                <Line
-                  type="monotone"
-                  dataKey="memory"
-                  stroke="#3b82f6"
-                  strokeWidth={2}
-                  dot={false}
-                  name="Memory (MB)"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="network"
-                  stroke="#10b981"
-                  strokeWidth={2}
-                  dot={false}
-                  name="Network (KB/s)"
-                />
-                <Line type="monotone" dataKey="wasm" stroke="#f59e0b" strokeWidth={2} dot={false} name="WASM" />
-                <Line type="monotone" dataKey="webgl" stroke="#8b5cf6" strokeWidth={2} dot={false} name="WebGL" />
-                <Line type="monotone" dataKey="gpu" stroke="#06b6d4" strokeWidth={2} dot={false} name="GPU" />
-              </LineChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+          <div style={{ width: `${100 * timelineZoom}%`, transformOrigin: "top left" }}>
+            <ChartContainer
+              config={{
+                cpu: { label: "CPU Usage (%)", color: "#ef4444" },
+                memory: { label: "Memory (MB)", color: "#3b82f6" },
+                network: { label: "Network (KB/s)", color: "#10b981" },
+                wasm: { label: "WASM Activity", color: "#f59e0b" },
+                webgl: { label: "WebGL Activity", color: "#8b5cf6" },
+                gpu: { label: "GPU Usage", color: "#06b6d4" },
+              }}
+              className="h-full"
+            >
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <XAxis
+                    dataKey="time"
+                    stroke="#9ca3af"
+                    fontSize={12}
+                    tickFormatter={(value) => `${(value / 1000).toFixed(1)}s`}
+                  />
+                  <YAxis stroke="#9ca3af" fontSize={12} />
+                  <ChartTooltip
+                    content={<ChartTooltipContent />}
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Legend />
+                  <Line type="monotone" dataKey="cpu" stroke="#ef4444" strokeWidth={2} dot={false} name="CPU (%)" />
+                  <Line
+                    type="monotone"
+                    dataKey="memory"
+                    stroke="#3b82f6"
+                    strokeWidth={2}
+                    dot={false}
+                    name="Memory (MB)"
+                  />
+                  <Line
+                    type="monotone"
+                    dataKey="network"
+                    stroke="#10b981"
+                    strokeWidth={2}
+                    dot={false}
+                    name="Network (KB/s)"
+                  />
+                  <Line type="monotone" dataKey="wasm" stroke="#f59e0b" strokeWidth={2} dot={false} name="WASM" />
+                  <Line type="monotone" dataKey="webgl" stroke="#8b5cf6" strokeWidth={2} dot={false} name="WebGL" />
+                  <Line type="monotone" dataKey="gpu" stroke="#06b6d4" strokeWidth={2} dot={false} name="GPU" />
+                </LineChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </div>
         <div className="mt-4 grid grid-cols-2 gap-2 text-xs sm:grid-cols-3 lg:grid-cols-6">
           <div className="text-center">

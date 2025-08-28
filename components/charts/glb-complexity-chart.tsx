@@ -13,8 +13,20 @@ interface GlbComplexityChartProps {
 
 export function GlbComplexityChart({ data }: GlbComplexityChartProps) {
   const [glbZoom, setGlbZoom] = useState(1);
-
   const resetGlbZoom = () => setGlbZoom(1);
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <Card className="border-slate-700 bg-slate-800/50">
+        <CardHeader>
+          <CardTitle className="text-sm text-slate-100 sm:text-base">3D Model Complexity</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[200px] items-center justify-center text-slate-400">No 3D model data available</div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="border-slate-700 bg-slate-800/50">
@@ -56,37 +68,38 @@ export function GlbComplexityChart({ data }: GlbComplexityChartProps) {
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <ChartContainer
-            config={{
-              sizeMB: { label: "Size (MB)", color: "#f59e0b" },
-              loadTime: { label: "Load Time (ms)", color: "#ef4444" },
-            }}
-            className="h-[200px] sm:h-[300px]"
-            style={{ transform: `scale(${glbZoom})`, transformOrigin: "top left" }}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <ScatterChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis
-                  dataKey="sizeMB"
-                  name="Size (MB)"
-                  stroke="#9ca3af"
-                  fontSize={12}
-                  tickFormatter={(value) => `${value.toFixed(1)}MB`}
-                />
-                <YAxis dataKey="loadTime" name="Load Time (ms)" stroke="#9ca3af" fontSize={12} />
-                <ChartTooltip
-                  content={<ChartTooltipContent />}
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid #475569",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Scatter dataKey="loadTime" fill="#f59e0b" />
-              </ScatterChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+          <div style={{ width: `${100 * glbZoom}%` }}>
+            <ChartContainer
+              config={{
+                sizeMB: { label: "Size (MB)", color: "#f59e0b" },
+                loadTime: { label: "Load Time (ms)", color: "#ef4444" },
+              }}
+              className="h-[200px] sm:h-[300px]"
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <ScatterChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <XAxis
+                    dataKey="sizeMB"
+                    name="Size (MB)"
+                    stroke="#9ca3af"
+                    fontSize={12}
+                    tickFormatter={(value) => `${value.toFixed(1)}MB`}
+                  />
+                  <YAxis dataKey="loadTime" name="Load Time (ms)" stroke="#9ca3af" fontSize={12} />
+                  <ChartTooltip
+                    content={<ChartTooltipContent />}
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Scatter dataKey="loadTime" fill="#f59e0b" />
+                </ScatterChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </div>
       </CardContent>
     </Card>
