@@ -168,15 +168,15 @@ export default function Recommendations({ data }: RecommendationsProps) {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="rounded-lg bg-red-900/20 border border-red-800 p-4 text-center">
+            <div className="rounded-lg border border-red-800 bg-red-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-red-400">{highPriorityRecs.length}</div>
               <div className="text-sm text-red-300">High Priority</div>
             </div>
-            <div className="rounded-lg bg-yellow-900/20 border border-yellow-800 p-4 text-center">
+            <div className="rounded-lg border border-yellow-800 bg-yellow-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-yellow-400">{mediumPriorityRecs.length}</div>
               <div className="text-sm text-yellow-300">Medium Priority</div>
             </div>
-            <div className="rounded-lg bg-green-900/20 border border-green-800 p-4 text-center">
+            <div className="rounded-lg border border-green-800 bg-green-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-green-400">{quickWins.length}</div>
               <div className="text-sm text-green-300">Quick Wins</div>
             </div>
@@ -186,10 +186,16 @@ export default function Recommendations({ data }: RecommendationsProps) {
 
       {/* Recommendations Tabs */}
       <Tabs defaultValue="priority" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 border-slate-700">
-          <TabsTrigger value="priority" className="data-[state=active]:bg-slate-700">By Priority</TabsTrigger>
-          <TabsTrigger value="category" className="data-[state=active]:bg-slate-700">By Category</TabsTrigger>
-          <TabsTrigger value="quick-wins" className="data-[state=active]:bg-slate-700">Quick Wins</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 border-slate-700 bg-slate-800/50">
+          <TabsTrigger value="priority" className="data-[state=active]:bg-slate-700">
+            By Priority
+          </TabsTrigger>
+          <TabsTrigger value="category" className="data-[state=active]:bg-slate-700">
+            By Category
+          </TabsTrigger>
+          <TabsTrigger value="quick-wins" className="data-[state=active]:bg-slate-700">
+            Quick Wins
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="priority" className="space-y-4">
@@ -197,7 +203,9 @@ export default function Recommendations({ data }: RecommendationsProps) {
           <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
               <CardTitle className="text-red-400">High Priority Recommendations</CardTitle>
-              <CardDescription className="text-slate-400">Address these issues first for maximum impact</CardDescription>
+              <CardDescription className="text-slate-400">
+                Address these issues first for maximum impact
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -212,7 +220,9 @@ export default function Recommendations({ data }: RecommendationsProps) {
           <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
               <CardTitle className="text-yellow-400">Medium Priority Recommendations</CardTitle>
-              <CardDescription className="text-slate-400">Important optimizations for continued improvement</CardDescription>
+              <CardDescription className="text-slate-400">
+                Important optimizations for continued improvement
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -266,7 +276,9 @@ export default function Recommendations({ data }: RecommendationsProps) {
           <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
               <CardTitle className="text-green-400">Quick Wins</CardTitle>
-              <CardDescription className="text-slate-400">Easy to implement optimizations with good impact</CardDescription>
+              <CardDescription className="text-slate-400">
+                Easy to implement optimizations with good impact
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -318,8 +330,12 @@ function RecommendationCard({ recommendation }: { recommendation: Recommendation
           <Badge variant={getPriorityColor(recommendation.priority) as any}>
             {recommendation.priority.toUpperCase()}
           </Badge>
-          <Badge variant="outline" className="border-slate-600 text-slate-300">{recommendation.category}</Badge>
-          <span className={`rounded-full px-2 py-1 text-xs font-medium ${getDifficultyColor(recommendation.difficulty)}`}>
+          <Badge variant="outline" className="border-slate-600 text-slate-300">
+            {recommendation.category}
+          </Badge>
+          <span
+            className={`rounded-full px-2 py-1 text-xs font-medium ${getDifficultyColor(recommendation.difficulty)}`}
+          >
             {recommendation.difficulty}
           </span>
         </div>

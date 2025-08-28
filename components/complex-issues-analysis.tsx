@@ -31,7 +31,7 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
     glbFiles: data?.glbFiles || [],
     networkRequests: data?.networkRequests || [],
     domains: data?.domains || [],
-    protocols: data?.protocols || []
+    protocols: data?.protocols || [],
   };
 
   const complexIssues: ComplexIssue[] = [
@@ -273,20 +273,26 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       <Tabs defaultValue="all" className="space-y-4">
         {/* Fixed: Mobile scroll and responsive layout */}
         <div className="overflow-x-auto">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-fit">
-            <TabsTrigger value="all" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
+          <TabsList className="grid w-full min-w-fit grid-cols-2 border-slate-700 bg-slate-800/50 lg:grid-cols-5">
+            <TabsTrigger value="all" className="whitespace-nowrap text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               All Issues
             </TabsTrigger>
-            <TabsTrigger value="critical" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
+            <TabsTrigger
+              value="critical"
+              className="whitespace-nowrap text-xs data-[state=active]:bg-slate-700 sm:text-sm"
+            >
               Critical
             </TabsTrigger>
-            <TabsTrigger value="high" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
+            <TabsTrigger value="high" className="whitespace-nowrap text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               High
             </TabsTrigger>
-            <TabsTrigger value="medium" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
+            <TabsTrigger
+              value="medium"
+              className="whitespace-nowrap text-xs data-[state=active]:bg-slate-700 sm:text-sm"
+            >
               Medium
             </TabsTrigger>
-            <TabsTrigger value="low" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
+            <TabsTrigger value="low" className="whitespace-nowrap text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Low
             </TabsTrigger>
           </TabsList>
@@ -318,7 +324,7 @@ function IssuesList({ issues }: { issues: ComplexIssue[] }) {
       case "critical":
         return "destructive";
       case "high":
-        return "destructive"; 
+        return "destructive";
       case "medium":
         return "default";
       case "low":
