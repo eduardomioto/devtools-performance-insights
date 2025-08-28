@@ -54,7 +54,7 @@ const wasmModule = await WebAssembly.instantiateStreaming(
       expectedImprovement: "Reduce WASM load time by 60-70% (~400ms)",
       difficulty: "medium",
       timeToImplement: "2-3 days",
-      icon: <Cpu className="w-4 h-4" />,
+      icon: <Cpu className="h-4 w-4" />,
       affectedMetrics: ["FCP", "LCP", "TBT"],
       prerequisites: ["Modern browser support", "WASM modules served with correct MIME type"],
       estimatedImpact: 85,
@@ -81,7 +81,7 @@ const loadModelLOD = (distance) => {
       expectedImprovement: "Reduce 3D model size by 70-80% (~35MB savings)",
       difficulty: "hard",
       timeToImplement: "1-2 weeks",
-      icon: <ImageIcon className="w-4 h-4" />,
+      icon: <ImageIcon className="h-4 w-4" />,
       affectedMetrics: ["LCP", "CLS", "Memory Usage"],
       prerequisites: ["3D modeling pipeline", "WebGL/Three.js expertise"],
       estimatedImpact: 90,
@@ -106,7 +106,7 @@ add_header Alt-Svc 'h3=":443"; ma=86400';`,
       expectedImprovement: "Reduce network latency by 25-40% (~300ms)",
       difficulty: "medium",
       timeToImplement: "3-5 days",
-      icon: <Wifi className="w-4 h-4" />,
+      icon: <Wifi className="h-4 w-4" />,
       affectedMetrics: ["TTFB", "FCP", "LCP"],
       prerequisites: ["Server/CDN HTTP/3 support", "SSL certificate"],
       estimatedImpact: 75,
@@ -136,7 +136,7 @@ const loadModule = async (moduleName) => {
       expectedImprovement: "Reduce total requests by 60% (~150 requests)",
       difficulty: "hard",
       timeToImplement: "1-2 weeks",
-      icon: <Database className="w-4 h-4" />,
+      icon: <Database className="h-4 w-4" />,
       affectedMetrics: ["FCP", "LCP", "Network Efficiency"],
       prerequisites: ["Build system modification", "Service worker implementation"],
       estimatedImpact: 80,
@@ -161,7 +161,7 @@ const loadModule = async (moduleName) => {
       expectedImprovement: "Reduce DNS lookup time by 50% (~200ms)",
       difficulty: "medium",
       timeToImplement: "3-4 days",
-      icon: <Globe className="w-4 h-4" />,
+      icon: <Globe className="h-4 w-4" />,
       affectedMetrics: ["TTFB", "Connection Time"],
       prerequisites: ["CDN reconfiguration", "DNS management access"],
       estimatedImpact: 65,
@@ -192,7 +192,7 @@ class WasmMemoryPool {
       expectedImprovement: "Reduce memory usage by 40-50% (~15MB)",
       difficulty: "hard",
       timeToImplement: "5-7 days",
-      icon: <Zap className="w-4 h-4" />,
+      icon: <Zap className="h-4 w-4" />,
       affectedMetrics: ["Memory Usage", "Performance Stability"],
       prerequisites: ["WASM expertise", "Memory profiling tools"],
       estimatedImpact: 60,
@@ -221,7 +221,7 @@ const loadResource = (url, priority = 'auto') => {
       expectedImprovement: "Improve perceived performance by 20-30%",
       difficulty: "medium",
       timeToImplement: "4-6 days",
-      icon: <Target className="w-4 h-4" />,
+      icon: <Target className="h-4 w-4" />,
       affectedMetrics: ["FCP", "LCP", "User Experience"],
       prerequisites: ["Modern browser support", "Analytics integration"],
       estimatedImpact: 55,
@@ -246,7 +246,7 @@ instancedGeometry.instanceCount = instanceCount;`,
       expectedImprovement: "Improve rendering performance by 40-60%",
       difficulty: "hard",
       timeToImplement: "1-2 weeks",
-      icon: <ImageIcon className="w-4 h-4" />,
+      icon: <ImageIcon className="h-4 w-4" />,
       affectedMetrics: ["Frame Rate", "GPU Usage", "Visual Performance"],
       prerequisites: ["WebGL/Three.js expertise", "GPU profiling tools"],
       estimatedImpact: 70,
@@ -291,10 +291,10 @@ instancedGeometry.instanceCount = instanceCount;`,
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Optimization Roadmap Summary */}
-      <Card className="bg-gradient-to-r from-blue-900/20 to-purple-900/20 border-blue-800">
+      <Card className="border-blue-800 bg-gradient-to-r from-blue-900/20 to-purple-900/20">
         <CardHeader>
-          <CardTitle className="text-blue-400 flex items-center gap-2">
-            <Lightbulb className="w-5 h-5" />
+          <CardTitle className="flex items-center gap-2 text-blue-400">
+            <Lightbulb className="h-5 w-5" />
             Advanced Performance Optimization Roadmap
           </CardTitle>
           <CardDescription className="text-blue-300">
@@ -303,26 +303,26 @@ instancedGeometry.instanceCount = instanceCount;`,
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-red-900/20 border border-red-800 rounded-lg">
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <div className="rounded-lg border border-red-800 bg-red-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-red-400">{criticalRecs.length}</div>
               <div className="text-sm text-red-300">Critical Priority</div>
-              <div className="text-xs text-red-400 mt-1">Immediate Action Required</div>
+              <div className="mt-1 text-xs text-red-400">Immediate Action Required</div>
             </div>
-            <div className="text-center p-4 bg-orange-900/20 border border-orange-800 rounded-lg">
+            <div className="rounded-lg border border-orange-800 bg-orange-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-orange-400">{highRecs.length}</div>
               <div className="text-sm text-orange-300">High Priority</div>
-              <div className="text-xs text-orange-400 mt-1">Next 2 Weeks</div>
+              <div className="mt-1 text-xs text-orange-400">Next 2 Weeks</div>
             </div>
-            <div className="text-center p-4 bg-yellow-900/20 border border-yellow-800 rounded-lg">
+            <div className="rounded-lg border border-yellow-800 bg-yellow-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-yellow-400">{mediumRecs.length}</div>
               <div className="text-sm text-yellow-300">Medium Priority</div>
-              <div className="text-xs text-yellow-400 mt-1">Next Month</div>
+              <div className="mt-1 text-xs text-yellow-400">Next Month</div>
             </div>
-            <div className="text-center p-4 bg-green-900/20 border border-green-800 rounded-lg">
+            <div className="rounded-lg border border-green-800 bg-green-900/20 p-4 text-center">
               <div className="text-2xl font-bold text-green-400">{quickWins.length}</div>
               <div className="text-sm text-green-300">Quick Wins</div>
-              <div className="text-xs text-green-400 mt-1">High Impact/Low Effort</div>
+              <div className="mt-1 text-xs text-green-400">High Impact/Low Effort</div>
             </div>
           </div>
         </CardContent>
@@ -331,20 +331,20 @@ instancedGeometry.instanceCount = instanceCount;`,
       {/* Recommendations Tabs */}
       <Tabs defaultValue="critical" className="space-y-4">
         <div className="mobile-scroll">
-          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
-            <TabsTrigger value="critical" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsList className="grid w-full min-w-max grid-cols-2 border-slate-700 bg-slate-800/50 lg:min-w-0 lg:grid-cols-5">
+            <TabsTrigger value="critical" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Critical
             </TabsTrigger>
-            <TabsTrigger value="high" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="high" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               High Priority
             </TabsTrigger>
-            <TabsTrigger value="medium" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="medium" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Medium
             </TabsTrigger>
-            <TabsTrigger value="quick-wins" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="quick-wins" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               Quick Wins
             </TabsTrigger>
-            <TabsTrigger value="all" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+            <TabsTrigger value="all" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
               All
             </TabsTrigger>
           </TabsList>
@@ -404,7 +404,7 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
   };
 
   return (
-    <Card className="bg-slate-800/50 border-slate-700">
+    <Card className="border-slate-700 bg-slate-800/50">
       <CardHeader>
         <CardTitle className="text-slate-100">{title}</CardTitle>
         <CardDescription className="text-slate-400">
@@ -414,44 +414,44 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
       <CardContent>
         <div className="space-y-6">
           {recommendations.map((rec) => (
-            <div key={rec.id} className="border border-slate-600 rounded-lg p-4 sm:p-6 space-y-4">
+            <div key={rec.id} className="space-y-4 rounded-lg border border-slate-600 p-4 sm:p-6">
               <div className="flex items-start justify-between">
-                <div className="flex items-center space-x-3 flex-1">
+                <div className="flex flex-1 items-center space-x-3">
                   {rec.icon}
                   <div className="flex-1">
-                    <h3 className="font-semibold text-slate-100 text-sm sm:text-base">{rec.title}</h3>
-                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                    <h3 className="text-sm font-semibold text-slate-100 sm:text-base">{rec.title}</h3>
+                    <div className="mt-2 flex flex-wrap items-center gap-2">
                       <Badge variant={getPriorityColor(rec.priority) as any} className="text-xs">
                         {rec.priority.toUpperCase()}
                       </Badge>
-                      <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
+                      <Badge variant="outline" className="border-slate-600 text-xs text-slate-300">
                         {rec.category}
                       </Badge>
                       <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium border ${getDifficultyColor(rec.difficulty)}`}
+                        className={`rounded-full border px-2 py-1 text-xs font-medium ${getDifficultyColor(rec.difficulty)}`}
                       >
                         {rec.difficulty}
                       </span>
-                      <Badge variant="outline" className="text-xs border-slate-600 text-slate-300">
+                      <Badge variant="outline" className="border-slate-600 text-xs text-slate-300">
                         {rec.timeToImplement}
                       </Badge>
                     </div>
                   </div>
                 </div>
-                <div className="text-right ml-4">
+                <div className="ml-4 text-right">
                   <div className="text-sm font-medium text-slate-100">{rec.expectedImprovement}</div>
-                  <Progress value={rec.estimatedImpact} className="w-20 mt-1" />
+                  <Progress value={rec.estimatedImpact} className="mt-1 w-20" />
                 </div>
               </div>
 
               <p className="text-sm text-slate-300">{rec.description}</p>
 
-              <div className="bg-blue-900/20 border border-blue-800 rounded p-3">
-                <p className="text-sm text-blue-400 font-medium mb-2">Expected Performance Impact:</p>
+              <div className="rounded border border-blue-800 bg-blue-900/20 p-3">
+                <p className="mb-2 text-sm font-medium text-blue-400">Expected Performance Impact:</p>
                 <p className="text-sm text-blue-200">{rec.expectedImprovement}</p>
-                <div className="flex flex-wrap gap-1 mt-2">
+                <div className="mt-2 flex flex-wrap gap-1">
                   {rec.affectedMetrics.map((metric) => (
-                    <Badge key={metric} variant="outline" className="text-xs border-blue-700 text-blue-300">
+                    <Badge key={metric} variant="outline" className="border-blue-700 text-xs text-blue-300">
                       {metric}
                     </Badge>
                   ))}
@@ -460,11 +460,11 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
 
               <div className="space-y-3">
                 <div>
-                  <p className="text-sm font-medium text-slate-100 mb-2">Implementation Steps:</p>
-                  <ul className="text-sm text-slate-300 space-y-1">
+                  <p className="mb-2 text-sm font-medium text-slate-100">Implementation Steps:</p>
+                  <ul className="space-y-1 text-sm text-slate-300">
                     {rec.implementation.map((step, index) => (
                       <li key={index} className="flex items-start space-x-2">
-                        <span className="text-blue-400 mt-1 text-xs">•</span>
+                        <span className="mt-1 text-xs text-blue-400">•</span>
                         <span>{step}</span>
                       </li>
                     ))}
@@ -473,8 +473,8 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
 
                 {rec.codeExample && (
                   <div>
-                    <p className="text-sm font-medium text-slate-100 mb-2">Code Example:</p>
-                    <pre className="bg-slate-900/50 border border-slate-600 rounded p-3 text-xs text-slate-300 overflow-x-auto">
+                    <p className="mb-2 text-sm font-medium text-slate-100">Code Example:</p>
+                    <pre className="overflow-x-auto rounded border border-slate-600 bg-slate-900/50 p-3 text-xs text-slate-300">
                       <code>{rec.codeExample}</code>
                     </pre>
                   </div>
@@ -482,10 +482,10 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
 
                 {rec.prerequisites.length > 0 && (
                   <div>
-                    <p className="text-sm font-medium text-slate-100 mb-2">Prerequisites:</p>
+                    <p className="mb-2 text-sm font-medium text-slate-100">Prerequisites:</p>
                     <div className="flex flex-wrap gap-1">
                       {rec.prerequisites.map((prereq) => (
-                        <Badge key={prereq} variant="outline" className="text-xs border-slate-600 text-slate-400">
+                        <Badge key={prereq} variant="outline" className="border-slate-600 text-xs text-slate-400">
                           {prereq}
                         </Badge>
                       ))}
@@ -494,7 +494,7 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
                 )}
               </div>
 
-              <div className="flex items-center justify-between pt-3 border-t border-slate-600">
+              <div className="flex items-center justify-between border-t border-slate-600 pt-3">
                 <div className="flex items-center space-x-4 text-xs text-slate-400">
                   <span>Impact Score: {rec.estimatedImpact}%</span>
                   <span>Time: {rec.timeToImplement}</span>
@@ -502,9 +502,9 @@ function RecommendationsList({ recommendations, title }: { recommendations: Adva
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-slate-600 text-slate-300 hover:bg-slate-700 bg-transparent"
+                  className="border-slate-600 bg-transparent text-slate-300 hover:bg-slate-700"
                 >
-                  <CheckCircle className="w-3 h-3 mr-1" />
+                  <CheckCircle className="mr-1 h-3 w-3" />
                   Mark as Planned
                 </Button>
               </div>

@@ -22,26 +22,26 @@ export function AnalysisTabs({ data, activeTab, onTabChange }: AnalysisTabsProps
   return (
     <Tabs value={activeTab} onValueChange={onTabChange} className="space-y-4">
       <div className="mobile-scroll">
-        <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 bg-slate-800/50 border-slate-700 min-w-max lg:min-w-0">
-          <TabsTrigger value="overview" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 relative">
+        <TabsList className="grid w-full min-w-max grid-cols-3 border-slate-700 bg-slate-800/50 lg:min-w-0 lg:grid-cols-6">
+          <TabsTrigger value="overview" className="relative text-xs data-[state=active]:bg-slate-700 sm:text-sm">
             Overview
           </TabsTrigger>
-          <TabsTrigger value="resources" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsTrigger value="resources" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
             Resources
-            <Badge variant="secondary" className="ml-1 text-xs bg-slate-600">
+            <Badge variant="secondary" className="ml-1 bg-slate-600 text-xs">
               {data.wasmModules.length + data.glbFiles.length}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="protocols" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsTrigger value="protocols" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
             Protocols
-            <Badge variant="secondary" className="ml-1 text-xs bg-slate-600">
+            <Badge variant="secondary" className="ml-1 bg-slate-600 text-xs">
               {data.protocols.length}
             </Badge>
           </TabsTrigger>
-          <TabsTrigger value="charts" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsTrigger value="charts" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
             Charts
           </TabsTrigger>
-          <TabsTrigger value="issues" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 relative">
+          <TabsTrigger value="issues" className="relative text-xs data-[state=active]:bg-slate-700 sm:text-sm">
             Issues
             {criticalIssuesCount > 0 && (
               <Badge variant="destructive" className="ml-1 text-xs">
@@ -49,7 +49,7 @@ export function AnalysisTabs({ data, activeTab, onTabChange }: AnalysisTabsProps
               </Badge>
             )}
           </TabsTrigger>
-          <TabsTrigger value="recommendations" className="text-xs sm:text-sm data-[state=active]:bg-slate-700">
+          <TabsTrigger value="recommendations" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
             Optimize
           </TabsTrigger>
         </TabsList>

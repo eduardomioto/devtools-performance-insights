@@ -39,7 +39,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       ],
       expectedImprovement: "Reduce FCP by 30-40% (~400ms)",
       difficulty: "medium",
-      icon: <Code2 className="w-4 h-4" />,
+      icon: <Code2 className="h-4 w-4" />,
     },
     {
       id: "2",
@@ -55,7 +55,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       ],
       expectedImprovement: "Reduce LCP by 25-35% (~600ms)",
       difficulty: "easy",
-      icon: <Target className="w-4 h-4" />,
+      icon: <Target className="h-4 w-4" />,
     },
     {
       id: "3",
@@ -71,7 +71,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       ],
       expectedImprovement: "Improve FCP by 15-25% (~200ms)",
       difficulty: "medium",
-      icon: <Zap className="w-4 h-4" />,
+      icon: <Zap className="h-4 w-4" />,
     },
     {
       id: "4",
@@ -87,7 +87,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       ],
       expectedImprovement: "Reduce CLS from 0.15 to <0.1",
       difficulty: "easy",
-      icon: <CheckCircle className="w-4 h-4" />,
+      icon: <CheckCircle className="h-4 w-4" />,
     },
     {
       id: "5",
@@ -103,7 +103,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       ],
       expectedImprovement: "Reduce FID by 20-30ms",
       difficulty: "hard",
-      icon: <Lightbulb className="w-4 h-4" />,
+      icon: <Lightbulb className="h-4 w-4" />,
     },
     {
       id: "6",
@@ -119,7 +119,7 @@ export default function Recommendations({ data }: RecommendationsProps) {
       ],
       expectedImprovement: "Improve perceived performance by 10-15%",
       difficulty: "easy",
-      icon: <ArrowRight className="w-4 h-4" />,
+      icon: <ArrowRight className="h-4 w-4" />,
     },
   ];
 
@@ -162,22 +162,22 @@ export default function Recommendations({ data }: RecommendationsProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Lightbulb className="w-5 h-5" />
+            <Lightbulb className="h-5 w-5" />
             Performance Optimization Roadmap
           </CardTitle>
           <CardDescription>Prioritized recommendations to improve your application's performance</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="text-center p-4 bg-red-50 rounded-lg">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div className="rounded-lg bg-red-50 p-4 text-center">
               <div className="text-2xl font-bold text-red-600">{highPriorityRecs.length}</div>
               <div className="text-sm text-red-700">High Priority</div>
             </div>
-            <div className="text-center p-4 bg-yellow-50 rounded-lg">
+            <div className="rounded-lg bg-yellow-50 p-4 text-center">
               <div className="text-2xl font-bold text-yellow-600">{mediumPriorityRecs.length}</div>
               <div className="text-sm text-yellow-700">Medium Priority</div>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
+            <div className="rounded-lg bg-green-50 p-4 text-center">
               <div className="text-2xl font-bold text-green-600">{quickWins.length}</div>
               <div className="text-sm text-green-700">Quick Wins</div>
             </div>
@@ -311,7 +311,7 @@ function RecommendationCard({ recommendation }: { recommendation: Recommendation
   };
 
   return (
-    <div className="border rounded-lg p-4 space-y-3">
+    <div className="space-y-3 rounded-lg border p-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-2">
           {recommendation.icon}
@@ -321,7 +321,7 @@ function RecommendationCard({ recommendation }: { recommendation: Recommendation
           </Badge>
           <Badge variant="outline">{recommendation.category}</Badge>
           <span
-            className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(recommendation.difficulty)}`}
+            className={`rounded-full px-2 py-1 text-xs font-medium ${getDifficultyColor(recommendation.difficulty)}`}
           >
             {recommendation.difficulty}
           </span>
@@ -330,17 +330,17 @@ function RecommendationCard({ recommendation }: { recommendation: Recommendation
 
       <p className="text-sm text-gray-600">{recommendation.description}</p>
 
-      <div className="bg-blue-50 border border-blue-200 rounded p-3">
-        <p className="text-sm text-blue-800 font-medium mb-2">Expected Improvement:</p>
+      <div className="rounded border border-blue-200 bg-blue-50 p-3">
+        <p className="mb-2 text-sm font-medium text-blue-800">Expected Improvement:</p>
         <p className="text-sm text-blue-700">{recommendation.expectedImprovement}</p>
       </div>
 
       <div className="space-y-2">
         <p className="text-sm font-medium">Implementation Steps:</p>
-        <ul className="text-sm text-gray-600 space-y-1">
+        <ul className="space-y-1 text-sm text-gray-600">
           {recommendation.implementation.map((step, index) => (
             <li key={index} className="flex items-start space-x-2">
-              <span className="text-blue-500 mt-1">•</span>
+              <span className="mt-1 text-blue-500">•</span>
               <span>{step}</span>
             </li>
           ))}

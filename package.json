@@ -1,6 +1,7 @@
 {
   "name": "devtools-performance-insights",
   "version": "1.0.0",
+  "type": "module",
   "description": "Advanced Chrome DevTools performance profile analyzer with WASM, GLB, and multi-protocol support",
   "keywords": [
     "chrome",
@@ -127,7 +128,8 @@
     "jest": "^29.0.0",
     "jest-environment-jsdom": "^29.0.0",
     "postcss": "^8.5",
-    "prettier": "^3.3.2",
+   "prettier": "^3.6.2",
+    "prettier-plugin-sort-json": "^4.1.1",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "typescript": "^5.8.3"
   },
