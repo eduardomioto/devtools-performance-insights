@@ -13,8 +13,20 @@ interface ProtocolPerformanceChartProps {
 
 export function ProtocolPerformanceChart({ data }: ProtocolPerformanceChartProps) {
   const [protocolZoom, setProtocolZoom] = useState(1);
-
   const resetProtocolZoom = () => setProtocolZoom(1);
+
+  if (!Array.isArray(data) || data.length === 0) {
+    return (
+      <Card className="border-slate-700 bg-slate-800/50">
+        <CardHeader>
+          <CardTitle className="text-sm text-slate-100 sm:text-base">Protocol Performance</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex h-[200px] items-center justify-center text-slate-400">No protocol data available</div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className="border-slate-700 bg-slate-800/50">
@@ -56,32 +68,33 @@ export function ProtocolPerformanceChart({ data }: ProtocolPerformanceChartProps
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <ChartContainer
-            config={{
-              requests: { label: "Requests", color: "#3b82f6" },
-              avgLatency: { label: "Avg Latency (ms)", color: "#ef4444" },
-            }}
-            className="h-[200px] sm:h-[300px]"
-            style={{ transform: `scale(${protocolZoom})`, transformOrigin: "top left" }}
-          >
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                <XAxis dataKey="protocol" stroke="#9ca3af" fontSize={12} />
-                <YAxis stroke="#9ca3af" fontSize={12} />
-                <ChartTooltip
-                  content={<ChartTooltipContent />}
-                  contentStyle={{
-                    backgroundColor: "#1e293b",
-                    border: "1px solid #475569",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Bar dataKey="requests" fill="#3b82f6" />
-                <Bar dataKey="avgLatency" fill="#ef4444" />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartContainer>
+          <div style={{ width: `${100 * protocolZoom}%` }}>
+            <ChartContainer
+              config={{
+                requests: { label: "Requests", color: "#3b82f6" },
+                avgLatency: { label: "Avg Latency (ms)", color: "#ef4444" },
+              }}
+              className="h-[200px] sm:h-[300px]"
+            >
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={data}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                  <XAxis dataKey="protocol" stroke="#9ca3af" fontSize={12} />
+                  <YAxis stroke="#9ca3af" fontSize={12} />
+                  <ChartTooltip
+                    content={<ChartTooltipContent />}
+                    contentStyle={{
+                      backgroundColor: "#1e293b",
+                      border: "1px solid #475569",
+                      borderRadius: "8px",
+                    }}
+                  />
+                  <Bar dataKey="requests" fill="#3b82f6" />
+                  <Bar dataKey="avgLatency" fill="#ef4444" />
+                </BarChart>
+              </ResponsiveContainer>
+            </ChartContainer>
+          </div>
         </div>
       </CardContent>
     </Card>
