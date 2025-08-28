@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -26,6 +25,15 @@ interface ComplexIssue {
 }
 
 export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisProps) {
+  // Fixed: Added null safety for all data access
+  const safeData = {
+    wasmModules: data?.wasmModules || [],
+    glbFiles: data?.glbFiles || [],
+    networkRequests: data?.networkRequests || [],
+    domains: data?.domains || [],
+    protocols: data?.protocols || []
+  };
+
   const complexIssues: ComplexIssue[] = [
     {
       id: "1",
@@ -34,9 +42,9 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       category: "WebAssembly",
       description: "Large WASM modules causing significant compilation delays on main thread",
       impact: "Blocks main thread for 180ms+ during compilation phase",
-      metric: `${data.wasmModules.filter((m: any) => m.compileTime > 100).length} modules affected`,
+      metric: `${safeData.wasmModules.filter((m: any) => m?.compileTime > 100).length} modules affected`,
       icon: <Cpu className="h-4 w-4" />,
-      affectedResources: data.wasmModules.length,
+      affectedResources: safeData.wasmModules.length,
       estimatedSavings: "~400ms FCP improvement",
     },
     {
@@ -46,9 +54,9 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       category: "3D Graphics",
       description: "GLB files exceeding 20MB causing memory pressure and long load times",
       impact: "Increases LCP by 2.8s and causes memory spikes up to 95MB",
-      metric: `${data.glbFiles.filter((f: any) => f.size > 20000000).length} large models`,
+      metric: `${safeData.glbFiles.filter((f: any) => f?.size > 20000000).length} large models`,
       icon: <ImageIcon className="h-4 w-4" />,
-      affectedResources: data.glbFiles.length,
+      affectedResources: safeData.glbFiles.length,
       estimatedSavings: "~2.2s LCP improvement",
     },
     {
@@ -58,9 +66,9 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       category: "Network Protocol",
       description: "Critical resources still using HTTP/1.1 with connection limits",
       impact: "Head-of-line blocking and connection queue delays",
-      metric: `${data.networkRequests.filter((r: any) => r.protocol === "http/1.1").length} legacy requests`,
+      metric: `${safeData.networkRequests.filter((r: any) => r?.protocol === "http/1.1").length} legacy requests`,
       icon: <Wifi className="h-4 w-4" />,
-      affectedResources: data.networkRequests.filter((r: any) => r.protocol === "http/1.1").length,
+      affectedResources: safeData.networkRequests.filter((r: any) => r?.protocol === "http/1.1").length,
       estimatedSavings: "~300ms network improvement",
     },
     {
@@ -68,11 +76,11 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       title: "Request Waterfall Cascade",
       severity: "high",
       category: "Network",
-      description: "247 requests creating complex dependency chains and network congestion",
+      description: `${safeData.networkRequests.length} requests creating complex dependency chains and network congestion`,
       impact: "Network queue saturation and increased connection overhead",
-      metric: `${data.networkRequests.length} total requests`,
+      metric: `${safeData.networkRequests.length} total requests`,
       icon: <Globe className="h-4 w-4" />,
-      affectedResources: data.networkRequests.length,
+      affectedResources: safeData.networkRequests.length,
       estimatedSavings: "~500ms total load time",
     },
     {
@@ -80,11 +88,11 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       title: "Cross-Domain Resource Scatter",
       severity: "high",
       category: "DNS/Connection",
-      description: "Resources spread across 5+ domains causing DNS lookup and connection overhead",
+      description: `Resources spread across ${safeData.domains.length} domains causing DNS lookup and connection overhead`,
       impact: "Additional DNS resolution time and connection establishment delays",
-      metric: `${data.domains.length} domains`,
+      metric: `${safeData.domains.length} domains`,
       icon: <Database className="h-4 w-4" />,
-      affectedResources: data.domains.length,
+      affectedResources: safeData.domains.length,
       estimatedSavings: "~200ms DNS/connection time",
     },
     {
@@ -92,48 +100,12 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
       title: "WASM Memory Pressure",
       severity: "medium",
       category: "Memory",
-      description: "WASM modules consuming excessive memory (29MB total)",
+      description: "WASM modules consuming excessive memory",
       impact: "Potential memory pressure on low-end devices",
-      metric: `${(data.wasmModules.reduce((acc: number, m: any) => acc + m.memoryUsage, 0) / 1024 / 1024).toFixed(0)}MB memory`,
+      metric: `${(safeData.wasmModules.reduce((acc: number, m: any) => acc + (m?.memoryUsage || 0), 0) / 1024 / 1024).toFixed(0)}MB memory`,
       icon: <Zap className="h-4 w-4" />,
-      affectedResources: data.wasmModules.length,
+      affectedResources: safeData.wasmModules.length,
       estimatedSavings: "~15MB memory reduction",
-    },
-    {
-      id: "7",
-      title: "Unoptimized Resource Priorities",
-      severity: "medium",
-      category: "Resource Loading",
-      description: "Critical resources not properly prioritized in loading sequence",
-      impact: "Suboptimal loading order affecting perceived performance",
-      metric: `${data.networkRequests.filter((r: any) => r.priority === "low").length} low-priority critical resources`,
-      icon: <Clock className="h-4 w-4" />,
-      affectedResources: data.networkRequests.filter((r: any) => r.priority === "low").length,
-      estimatedSavings: "~150ms perceived improvement",
-    },
-    {
-      id: "8",
-      title: "3D Model Complexity Overhead",
-      severity: "medium",
-      category: "WebGL",
-      description: "High-polygon models causing GPU bottlenecks and rendering delays",
-      impact: "Frame drops and rendering performance issues",
-      metric: `${data.glbFiles.reduce((acc: number, f: any) => acc + f.vertices, 0).toLocaleString()} total vertices`,
-      icon: <ImageIcon className="h-4 w-4" />,
-      affectedResources: data.glbFiles.length,
-      estimatedSavings: "~30% rendering performance",
-    },
-    {
-      id: "9",
-      title: "Protocol Fragmentation",
-      severity: "low",
-      category: "HTTP Protocol",
-      description: "Mixed protocol usage preventing optimal connection reuse",
-      impact: "Suboptimal connection pooling and multiplexing",
-      metric: `${data.protocols.length} different protocols`,
-      icon: <Code className="h-4 w-4" />,
-      affectedResources: data.protocols.length,
-      estimatedSavings: "~100ms connection optimization",
     },
   ];
 
@@ -299,21 +271,22 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
 
       {/* Detailed Issues Analysis */}
       <Tabs defaultValue="all" className="space-y-4">
-        <div className="mobile-scroll">
-          <TabsList className="grid w-full min-w-max grid-cols-2 border-slate-700 bg-slate-800/50 lg:min-w-0 lg:grid-cols-5">
-            <TabsTrigger value="all" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
+        {/* Fixed: Mobile scroll and responsive layout */}
+        <div className="overflow-x-auto">
+          <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 bg-slate-800/50 border-slate-700 min-w-fit">
+            <TabsTrigger value="all" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
               All Issues
             </TabsTrigger>
-            <TabsTrigger value="critical" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
+            <TabsTrigger value="critical" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
               Critical
             </TabsTrigger>
-            <TabsTrigger value="high" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
+            <TabsTrigger value="high" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
               High
             </TabsTrigger>
-            <TabsTrigger value="medium" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
+            <TabsTrigger value="medium" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
               Medium
             </TabsTrigger>
-            <TabsTrigger value="low" className="text-xs data-[state=active]:bg-slate-700 sm:text-sm">
+            <TabsTrigger value="low" className="text-xs sm:text-sm data-[state=active]:bg-slate-700 whitespace-nowrap">
               Low
             </TabsTrigger>
           </TabsList>
@@ -322,19 +295,15 @@ export default function ComplexIssuesAnalysis({ data }: ComplexIssuesAnalysisPro
         <TabsContent value="all">
           <IssuesList issues={complexIssues} />
         </TabsContent>
-
         <TabsContent value="critical">
           <IssuesList issues={criticalIssues} />
         </TabsContent>
-
         <TabsContent value="high">
           <IssuesList issues={highIssues} />
         </TabsContent>
-
         <TabsContent value="medium">
           <IssuesList issues={mediumIssues} />
         </TabsContent>
-
         <TabsContent value="low">
           <IssuesList issues={lowIssues} />
         </TabsContent>
@@ -349,7 +318,7 @@ function IssuesList({ issues }: { issues: ComplexIssue[] }) {
       case "critical":
         return "destructive";
       case "high":
-        return "destructive";
+        return "destructive"; 
       case "medium":
         return "default";
       case "low":

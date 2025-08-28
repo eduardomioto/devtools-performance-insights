@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, ArrowRight, Lightbulb, Target, Zap, Code2 } from "lucide-react";
@@ -139,47 +138,47 @@ export default function Recommendations({ data }: RecommendationsProps) {
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "easy":
-        return "bg-green-100 text-green-800";
+        return "bg-green-900/30 text-green-400 border-green-700";
       case "medium":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-900/30 text-yellow-400 border-yellow-700";
       case "hard":
-        return "bg-red-100 text-red-800";
+        return "bg-red-900/30 text-red-400 border-red-700";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-slate-900/30 text-slate-400 border-slate-700";
     }
   };
 
   const highPriorityRecs = recommendations.filter((r) => r.priority === "high");
   const mediumPriorityRecs = recommendations.filter((r) => r.priority === "medium");
   const lowPriorityRecs = recommendations.filter((r) => r.priority === "low");
-
   const quickWins = recommendations.filter((r) => r.difficulty === "easy");
-  const impactfulChanges = recommendations.filter((r) => r.priority === "high");
 
   return (
     <div className="space-y-6">
-      {/* Summary */}
-      <Card>
+      {/* Summary - Fixed: Dark theme colors */}
+      <Card className="border-slate-700 bg-slate-800/50">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
+          <CardTitle className="flex items-center gap-2 text-slate-100">
             <Lightbulb className="h-5 w-5" />
             Performance Optimization Roadmap
           </CardTitle>
-          <CardDescription>Prioritized recommendations to improve your application's performance</CardDescription>
+          <CardDescription className="text-slate-400">
+            Prioritized recommendations to improve your application's performance
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-            <div className="rounded-lg bg-red-50 p-4 text-center">
-              <div className="text-2xl font-bold text-red-600">{highPriorityRecs.length}</div>
-              <div className="text-sm text-red-700">High Priority</div>
+            <div className="rounded-lg bg-red-900/20 border border-red-800 p-4 text-center">
+              <div className="text-2xl font-bold text-red-400">{highPriorityRecs.length}</div>
+              <div className="text-sm text-red-300">High Priority</div>
             </div>
-            <div className="rounded-lg bg-yellow-50 p-4 text-center">
-              <div className="text-2xl font-bold text-yellow-600">{mediumPriorityRecs.length}</div>
-              <div className="text-sm text-yellow-700">Medium Priority</div>
+            <div className="rounded-lg bg-yellow-900/20 border border-yellow-800 p-4 text-center">
+              <div className="text-2xl font-bold text-yellow-400">{mediumPriorityRecs.length}</div>
+              <div className="text-sm text-yellow-300">Medium Priority</div>
             </div>
-            <div className="rounded-lg bg-green-50 p-4 text-center">
-              <div className="text-2xl font-bold text-green-600">{quickWins.length}</div>
-              <div className="text-sm text-green-700">Quick Wins</div>
+            <div className="rounded-lg bg-green-900/20 border border-green-800 p-4 text-center">
+              <div className="text-2xl font-bold text-green-400">{quickWins.length}</div>
+              <div className="text-sm text-green-300">Quick Wins</div>
             </div>
           </div>
         </CardContent>
@@ -187,18 +186,18 @@ export default function Recommendations({ data }: RecommendationsProps) {
 
       {/* Recommendations Tabs */}
       <Tabs defaultValue="priority" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="priority">By Priority</TabsTrigger>
-          <TabsTrigger value="category">By Category</TabsTrigger>
-          <TabsTrigger value="quick-wins">Quick Wins</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 border-slate-700">
+          <TabsTrigger value="priority" className="data-[state=active]:bg-slate-700">By Priority</TabsTrigger>
+          <TabsTrigger value="category" className="data-[state=active]:bg-slate-700">By Category</TabsTrigger>
+          <TabsTrigger value="quick-wins" className="data-[state=active]:bg-slate-700">Quick Wins</TabsTrigger>
         </TabsList>
 
         <TabsContent value="priority" className="space-y-4">
           {/* High Priority */}
-          <Card>
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle className="text-red-600">High Priority Recommendations</CardTitle>
-              <CardDescription>Address these issues first for maximum impact</CardDescription>
+              <CardTitle className="text-red-400">High Priority Recommendations</CardTitle>
+              <CardDescription className="text-slate-400">Address these issues first for maximum impact</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -210,10 +209,10 @@ export default function Recommendations({ data }: RecommendationsProps) {
           </Card>
 
           {/* Medium Priority */}
-          <Card>
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle className="text-yellow-600">Medium Priority Recommendations</CardTitle>
-              <CardDescription>Important optimizations for continued improvement</CardDescription>
+              <CardTitle className="text-yellow-400">Medium Priority Recommendations</CardTitle>
+              <CardDescription className="text-slate-400">Important optimizations for continued improvement</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -225,10 +224,10 @@ export default function Recommendations({ data }: RecommendationsProps) {
           </Card>
 
           {/* Low Priority */}
-          <Card>
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle className="text-gray-600">Low Priority Recommendations</CardTitle>
-              <CardDescription>Nice-to-have optimizations for polish</CardDescription>
+              <CardTitle className="text-slate-400">Low Priority Recommendations</CardTitle>
+              <CardDescription className="text-slate-400">Nice-to-have optimizations for polish</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -246,10 +245,10 @@ export default function Recommendations({ data }: RecommendationsProps) {
             if (categoryRecs.length === 0) return null;
 
             return (
-              <Card key={category}>
+              <Card key={category} className="border-slate-700 bg-slate-800/50">
                 <CardHeader>
-                  <CardTitle>{category} Optimizations</CardTitle>
-                  <CardDescription>{categoryRecs.length} recommendations</CardDescription>
+                  <CardTitle className="text-slate-100">{category} Optimizations</CardTitle>
+                  <CardDescription className="text-slate-400">{categoryRecs.length} recommendations</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -264,10 +263,10 @@ export default function Recommendations({ data }: RecommendationsProps) {
         </TabsContent>
 
         <TabsContent value="quick-wins" className="space-y-4">
-          <Card>
+          <Card className="border-slate-700 bg-slate-800/50">
             <CardHeader>
-              <CardTitle className="text-green-600">Quick Wins</CardTitle>
-              <CardDescription>Easy to implement optimizations with good impact</CardDescription>
+              <CardTitle className="text-green-400">Quick Wins</CardTitle>
+              <CardDescription className="text-slate-400">Easy to implement optimizations with good impact</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -300,47 +299,45 @@ function RecommendationCard({ recommendation }: { recommendation: Recommendation
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
       case "easy":
-        return "bg-green-100 text-green-800";
+        return "bg-green-900/30 text-green-400 border border-green-700";
       case "medium":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-900/30 text-yellow-400 border border-yellow-700";
       case "hard":
-        return "bg-red-100 text-red-800";
+        return "bg-red-900/30 text-red-400 border border-red-700";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-slate-900/30 text-slate-400 border border-slate-700";
     }
   };
 
   return (
-    <div className="space-y-3 rounded-lg border p-4">
+    <div className="space-y-3 rounded-lg border border-slate-600 bg-slate-700/20 p-4">
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-2">
           {recommendation.icon}
-          <h3 className="font-semibold">{recommendation.title}</h3>
+          <h3 className="font-semibold text-slate-100">{recommendation.title}</h3>
           <Badge variant={getPriorityColor(recommendation.priority) as any}>
             {recommendation.priority.toUpperCase()}
           </Badge>
-          <Badge variant="outline">{recommendation.category}</Badge>
-          <span
-            className={`rounded-full px-2 py-1 text-xs font-medium ${getDifficultyColor(recommendation.difficulty)}`}
-          >
+          <Badge variant="outline" className="border-slate-600 text-slate-300">{recommendation.category}</Badge>
+          <span className={`rounded-full px-2 py-1 text-xs font-medium ${getDifficultyColor(recommendation.difficulty)}`}>
             {recommendation.difficulty}
           </span>
         </div>
       </div>
 
-      <p className="text-sm text-gray-600">{recommendation.description}</p>
+      <p className="text-sm text-slate-300">{recommendation.description}</p>
 
-      <div className="rounded border border-blue-200 bg-blue-50 p-3">
-        <p className="mb-2 text-sm font-medium text-blue-800">Expected Improvement:</p>
-        <p className="text-sm text-blue-700">{recommendation.expectedImprovement}</p>
+      <div className="rounded border border-blue-700 bg-blue-900/20 p-3">
+        <p className="mb-2 text-sm font-medium text-blue-300">Expected Improvement:</p>
+        <p className="text-sm text-blue-200">{recommendation.expectedImprovement}</p>
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm font-medium">Implementation Steps:</p>
-        <ul className="space-y-1 text-sm text-gray-600">
+        <p className="text-sm font-medium text-slate-100">Implementation Steps:</p>
+        <ul className="space-y-1 text-sm text-slate-300">
           {recommendation.implementation.map((step, index) => (
             <li key={index} className="flex items-start space-x-2">
-              <span className="mt-1 text-blue-500">•</span>
+              <span className="mt-1 text-blue-400">•</span>
               <span>{step}</span>
             </li>
           ))}
