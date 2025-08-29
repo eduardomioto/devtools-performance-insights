@@ -2,6 +2,10 @@
 
 A comprehensive Next.js application for analyzing complex Chrome DevTools performance profiles, with specialized support for WebAssembly (WASM), 3D models (GLB), HTTP/2-3 protocols, and multi-domain architectures.
 
+<img width="1318" height="843" alt="image" src="https://github.com/user-attachments/assets/b9811a22-7a6d-47b1-a5a2-6a21cde6f20d" />
+
+
+
 ## 🛡️ Security
 
 [![Snyk Security](https://snyk.io/test/github/eduardomioto/chrome-performance-analyzer/badge.svg)](https://snyk.io/test/github/eduardomioto/devtools-performance-insights)
@@ -266,29 +270,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Discussions**: Join GitHub Discussions for questions
 - **Email**: Contact the maintainers for enterprise support
 
-## 🔄 Changelog
+## Infrastructure
 
-### v1.0.0 (Current)
-- Initial release with full Chrome profile analysis
-- WebAssembly and 3D model support
-- HTTP/2-3 protocol analysis
-- Mobile-responsive dark theme UI
-- Comprehensive performance recommendations
-- **Security**: Integrated Snyk security scanning
-- **Sponsorship**: Complete funding infrastructure
+- DNS Server: Route 53
+- Deploy: Vercel
+- Database: None
 
-[**View Full Changelog →**](CHANGELOG.md)
-
----
 
 **Built with ❤️ for the web performance community**
 
 [![Security](https://img.shields.io/badge/security-Snyk-4C4A73.svg)](https://snyk.io/)
 [![Sponsors](https://img.shields.io/badge/sponsors-welcome-brightgreen.svg)](SPONSORS.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
-
-## 🧩 Alternatives
-- [Speedscope](https://www.speedscope.app/) ![Speedscope Icon](https://www.speedscope.app/favicon.ico)
-- [Perfetto UI](https://ui.perfetto.dev/) ![Perfetto Icon](https://ui.perfetto.dev/favicon.ico)Alternatives
-
