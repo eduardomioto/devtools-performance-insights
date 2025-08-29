@@ -10,6 +10,7 @@ export function DashboardHeader({ performanceData }: DashboardHeaderProps) {
     <div className="space-y-2 px-2 text-center sm:space-y-4">
       {/* Fixed: Added back the missing icon */}
       <div className="mb-2 flex items-center justify-center gap-3">
+        <img src="/logo_transparent.svg" alt="Logo" className="h-8 w-8 rounded-full shadow" width={60} height={60} />
         <h1 className="bg-gradient-to-r from-blue-400 via-purple-400 to-cyan-400 bg-clip-text text-2xl font-bold leading-tight text-transparent sm:text-4xl">
           Advanced Performance Analytics
         </h1>

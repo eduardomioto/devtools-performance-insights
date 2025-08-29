@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="2000" height="2000" viewBox="0 0 2000 2000"><rect width="2000" height="2000" x="0" y="0" id="background" stroke="transparent" fill="#ffffff"></rect><svg xml:space="preserve" width="1500" height="1500" data-version="2" data-id="lg_hMGQ9CrQNQHku7k2v6" viewBox="0 0 522 446" x="250" y="250">
+    <g transform="matrix(19.6853 0 0 19.6853 261 358.68)">
+        <linearGradient id="a" x1="0" x2="1" y1="0" y2="0" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stop-color="#ff6cab"></stop>
+            <stop offset="100%" stop-color="#7366ff"></stop>
+        </linearGradient>
+        <path fill="url(#a)" d="M94.66 758.57 92 760l13 7 13-7-2.66-1.43-10.34 5.57z" opacity=".5" transform="translate(-105 -762.785)"></path>
+    </g>
+    <g transform="matrix(19.6853 0 0 19.6853 261 275.707)">
+        <linearGradient id="b" x1="0" x2="1" y1="0" y2="0" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stop-color="#ff6cab"></stop>
+            <stop offset="100%" stop-color="#7366ff"></stop>
+        </linearGradient>
+        <path fill="url(#b)" d="M115.34 754.57 105 760.14l-10.34-5.57L92 756l13 7 13-7z" opacity=".8" transform="translate(-105 -758.785)"></path>
+    </g>
+    <g transform="matrix(19.6853 0 0 19.6853 261 142.143)">
+        <linearGradient id="c" x1="0" x2="1" y1="0" y2="0" gradientUnits="objectBoundingBox">
+            <stop offset="0%" stop-color="#ff6cab"></stop>
+            <stop offset="100%" stop-color="#7366ff"></stop>
+        </linearGradient>
+        <path fill="url(#c)" d="m105 759 13-7-13-7-13 7z" transform="translate(-105 -752)"></path>
+    </g>
+</svg></svg>
