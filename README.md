@@ -2,6 +2,10 @@
 
 A comprehensive Next.js application for analyzing complex Chrome DevTools performance profiles, with specialized support for WebAssembly (WASM), 3D models (GLB), HTTP/2-3 protocols, and multi-domain architectures.
 
+<img width="1318" height="843" alt="image" src="https://github.com/user-attachments/assets/b9811a22-7a6d-47b1-a5a2-6a21cde6f20d" />
+
+
+
 ## 🛡️ Security
 
 [![Snyk Security](https://snyk.io/test/github/eduardomioto/chrome-performance-analyzer/badge.svg)](https://snyk.io/test/github/eduardomioto/devtools-performance-insights)
@@ -278,3 +282,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [![Security](https://img.shields.io/badge/security-Snyk-4C4A73.svg)](https://snyk.io/)
 [![Sponsors](https://img.shields.io/badge/sponsors-welcome-brightgreen.svg)](SPONSORS.md)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
