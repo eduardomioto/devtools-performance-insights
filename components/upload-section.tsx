@@ -78,9 +78,8 @@ export function UploadSection({ isLoading, error, uploadProgress, onFileUpload, 
           {/* Hero Section */}
           <div className="space-y-6">
             <div className="relative">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-cyan-500/20 blur-3xl"></div>
               <div className="relative">
-                <p className="mt-4 text-xl leading-relaxed text-slate-300">
+                <p className="mt-4 text-xl leading-relaxed text-slate-300 sm:text-base">
                   Uncover deep insights from complex web applications with WASM, 3D graphics, and multi-protocol
                   architectures.
                 </p>
