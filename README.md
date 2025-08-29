@@ -266,20 +266,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Discussions**: Join GitHub Discussions for questions
 - **Email**: Contact the maintainers for enterprise support
 
-## 🔄 Changelog
+## Infrastructure
 
-### v1.0.0 (Current)
-- Initial release with full Chrome profile analysis
-- WebAssembly and 3D model support
-- HTTP/2-3 protocol analysis
-- Mobile-responsive dark theme UI
-- Comprehensive performance recommendations
-- **Security**: Integrated Snyk security scanning
-- **Sponsorship**: Complete funding infrastructure
+- DNS Server: Route 53
+- Deploy: Vercel
+- Database: None
 
-[**View Full Changelog →**](CHANGELOG.md)
-
----
 
 **Built with ❤️ for the web performance community**
 
