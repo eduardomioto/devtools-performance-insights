@@ -8594,9 +8594,9 @@ react-dom@^19:
     scheduler "^0.26.0"
 
 react-hook-form@latest:
-  version "7.61.1"
-  resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.61.1.tgz"
-  integrity sha512-2vbXUFDYgqEgM2RcXcAT2PwDW/80QARi+PKmHy5q2KhuKvOlG8iIYgf7eIlIANR5trW9fJbP4r5aub3a4egsew==
+  version "7.64.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.64.0.tgz#7820961b773d0b4706baa506e8aa53a0e904b6f7"
+  integrity sha512-fnN+vvTiMLnRqKNTVhDysdrUay0kUUAymQnFIznmgDvapjveUWOOPqMNzPg+A+0yf9DuE2h6xzBjN1s+Qx8wcg==
 
 react-is@^16.13.1:
   version "16.13.1"
