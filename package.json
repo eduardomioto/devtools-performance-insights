@@ -103,7 +103,7 @@
     "shadcn": "^2.1.7",
     "sonner": "latest",
     "tailwind-merge": "^2.5.5",
-    "tailwindcss": "^3.4.17",
+    "tailwindcss": "^4.1.14",
     "tailwindcss-animate": "^1.0.7",
     "three": "latest",
     "typescript": "^5.8.3",
