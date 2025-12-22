@@ -116,7 +116,7 @@
     "@jest/types": "^29.6.3",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
-    "@types/node": "^22",
+    "@types/node": "^25",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/testing-library__dom": "^7.5.0",
