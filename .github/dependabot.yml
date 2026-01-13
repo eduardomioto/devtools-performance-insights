@@ -9,10 +9,9 @@ updates:
       time: "09:00"
     open-pull-requests-limit: 10
     reviewers:
-      - "maintainer1"
-      - "maintainer2"
+      - "eduardomioto"
     assignees:
-      - "maintainer1"
+      - "eduardomioto"
     commit-message:
       prefix: "chore"
       prefix-development: "chore"
