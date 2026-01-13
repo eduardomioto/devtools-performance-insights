@@ -124,7 +124,7 @@
     "@types/three": "^0.170.0",
     "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@typescript-eslint/parser": "^8.1.0",
-    "conventional-changelog-cli": "^4.1.0",
+    "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "^15.0.1",
     "husky": "^9.1.7",
